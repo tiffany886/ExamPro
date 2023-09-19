@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exampro.mapper.ExamregistrationMapper">
+  <resultMap id="BaseResultMap" type="com.exampro.model.Examregistration">
+    <id column="RegistrationID" jdbcType="INTEGER" property="registrationid" />
+    <result column="ExamID" jdbcType="INTEGER" property="examid" />
+    <result column="UserID" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    RegistrationID, ExamID, UserID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from examregistration
+    where RegistrationID = #{registrationid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from examregistration
+    where RegistrationID = #{registrationid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.exampro.model.Examregistration">
+    insert into examregistration (RegistrationID, ExamID, UserID
+      )
+    values (#{registrationid,jdbcType=INTEGER}, #{examid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.exampro.model.Examregistration">
+    insert into examregistration
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="registrationid != null">
+        RegistrationID,
+      </if>
+      <if test="examid != null">
+        ExamID,
+      </if>
+      <if test="userid != null">
+        UserID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="registrationid != null">
+        #{registrationid,jdbcType=INTEGER},
+      </if>
+      <if test="examid != null">
+        #{examid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.Examregistration">
+    update examregistration
+    <set>
+      <if test="examid != null">
+        ExamID = #{examid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        UserID = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where RegistrationID = #{registrationid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.exampro.model.Examregistration">
+    update examregistration
+    set ExamID = #{examid,jdbcType=INTEGER},
+      UserID = #{userid,jdbcType=INTEGER}
+    where RegistrationID = #{registrationid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exampro.mapper.GradingmanagementMapper">
+  <resultMap id="BaseResultMap" type="com.exampro.model.Gradingmanagement">
+    <id column="GradingID" jdbcType="INTEGER" property="gradingid" />
+    <result column="PaperID" jdbcType="INTEGER" property="paperid" />
+    <result column="ExamineeID" jdbcType="INTEGER" property="examineeid" />
+    <result column="GraderID" jdbcType="INTEGER" property="graderid" />
+    <result column="StartTime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="EndTime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="ObjectiveScore" jdbcType="INTEGER" property="objectivescore" />
+    <result column="SubjectiveScore" jdbcType="INTEGER" property="subjectivescore" />
+    <result column="TotalScore" jdbcType="INTEGER" property="totalscore" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    GradingID, PaperID, ExamineeID, GraderID, StartTime, EndTime, ObjectiveScore, SubjectiveScore, 
+    TotalScore
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from gradingmanagement
+    where GradingID = #{gradingid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from gradingmanagement
+    where GradingID = #{gradingid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.exampro.model.Gradingmanagement">
+    insert into gradingmanagement (GradingID, PaperID, ExamineeID, 
+      GraderID, StartTime, EndTime, 
+      ObjectiveScore, SubjectiveScore, TotalScore
+      )
+    values (#{gradingid,jdbcType=INTEGER}, #{paperid,jdbcType=INTEGER}, #{examineeid,jdbcType=INTEGER}, 
+      #{graderid,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{objectivescore,jdbcType=INTEGER}, #{subjectivescore,jdbcType=INTEGER}, #{totalscore,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.exampro.model.Gradingmanagement">
+    insert into gradingmanagement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gradingid != null">
+        GradingID,
+      </if>
+      <if test="paperid != null">
+        PaperID,
+      </if>
+      <if test="examineeid != null">
+        ExamineeID,
+      </if>
+      <if test="graderid != null">
+        GraderID,
+      </if>
+      <if test="starttime != null">
+        StartTime,
+      </if>
+      <if test="endtime != null">
+        EndTime,
+      </if>
+      <if test="objectivescore != null">
+        ObjectiveScore,
+      </if>
+      <if test="subjectivescore != null">
+        SubjectiveScore,
+      </if>
+      <if test="totalscore != null">
+        TotalScore,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gradingid != null">
+        #{gradingid,jdbcType=INTEGER},
+      </if>
+      <if test="paperid != null">
+        #{paperid,jdbcType=INTEGER},
+      </if>
+      <if test="examineeid != null">
+        #{examineeid,jdbcType=INTEGER},
+      </if>
+      <if test="graderid != null">
+        #{graderid,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="objectivescore != null">
+        #{objectivescore,jdbcType=INTEGER},
+      </if>
+      <if test="subjectivescore != null">
+        #{subjectivescore,jdbcType=INTEGER},
+      </if>
+      <if test="totalscore != null">
+        #{totalscore,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.Gradingmanagement">
+    update gradingmanagement
+    <set>
+      <if test="paperid != null">
+        PaperID = #{paperid,jdbcType=INTEGER},
+      </if>
+      <if test="examineeid != null">
+        ExamineeID = #{examineeid,jdbcType=INTEGER},
+      </if>
+      <if test="graderid != null">
+        GraderID = #{graderid,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        StartTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        EndTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="objectivescore != null">
+        ObjectiveScore = #{objectivescore,jdbcType=INTEGER},
+      </if>
+      <if test="subjectivescore != null">
+        SubjectiveScore = #{subjectivescore,jdbcType=INTEGER},
+      </if>
+      <if test="totalscore != null">
+        TotalScore = #{totalscore,jdbcType=INTEGER},
+      </if>
+    </set>
+    where GradingID = #{gradingid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.exampro.model.Gradingmanagement">
+    update gradingmanagement
+    set PaperID = #{paperid,jdbcType=INTEGER},
+      ExamineeID = #{examineeid,jdbcType=INTEGER},
+      GraderID = #{graderid,jdbcType=INTEGER},
+      StartTime = #{starttime,jdbcType=TIMESTAMP},
+      EndTime = #{endtime,jdbcType=TIMESTAMP},
+      ObjectiveScore = #{objectivescore,jdbcType=INTEGER},
+      SubjectiveScore = #{subjectivescore,jdbcType=INTEGER},
+      TotalScore = #{totalscore,jdbcType=INTEGER}
+    where GradingID = #{gradingid,jdbcType=INTEGER}
+  </update>
+</mapper>

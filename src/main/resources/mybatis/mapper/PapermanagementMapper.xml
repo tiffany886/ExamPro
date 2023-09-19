@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exampro.mapper.PapermanagementMapper">
+  <resultMap id="BaseResultMap" type="com.exampro.model.Papermanagement">
+    <id column="PaperID" jdbcType="INTEGER" property="paperid" />
+    <result column="PaperName" jdbcType="VARCHAR" property="papername" />
+    <result column="ObjectiveScore" jdbcType="INTEGER" property="objectivescore" />
+    <result column="TotalScore" jdbcType="INTEGER" property="totalscore" />
+    <result column="SubjectiveScore" jdbcType="INTEGER" property="subjectivescore" />
+    <result column="StartTime" jdbcType="TIMESTAMP" property="starttime" />
+    <result column="EndTime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="NumberOfExaminees" jdbcType="INTEGER" property="numberofexaminees" />
+    <result column="CreatedBy" jdbcType="INTEGER" property="createdby" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    PaperID, PaperName, ObjectiveScore, TotalScore, SubjectiveScore, StartTime, EndTime, 
+    NumberOfExaminees, CreatedBy
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from papermanagement
+    where PaperID = #{paperid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from papermanagement
+    where PaperID = #{paperid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.exampro.model.Papermanagement">
+    insert into papermanagement (PaperID, PaperName, ObjectiveScore, 
+      TotalScore, SubjectiveScore, StartTime, 
+      EndTime, NumberOfExaminees, CreatedBy
+      )
+    values (#{paperid,jdbcType=INTEGER}, #{papername,jdbcType=VARCHAR}, #{objectivescore,jdbcType=INTEGER}, 
+      #{totalscore,jdbcType=INTEGER}, #{subjectivescore,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{numberofexaminees,jdbcType=INTEGER}, #{createdby,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.exampro.model.Papermanagement">
+    insert into papermanagement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="paperid != null">
+        PaperID,
+      </if>
+      <if test="papername != null">
+        PaperName,
+      </if>
+      <if test="objectivescore != null">
+        ObjectiveScore,
+      </if>
+      <if test="totalscore != null">
+        TotalScore,
+      </if>
+      <if test="subjectivescore != null">
+        SubjectiveScore,
+      </if>
+      <if test="starttime != null">
+        StartTime,
+      </if>
+      <if test="endtime != null">
+        EndTime,
+      </if>
+      <if test="numberofexaminees != null">
+        NumberOfExaminees,
+      </if>
+      <if test="createdby != null">
+        CreatedBy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="paperid != null">
+        #{paperid,jdbcType=INTEGER},
+      </if>
+      <if test="papername != null">
+        #{papername,jdbcType=VARCHAR},
+      </if>
+      <if test="objectivescore != null">
+        #{objectivescore,jdbcType=INTEGER},
+      </if>
+      <if test="totalscore != null">
+        #{totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="subjectivescore != null">
+        #{subjectivescore,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="numberofexaminees != null">
+        #{numberofexaminees,jdbcType=INTEGER},
+      </if>
+      <if test="createdby != null">
+        #{createdby,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.Papermanagement">
+    update papermanagement
+    <set>
+      <if test="papername != null">
+        PaperName = #{papername,jdbcType=VARCHAR},
+      </if>
+      <if test="objectivescore != null">
+        ObjectiveScore = #{objectivescore,jdbcType=INTEGER},
+      </if>
+      <if test="totalscore != null">
+        TotalScore = #{totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="subjectivescore != null">
+        SubjectiveScore = #{subjectivescore,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        StartTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        EndTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="numberofexaminees != null">
+        NumberOfExaminees = #{numberofexaminees,jdbcType=INTEGER},
+      </if>
+      <if test="createdby != null">
+        CreatedBy = #{createdby,jdbcType=INTEGER},
+      </if>
+    </set>
+    where PaperID = #{paperid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.exampro.model.Papermanagement">
+    update papermanagement
+    set PaperName = #{papername,jdbcType=VARCHAR},
+      ObjectiveScore = #{objectivescore,jdbcType=INTEGER},
+      TotalScore = #{totalscore,jdbcType=INTEGER},
+      SubjectiveScore = #{subjectivescore,jdbcType=INTEGER},
+      StartTime = #{starttime,jdbcType=TIMESTAMP},
+      EndTime = #{endtime,jdbcType=TIMESTAMP},
+      NumberOfExaminees = #{numberofexaminees,jdbcType=INTEGER},
+      CreatedBy = #{createdby,jdbcType=INTEGER}
+    where PaperID = #{paperid,jdbcType=INTEGER}
+  </update>
+</mapper>
