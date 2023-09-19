@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exampro.mapper.QuestionpoolMapper">
+  <resultMap id="BaseResultMap" type="com.exampro.model.Questionpool">
+    <id column="QuestionID" jdbcType="INTEGER" property="questionid" />
+    <result column="QuestionType" jdbcType="VARCHAR" property="questiontype" />
+    <result column="CreateTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.exampro.model.Questionpool">
+    <result column="QuestionDescription" jdbcType="LONGVARCHAR" property="questiondescription" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    QuestionID, QuestionType, CreateTime
+  </sql>
+  <sql id="Blob_Column_List">
+    QuestionDescription
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from questionpool
+    where QuestionID = #{questionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from questionpool
+    where QuestionID = #{questionid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.exampro.model.Questionpool">
+    insert into questionpool (QuestionID, QuestionType, CreateTime, 
+      QuestionDescription)
+    values (#{questionid,jdbcType=INTEGER}, #{questiontype,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{questiondescription,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.exampro.model.Questionpool">
+    insert into questionpool
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="questionid != null">
+        QuestionID,
+      </if>
+      <if test="questiontype != null">
+        QuestionType,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="questiondescription != null">
+        QuestionDescription,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="questionid != null">
+        #{questionid,jdbcType=INTEGER},
+      </if>
+      <if test="questiontype != null">
+        #{questiontype,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="questiondescription != null">
+        #{questiondescription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.Questionpool">
+    update questionpool
+    <set>
+      <if test="questiontype != null">
+        QuestionType = #{questiontype,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="questiondescription != null">
+        QuestionDescription = #{questiondescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where QuestionID = #{questionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.exampro.model.Questionpool">
+    update questionpool
+    set QuestionType = #{questiontype,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      QuestionDescription = #{questiondescription,jdbcType=LONGVARCHAR}
+    where QuestionID = #{questionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.exampro.model.Questionpool">
+    update questionpool
+    set QuestionType = #{questiontype,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+    where QuestionID = #{questionid,jdbcType=INTEGER}
+  </update>
+</mapper>
