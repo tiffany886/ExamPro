@@ -1,7 +1,5 @@
 package com.exampro.model;
 
-import java.io.Serializable;
-
 public class User{
     /**
      * 用户ID
@@ -30,6 +28,12 @@ public class User{
      * @mbg.generated
      */
     private Integer role;
+
+    public User(String username, String password, Integer role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
     private static final long serialVersionUID = 1L;
 
