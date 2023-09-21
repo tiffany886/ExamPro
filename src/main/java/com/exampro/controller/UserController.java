@@ -81,7 +81,7 @@ public class UserController {
         }
         System.out.println(user.getPassword());
         // 判断用户的密码是否相同
-        if(passHandler.checkPass(password,"exampro^0^",user.getPassword())){
+        if(!passHandler.checkPass(password,"exampro^0^",user.getPassword())){
             return ResponseEntity.ok(response.failure("密码不正确！登陆失败！", false));
         }
         // 生成Token并返回给客户端

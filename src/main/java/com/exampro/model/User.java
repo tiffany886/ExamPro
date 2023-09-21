@@ -3,31 +3,30 @@ package com.exampro.model;
 public class User{
     /**
      * 用户ID
-     *
-     * @mbg.generated
      */
     private Integer userid;
 
     /**
      * 用户名
-     *
-     * @mbg.generated
      */
     private String username;
 
     /**
      * 密码
-     *
-     * @mbg.generated
      */
     private String password;
 
     /**
      * 身份
-     *
-     * @mbg.generated
      */
     private Integer role;
+
+    public User(Integer userid, String username, String password, Integer role) {
+        this.userid = userid;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
     public User(String username, String password, Integer role) {
         this.username = username;
