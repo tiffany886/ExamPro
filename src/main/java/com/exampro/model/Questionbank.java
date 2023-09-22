@@ -1,67 +1,86 @@
 package com.exampro.model;
 
+import io.swagger.models.auth.In;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-
+// @Data
 public class Questionbank implements Serializable {
     /**
      * 题库ID
      *
-     * @mbg.generated
      */
-    private Integer bankid;
+    private Integer bankId;
 
     /**
      * 题库名称
      *
-     * @mbg.generated
      */
-    private String bankname;
+    private String bankName;
 
     /**
      * 创建时间
      *
-     * @mbg.generated
      */
-    private Date createtime;
+    private Date createTime;
+    /**
+     *
+     * 创建用户
+     */
+    private Integer userId;
 
-    private static final long serialVersionUID = 1L;
-
-    public Integer getBankid() {
-        return bankid;
+    public Questionbank(Integer bankId, String bankName, Date createTime, Integer userId) {
+        this.bankId = bankId;
+        this.bankName = bankName;
+        this.createTime = createTime;
+        this.userId = userId;
     }
 
-    public void setBankid(Integer bankid) {
-        this.bankid = bankid;
+    public Questionbank(String bankName, Integer userId) {
+        this.bankName = bankName;
+        this.userId = userId;
     }
 
-    public String getBankname() {
-        return bankname;
+    public Integer getBankId() {
+        return bankId;
     }
 
-    public void setBankname(String bankname) {
-        this.bankname = bankname;
+    public void setBankId(Integer bankId) {
+        this.bankId = bankId;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public String getBankName() {
+        return bankName;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", bankid=").append(bankid);
-        sb.append(", bankname=").append(bankname);
-        sb.append(", createtime=").append(createtime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Questionbank{" +
+                "bankId=" + bankId +
+                ", bankName='" + bankName + '\'' +
+                ", createTime=" + createTime +
+                ", userId=" + userId +
+                '}';
     }
 }

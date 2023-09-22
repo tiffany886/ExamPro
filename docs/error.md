@@ -20,3 +20,26 @@
 
     - 指定显式顺序：您可以为控制器类或方法指定显式顺序，以确保它们被正确处理。这可以通过使用@Order注解或Ordered接口来实现。
 
+
+### 未构造错误
+```
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@4973a9c2]
+2023-09-22 09:39:47.166 ERROR 17476 --- [nio-8080-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet]    
+Questionpool matching [java.lang.Integer, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.time.LocalDateTime]]
+
+```
+
+1. 构造函数是否添加？字段名和数据库表的名字是否一致
+2. 构造函数的顺序是否与表的数据顺序一致？
+
+### 空指针
+```
+{
+    "timestamp": "2023-09-22T01:32:49.630+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "trace": "java.lang.NullPointerException\r\n\tat com.exampro.contr
+    com.exampro.controller.paper.QuestionController.searchQuesByUserId(QuestionController.java:24)
+ 
+```
+1. 空指针异常，在引入mapper的时候是否用@Autowired进行注入

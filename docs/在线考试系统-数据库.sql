@@ -78,7 +78,9 @@ DROP TABLE IF EXISTS `QuestionBank`;
 CREATE TABLE QuestionBank (
     BankID INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '题库ID',
     BankName VARCHAR(255) NOT NULL COMMENT '题库名称',
-    CreateTime DATETIME NOT NULL COMMENT '创建时间'
+    CreateTime DATETIME NOT NULL COMMENT '创建时间',
+    UserID INT NOT NULL COMMENT '题库所属用户ID',
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='题库管理表';
 
 -- 创建题库题目关联表
@@ -108,7 +110,6 @@ CREATE TABLE QuestionBankAssociation (
     AssociationID INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '关联ID',
     QuestionID INT NOT NULL COMMENT '试题ID',
     BankID INT NOT NULL COMMENT '题库ID',
-    FOREIGN KEY (QuestionID) REFERENCES QuestionManagement(QuestionID),
     FOREIGN KEY (BankID) REFERENCES QuestionBank(BankID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='题目题库关联表';
 
@@ -123,8 +124,8 @@ CREATE TABLE PaperManagement (
     StartTime DATETIME NOT NULL COMMENT '考试开始时间',
     EndTime DATETIME NOT NULL COMMENT '考试结束时间',
     NumberOfExaminees INT NOT NULL COMMENT '考试人数',
-    CreatedBy INT NOT NULL COMMENT '创建人ID',
-    FOREIGN KEY (CreatedBy) REFERENCES User(UserID)
+    UserID INT NOT NULL COMMENT '创建人ID',
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试卷管理表';
 
 -- 创建试卷题目关联表
@@ -135,8 +136,7 @@ CREATE TABLE PaperQuestion (
     QuestionID INT NOT NULL COMMENT '题目ID',
     QuestionType VARCHAR(255) NOT NULL COMMENT '题目类型',
     Score INT NOT NULL COMMENT '分数',
-    FOREIGN KEY (PaperID) REFERENCES PaperManagement(PaperID),
-    FOREIGN KEY (QuestionID) REFERENCES QuestionManagement(QuestionID)
+    FOREIGN KEY (PaperID) REFERENCES PaperManagement(PaperID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试卷题目关联表';
 
 -- 创建评卷管理表
@@ -155,3 +155,10 @@ CREATE TABLE GradingManagement (
     FOREIGN KEY (ExamineeID) REFERENCES User(UserID),
     FOREIGN KEY (GraderID) REFERENCES User(UserID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='评卷管理表';
+
+
+ALTER TABLE questionpool
+    MODIFY COLUMN createTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE questionbank
+    MODIFY COLUMN createTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
