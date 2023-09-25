@@ -22,6 +22,12 @@ public class QuesAddBankController {
 
     ApiResponse<Boolean> response = new ApiResponse<>();
 
+    /**
+     * 在题库中加题目
+     * @param bankId
+     * @param questionId
+     * @return
+     */
     @PostMapping(value = "/addQuesInBank",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiRest<Boolean>> addQuestion(@RequestParam("bankid") String bankId,
                                                         @RequestParam("questionid") String questionId){

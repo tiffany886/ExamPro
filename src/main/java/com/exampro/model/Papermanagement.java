@@ -1,163 +1,190 @@
 package com.exampro.model;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 试卷管理表
+ */
 public class Papermanagement implements Serializable {
+    public Papermanagement(){}
     /**
      * 试卷ID
      *
-     * @mbg.generated
      */
-    private Integer paperid;
+    private Integer paperId;
 
     /**
      * 试卷名称
      *
-     * @mbg.generated
      */
-    private String papername;
+    private String paperName;
 
     /**
      * 客观题分数
      *
-     * @mbg.generated
      */
-    private Integer objectivescore;
+    private Integer objectiveScore;
 
     /**
      * 总分
      *
-     * @mbg.generated
      */
-    private Integer totalscore;
+    private Integer totalScore;
 
     /**
      * 主观题分数
      *
-     * @mbg.generated
      */
-    private Integer subjectivescore;
+    private Integer subjectiveScore;
 
     /**
      * 考试开始时间
      *
-     * @mbg.generated
      */
-    private Date starttime;
+    private Date startTime;
 
     /**
      * 考试结束时间
      *
-     * @mbg.generated
      */
-    private Date endtime;
+    private Date endTime;
 
     /**
      * 考试人数
      *
-     * @mbg.generated
      */
-    private Integer numberofexaminees;
+    private Integer numberOfExaminees;
 
     /**
      * 创建人ID
      *
-     * @mbg.generated
      */
-    private Integer createdby;
+    private Integer userId;
 
-    private static final long serialVersionUID = 1L;
+    /**
+     *考试时间
+     */
+    private Integer duration;
 
-    public Integer getPaperid() {
-        return paperid;
-    }
-
-    public void setPaperid(Integer paperid) {
-        this.paperid = paperid;
-    }
-
-    public String getPapername() {
-        return papername;
-    }
-
-    public void setPapername(String papername) {
-        this.papername = papername;
-    }
-
-    public Integer getObjectivescore() {
-        return objectivescore;
-    }
-
-    public void setObjectivescore(Integer objectivescore) {
-        this.objectivescore = objectivescore;
-    }
-
-    public Integer getTotalscore() {
-        return totalscore;
-    }
-
-    public void setTotalscore(Integer totalscore) {
-        this.totalscore = totalscore;
-    }
-
-    public Integer getSubjectivescore() {
-        return subjectivescore;
-    }
-
-    public void setSubjectivescore(Integer subjectivescore) {
-        this.subjectivescore = subjectivescore;
-    }
-
-    public Date getStarttime() {
-        return starttime;
-    }
-
-    public void setStarttime(Date starttime) {
-        this.starttime = starttime;
-    }
-
-    public Date getEndtime() {
-        return endtime;
-    }
-
-    public void setEndtime(Date endtime) {
-        this.endtime = endtime;
-    }
-
-    public Integer getNumberofexaminees() {
-        return numberofexaminees;
-    }
-
-    public void setNumberofexaminees(Integer numberofexaminees) {
-        this.numberofexaminees = numberofexaminees;
-    }
-
-    public Integer getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(Integer createdby) {
-        this.createdby = createdby;
+    public Papermanagement(String paperName, Integer objectiveScore, Integer subjectiveScore, Date startTime, Integer numberOfExaminees, Integer userId, Integer duration) {
+        this.paperName = paperName;
+        this.objectiveScore = objectiveScore;
+        this.subjectiveScore = subjectiveScore;
+        this.startTime = startTime;
+        this.numberOfExaminees = numberOfExaminees;
+        this.userId = userId;
+        this.duration = duration;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", paperid=").append(paperid);
-        sb.append(", papername=").append(papername);
-        sb.append(", objectivescore=").append(objectivescore);
-        sb.append(", totalscore=").append(totalscore);
-        sb.append(", subjectivescore=").append(subjectivescore);
-        sb.append(", starttime=").append(starttime);
-        sb.append(", endtime=").append(endtime);
-        sb.append(", numberofexaminees=").append(numberofexaminees);
-        sb.append(", createdby=").append(createdby);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Papermanagement{" +
+                "paperId=" + paperId +
+                ", paperName='" + paperName + '\'' +
+                ", objectiveScore=" + objectiveScore +
+                ", totalScore=" + totalScore +
+                ", subjectiveScore=" + subjectiveScore +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", numberOfExaminees=" + numberOfExaminees +
+                ", userId=" + userId +
+                ", duration=" + duration +
+                '}';
+    }
+
+    public Integer getPaperId() {
+        return paperId;
+    }
+
+    public void setPaperId(Integer paperId) {
+        this.paperId = paperId;
+    }
+
+    public String getPaperName() {
+        return paperName;
+    }
+
+    public void setPaperName(String paperName) {
+        this.paperName = paperName;
+    }
+
+    public Integer getObjectiveScore() {
+        return objectiveScore;
+    }
+
+    public void setObjectiveScore(Integer objectiveScore) {
+        this.objectiveScore = objectiveScore;
+    }
+
+    public Integer getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(Integer totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public Integer getSubjectiveScore() {
+        return subjectiveScore;
+    }
+
+    public void setSubjectiveScore(Integer subjectiveScore) {
+        this.subjectiveScore = subjectiveScore;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getNumberOfExaminees() {
+        return numberOfExaminees;
+    }
+
+    public void setNumberOfExaminees(Integer numberOfExaminees) {
+        this.numberOfExaminees = numberOfExaminees;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Papermanagement(Integer paperId, String paperName, Integer objectiveScore, Integer totalScore, Integer subjectiveScore, Date startTime, Date endTime, Integer numberOfExaminees, Integer userId, Integer duration) {
+        this.paperId = paperId;
+        this.paperName = paperName;
+        this.objectiveScore = objectiveScore;
+        this.totalScore = totalScore;
+        this.subjectiveScore = subjectiveScore;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.numberOfExaminees = numberOfExaminees;
+        this.userId = userId;
+        this.duration = duration;
     }
 }

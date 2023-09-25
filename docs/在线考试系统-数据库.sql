@@ -136,6 +136,8 @@ CREATE TABLE PaperQuestion (
     QuestionID INT NOT NULL COMMENT '题目ID',
     QuestionType VARCHAR(255) NOT NULL COMMENT '题目类型',
     Score INT NOT NULL COMMENT '分数',
+    MultipleChoiceOrder INT NOT NULL COMMENT '选择题顺序',
+    ObjectiveOrder INT NOT NULL COMMENT '客观题顺序',
     FOREIGN KEY (PaperID) REFERENCES PaperManagement(PaperID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试卷题目关联表';
 
@@ -162,3 +164,62 @@ ALTER TABLE questionpool
 
 ALTER TABLE questionbank
     MODIFY COLUMN createTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+
+INSERT INTO User (Username, Password, Role)
+VALUES
+('zhhh', 'e1ee0203ab28bb206f7b557722882de1', 1);
+
+# 题库
+INSERT INTO QuestionBank (BankName,UserID)
+VALUES
+('英语题库', 1),
+('数学题库', 1);
+
+INSERT INTO QuestionPool (QuestionType, QuestionDescription, UserID, QuestionAnswer)
+VALUES
+('0', 'What is 2 + 2?', 1, '4'),
+('0', 'What is the capital of France?', 1, 'Paris'),
+('0', 'What is 3 x 3?', 1, '9');
+
+Insert INTO bankquestion (BankID, QuestionID) VALUE (1 ,1);
+
+# 试卷
+INSERT INTO PaperManagement (PaperName, ObjectiveScore, TotalScore, SubjectiveScore, StartTime, EndTime, NumberOfExaminees, UserID)
+VALUES
+('英语四六级试卷', 20, 50, 30,'2023-9-22 13:00:00', '2023-9-22 15:00:00', 100, 1),
+('教资科一考试试卷', 25, 60, 35, '2023-9-23 13:00:00', '2023-9-23 15:00:00', 120, 1),
+('蓝桥杯考试', 18, 45, 27, '2023-9-24 13:00:00', '2023-9-24 15:00:00', 90, 1);
+
+Insert INTO bankquestion (BankID, QuestionID) VALUE (1 ,1);
+
+# 触发器 自动计算总分
+DELIMITER //
+CREATE TRIGGER CalculateTotalScore
+    BEFORE INSERT ON PaperManagement
+    FOR EACH ROW
+BEGIN
+    SET NEW.TotalScore = NEW.ObjectiveScore + NEW.SubjectiveScore;
+END;
+//
+DELIMITER ;
+
+INSERT INTO PaperManagement (paperName, objectiveScore, subjectiveScore, startTime, endTime, numberOfExaminees, userID)
+    value ('小升初卷子',40,60,'2023-4-5 14:00:00','2023-4-5 14:00:00',40,1);
+
+ALTER TABLE PaperManagement
+    ADD COLUMN `Duration` INT NOT NULL COMMENT '考试时长（分钟）';
+
+# 触发器：自动计算考试结束时间
+DELIMITER //
+CREATE TRIGGER CalculateEndTime
+    BEFORE INSERT ON PaperManagement
+    FOR EACH ROW
+BEGIN
+    SET NEW.EndTime = DATE_ADD(NEW.StartTime, INTERVAL NEW.Duration MINUTE);
+END;
+//
+DELIMITER ;
+
+INSERT INTO PaperManagement (paperName, objectiveScore, subjectiveScore, startTime, numberOfExaminees, userID,Duration)
+    value ('小升初卷子',40,60,'2023-4-5 14:00:00',40,1,120);
