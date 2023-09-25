@@ -1,6 +1,6 @@
-package com.exampro.mapper;
+package com.exampro.mapper.paper;
 
-import com.exampro.model.Questionpool;
+import com.exampro.model.paper.Questionpool;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

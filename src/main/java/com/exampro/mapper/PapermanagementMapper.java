@@ -1,6 +1,6 @@
 package com.exampro.mapper;
 
-import com.exampro.model.Papermanagement;
+import com.exampro.model.paper.Papermanagement;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

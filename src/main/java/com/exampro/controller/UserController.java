@@ -7,6 +7,8 @@ import com.exampro.model.User;
 import com.exampro.utils.jwt.JwtTokenUtil;
 import com.exampro.utils.passwd.PassHandler;
 import com.exampro.utils.passwd.PassInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Api(tags = "用户相关接口")
 public class UserController {
     /**
      * 注入 UserMapper
@@ -39,6 +42,7 @@ public class UserController {
      * 查询所有用户
      */
     @GetMapping("/allUser")
+    @ApiOperation("查询所有用户")
     public List findAllUsers(){
         return userMapper.findAllUsers();
     }
@@ -49,6 +53,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value="/checkIfUserExist",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("查询数据库检查用户是否存在")
     public ResponseEntity<ApiRest<Boolean>> checkUserExists(@RequestParam("username") String username){
         // 查询数据库检查用户是否存在
         User user = userMapper.findByUsername(username);
@@ -71,6 +76,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/login",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("登录接口")
     public ResponseEntity<?> login(@RequestParam("username") String username,@RequestParam("password") String password) {
         ApiResponse<Boolean> response = new ApiResponse<>();
         // 判断用户是否存在
@@ -93,6 +99,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/regUser",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("注册用户")
     public ResponseEntity<?> regUser(@RequestParam("username") String username,
                                      @RequestParam("password") String password,@RequestParam("role") String role) {
         ApiResponse<Boolean> response = new ApiResponse<>();

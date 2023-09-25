@@ -2,8 +2,10 @@ package com.exampro.controller.paper;
 
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
-import com.exampro.mapper.QuestionbankMapper;
-import com.exampro.model.Questionbank;
+import com.exampro.mapper.paper.QuestionbankMapper;
+import com.exampro.model.paper.Questionbank;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Api(tags = "题库接口") // 这里定义了API的标签，可以用来分组接口
 public class BankController {
     @Autowired
     private QuestionbankMapper questionbankMapper;
@@ -25,6 +28,7 @@ public class BankController {
      * @return
      */
     @GetMapping(value="/searchAllBank")
+    @ApiOperation("查询所有题库") // 在这里定义接口的名字
     public ResponseEntity<ApiRest<?>> searchAllQues(){
         List<Questionbank> rows=questionbankMapper.selectAllBank();
         System.out.println(rows);
@@ -41,6 +45,7 @@ public class BankController {
      * @return
      */
     @GetMapping(value = "/searchBankById")
+    @ApiOperation("根据用户id查询题库")
     public ResponseEntity<ApiRest<?>> searchBankById(String userId){
         List<Questionbank> rows=questionbankMapper.selectBankById(Integer.parseInt(userId));
         System.out.println(rows);
@@ -52,6 +57,7 @@ public class BankController {
     }
 
     @PostMapping(value = "/addBank",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("添加题库")
     public ResponseEntity<ApiRest<Boolean>> addBank(@RequestParam("bankname") String bankName,
                                                         @RequestParam("userid") String userId){
         Questionbank questionbank = new Questionbank(bankName,Integer.parseInt(userId));

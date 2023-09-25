@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.exampro.mapper.QuestionbankMapper">
-  <resultMap id="BaseResultMap" type="com.exampro.model.Questionbank">
+<mapper namespace="com.exampro.mapper.paper.QuestionbankMapper">
+  <resultMap id="BaseResultMap" type="com.exampro.model.paper.Questionbank">
     <id column="BankID" jdbcType="INTEGER" property="bankid" />
     <result column="BankName" jdbcType="VARCHAR" property="bankname" />
     <result column="CreateTime" jdbcType="TIMESTAMP" property="createtime" />
@@ -19,13 +19,13 @@
     delete from questionbank
     where BankID = #{bankid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.exampro.model.Questionbank">
+  <insert id="insert" parameterType="com.exampro.model.paper.Questionbank">
     insert into questionbank (BankID, BankName, CreateTime
       )
     values (#{bankid,jdbcType=INTEGER}, #{bankname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.exampro.model.Questionbank">
+  <insert id="insertSelective" parameterType="com.exampro.model.paper.Questionbank">
     insert into questionbank
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="bankid != null">
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.Questionbank">
+  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.paper.Questionbank">
     update questionbank
     <set>
       <if test="bankname != null">
@@ -62,7 +62,7 @@
     </set>
     where BankID = #{bankid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.exampro.model.Questionbank">
+  <update id="updateByPrimaryKey" parameterType="com.exampro.model.paper.Questionbank">
     update questionbank
     set BankName = #{bankname,jdbcType=VARCHAR},
       CreateTime = #{createtime,jdbcType=TIMESTAMP}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.exampro.mapper.BankquestionMapper">
-  <resultMap id="BaseResultMap" type="com.exampro.model.Bankquestion">
+  <resultMap id="BaseResultMap" type="com.exampro.model.paper.Bankquestion">
     <id column="LinkID" jdbcType="INTEGER" property="linkid" />
     <result column="BankID" jdbcType="INTEGER" property="bankid" />
     <result column="QuestionID" jdbcType="INTEGER" property="questionid" />
@@ -19,13 +19,13 @@
     delete from bankquestion
     where LinkID = #{linkid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.exampro.model.Bankquestion">
+  <insert id="insert" parameterType="com.exampro.model.paper.Bankquestion">
     insert into bankquestion (LinkID, BankID, QuestionID
       )
     values (#{linkid,jdbcType=INTEGER}, #{bankid,jdbcType=INTEGER}, #{questionid,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.exampro.model.Bankquestion">
+  <insert id="insertSelective" parameterType="com.exampro.model.paper.Bankquestion">
     insert into bankquestion
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="linkid != null">
@@ -50,7 +50,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.Bankquestion">
+  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.paper.Bankquestion">
     update bankquestion
     <set>
       <if test="bankid != null">
@@ -62,7 +62,7 @@
     </set>
     where LinkID = #{linkid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.exampro.model.Bankquestion">
+  <update id="updateByPrimaryKey" parameterType="com.exampro.model.paper.Bankquestion">
     update bankquestion
     set BankID = #{bankid,jdbcType=INTEGER},
       QuestionID = #{questionid,jdbcType=INTEGER}

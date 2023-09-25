@@ -1,36 +1,35 @@
-package com.exampro.model;
+package com.exampro.model.paper;
 
 import io.swagger.models.auth.In;
 
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 题目表
+ */
 public class Questionpool implements Serializable {
     /**
      * 题目ID
      *
-     * @mbg.generated
      */
     private Integer questionId;
 
     /**
      * 题目类型
      *
-     * @mbg.generated
      */
     private String questionType;
 
     /**
      * 创建时间
      *
-     * @mbg.generated
      */
     private Date createTime;
 
     /**
      * 题目描述
      *
-     * @mbg.generated
      */
     private String questionDescription;
 

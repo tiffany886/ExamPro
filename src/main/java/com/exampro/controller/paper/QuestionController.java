@@ -2,8 +2,10 @@ package com.exampro.controller.paper;
 
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
-import com.exampro.mapper.QuestionpoolMapper;
-import com.exampro.model.Questionpool;
+import com.exampro.mapper.paper.QuestionpoolMapper;
+import com.exampro.model.paper.Questionpool;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Api(tags = "题目相关接口")
 public class QuestionController {
     @Autowired
     private QuestionpoolMapper questionpoolMapper;
@@ -24,6 +27,7 @@ public class QuestionController {
      * 获取全部题目
      * @return
      */
+    @ApiOperation("获取全部题目")
     @PostMapping(value="/searchAllQues",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiRest<?>> searchAllQues(){
         ApiResponse<Boolean> response = new ApiResponse<>();
@@ -39,7 +43,9 @@ public class QuestionController {
      * @param userId
      * @return
      */
+
     @PostMapping(value="/searchQuesByUserId",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("根据id获取对应的题目池")
     public ResponseEntity<ApiRest<?>> searchQuesByUserId(@RequestParam("userid") String userId){
         ApiResponse<Boolean> response = new ApiResponse<>();
         System.out.println("--- userId="+userId);
@@ -60,6 +66,7 @@ public class QuestionController {
      * @return 是否添加成功
      */
     @PostMapping(value = "/addQuestion",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("添加题目")
     public ResponseEntity<ApiRest<Boolean>> addQuestion(@RequestParam("questiontype") String questionType,
                                                         @RequestParam("questiondescription") String questionDescription,
                                                         @RequestParam("userid") String userId,

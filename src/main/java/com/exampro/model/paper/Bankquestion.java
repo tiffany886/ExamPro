@@ -1,26 +1,26 @@
-package com.exampro.model;
+package com.exampro.model.paper;
 
 import java.io.Serializable;
 
+/**
+ * 题目题库管理表
+ */
 public class Bankquestion implements Serializable {
     /**
      * 关联ID
      *
-     * @mbg.generated
      */
     private Integer linkid;
 
     /**
      * 题库ID
      *
-     * @mbg.generated
      */
     private Integer bankid;
 
     /**
      * 题目ID
      *
-     * @mbg.generated
      */
     private Integer questionid;
 

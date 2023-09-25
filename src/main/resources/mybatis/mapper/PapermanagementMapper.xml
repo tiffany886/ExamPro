@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.exampro.mapper.PapermanagementMapper">
-  <resultMap id="BaseResultMap" type="com.exampro.model.Papermanagement">
+  <resultMap id="BaseResultMap" type="com.exampro.model.paper.Papermanagement">
     <id column="PaperID" jdbcType="INTEGER" property="paperid" />
     <result column="PaperName" jdbcType="VARCHAR" property="papername" />
     <result column="ObjectiveScore" jdbcType="INTEGER" property="objectivescore" />
@@ -26,7 +26,7 @@
     delete from papermanagement
     where PaperID = #{paperid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.exampro.model.Papermanagement">
+  <insert id="insert" parameterType="com.exampro.model.paper.Papermanagement">
     insert into papermanagement (PaperID, PaperName, ObjectiveScore, 
       TotalScore, SubjectiveScore, StartTime, 
       EndTime, NumberOfExaminees, CreatedBy
@@ -36,7 +36,7 @@
       #{endtime,jdbcType=TIMESTAMP}, #{numberofexaminees,jdbcType=INTEGER}, #{createdby,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.exampro.model.Papermanagement">
+  <insert id="insertSelective" parameterType="com.exampro.model.paper.Papermanagement">
     insert into papermanagement
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="paperid != null">
@@ -97,7 +97,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.Papermanagement">
+  <update id="updateByPrimaryKeySelective" parameterType="com.exampro.model.paper.Papermanagement">
     update papermanagement
     <set>
       <if test="papername != null">
@@ -127,7 +127,7 @@
     </set>
     where PaperID = #{paperid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.exampro.model.Papermanagement">
+  <update id="updateByPrimaryKey" parameterType="com.exampro.model.paper.Papermanagement">
     update papermanagement
     set PaperName = #{papername,jdbcType=VARCHAR},
       ObjectiveScore = #{objectivescore,jdbcType=INTEGER},

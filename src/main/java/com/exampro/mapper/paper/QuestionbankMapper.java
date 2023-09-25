@@ -1,12 +1,10 @@
-package com.exampro.mapper;
+package com.exampro.mapper.paper;
 
-import com.exampro.model.Questionbank;
-import io.swagger.models.auth.In;
+import com.exampro.model.paper.Questionbank;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 

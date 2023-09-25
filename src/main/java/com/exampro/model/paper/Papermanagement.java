@@ -1,4 +1,4 @@
-package com.exampro.model;
+package com.exampro.model.paper;
 
 import lombok.Data;
 

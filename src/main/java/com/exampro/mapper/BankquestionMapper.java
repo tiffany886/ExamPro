@@ -1,6 +1,6 @@
 package com.exampro.mapper;
 
-import com.exampro.model.Bankquestion;
+import com.exampro.model.paper.Bankquestion;
 
 public interface BankquestionMapper {
     int deleteByPrimaryKey(Integer linkid);

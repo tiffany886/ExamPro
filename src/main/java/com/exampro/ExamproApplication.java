@@ -13,5 +13,4 @@ public class ExamproApplication {
     public static void main(String[] args) throws ParseException {
         SpringApplication.run(ExamproApplication.class, args);
     }
-
 }

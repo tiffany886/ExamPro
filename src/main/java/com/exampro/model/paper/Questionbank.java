@@ -1,11 +1,13 @@
-package com.exampro.model;
+package com.exampro.model.paper;
 
 import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-// @Data
+/**
+ * 题库表
+ */
 public class Questionbank implements Serializable {
     /**
      * 题库ID

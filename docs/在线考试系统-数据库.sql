@@ -22,7 +22,9 @@ CREATE TABLE Exam (
     ExamName VARCHAR(255) NOT NULL COMMENT '考试名称',
     ExamDescription VARCHAR(255) NOT NULL COMMENT '考试描述',
     StartTime DATETIME NOT NULL COMMENT '开始时间',
-    EndTime DATETIME NOT NULL COMMENT '结束时间'
+    EndTime DATETIME NOT NULL COMMENT '结束时间',
+    PaperID INT NOT NULL COMMENT '试卷ID',
+    FOREIGN KEY (PaperID) REFERENCES PaperManagement(PaperID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='考试表';
 
 -- 创建考试报名表
@@ -125,6 +127,7 @@ CREATE TABLE PaperManagement (
     EndTime DATETIME NOT NULL COMMENT '考试结束时间',
     NumberOfExaminees INT NOT NULL COMMENT '考试人数',
     UserID INT NOT NULL COMMENT '创建人ID',
+    Duration INT NOT NULL COMMENT '考试时长',
     FOREIGN KEY (UserID) REFERENCES User(UserID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='试卷管理表';
 
@@ -184,12 +187,6 @@ VALUES
 
 Insert INTO bankquestion (BankID, QuestionID) VALUE (1 ,1);
 
-# 试卷
-INSERT INTO PaperManagement (PaperName, ObjectiveScore, TotalScore, SubjectiveScore, StartTime, EndTime, NumberOfExaminees, UserID)
-VALUES
-('英语四六级试卷', 20, 50, 30,'2023-9-22 13:00:00', '2023-9-22 15:00:00', 100, 1),
-('教资科一考试试卷', 25, 60, 35, '2023-9-23 13:00:00', '2023-9-23 15:00:00', 120, 1),
-('蓝桥杯考试', 18, 45, 27, '2023-9-24 13:00:00', '2023-9-24 15:00:00', 90, 1);
 
 Insert INTO bankquestion (BankID, QuestionID) VALUE (1 ,1);
 
@@ -204,12 +201,6 @@ END;
 //
 DELIMITER ;
 
-INSERT INTO PaperManagement (paperName, objectiveScore, subjectiveScore, startTime, endTime, numberOfExaminees, userID)
-    value ('小升初卷子',40,60,'2023-4-5 14:00:00','2023-4-5 14:00:00',40,1);
-
-ALTER TABLE PaperManagement
-    ADD COLUMN `Duration` INT NOT NULL COMMENT '考试时长（分钟）';
-
 # 触发器：自动计算考试结束时间
 DELIMITER //
 CREATE TRIGGER CalculateEndTime
@@ -223,3 +214,11 @@ DELIMITER ;
 
 INSERT INTO PaperManagement (paperName, objectiveScore, subjectiveScore, startTime, numberOfExaminees, userID,Duration)
     value ('小升初卷子',40,60,'2023-4-5 14:00:00',40,1,120);
+
+# 试卷
+INSERT INTO PaperManagement (PaperName, ObjectiveScore, SubjectiveScore, StartTime, NumberOfExaminees, UserID, duration)
+VALUES
+('英语四六级试卷', 20, 30,'2023-9-22 13:00:00', 100, 1, 120),
+('教资科一考试试卷', 25, 35, '2023-9-23 13:00:00', 120, 1, 60),
+('蓝桥杯考试', 18, 27, '2023-9-24 13:00:00',  90, 1, 120);
+

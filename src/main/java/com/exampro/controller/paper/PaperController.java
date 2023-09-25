@@ -3,21 +3,21 @@ package com.exampro.controller.paper;
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
 import com.exampro.mapper.PapermanagementMapper;
-import com.exampro.model.Papermanagement;
+import com.exampro.model.paper.Papermanagement;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import com.exampro.util.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Api(tags = "试卷接口")
 public class PaperController {
     @Autowired
     private PapermanagementMapper papermanagementMapper;
@@ -31,6 +31,7 @@ public class PaperController {
      * @return
      */
     @GetMapping("/searchPaper")
+    @ApiOperation("查询试卷")
     public ResponseEntity<ApiRest<?>> searchPaper(){
         List<Papermanagement> rows = papermanagementMapper.selectAllPaper();
         if(rows.isEmpty()){
@@ -45,6 +46,7 @@ public class PaperController {
      * (#{PaperName}, #{ObjectiveScore}, #{TotalScore}, #{SubjectiveScore}, #{StartTime}, #{EndTime},#{NumberOfExaminees}, #{UserID}
      */
     @PostMapping("/addPaper")
+    @ApiOperation("添加试卷")
     public ResponseEntity<ApiRest<Boolean>> addPaper(@RequestParam("paperName") String paperName,
                                                      @RequestParam("objectiveScore") String objectiveScore,
                                                      @RequestParam("subjectiveScore") String subjectiveScore,
