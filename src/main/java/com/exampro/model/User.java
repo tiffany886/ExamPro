@@ -21,6 +21,11 @@ public class User{
      */
     private Integer role;
 
+    public User(Integer userid, String username) {
+        this.userid = userid;
+        this.username = username;
+    }
+
     public User(Integer userid, String username, String password, Integer role) {
         this.userid = userid;
         this.username = username;
@@ -70,16 +75,14 @@ public class User{
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", userid=").append(userid);
-        sb.append(", username=").append(username);
-        sb.append(", password=").append(password);
-        sb.append(", role=").append(role);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return getClass().getSimpleName() +
+                " [" +
+                "Hash = " + hashCode() +
+                ", userid=" + userid +
+                ", username=" + username +
+                ", password=" + password +
+                ", role=" + role +
+                ", serialVersionUID=" + serialVersionUID +
+                "]";
     }
 }

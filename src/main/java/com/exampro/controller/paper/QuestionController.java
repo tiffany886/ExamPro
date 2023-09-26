@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/index")
 @Api(tags = "题目相关接口")
 public class QuestionController {
     @Autowired
@@ -25,7 +25,6 @@ public class QuestionController {
 
     /**
      * 获取全部题目
-     * @return
      */
     @ApiOperation("获取全部题目")
     @PostMapping(value="/searchAllQues",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,8 +39,6 @@ public class QuestionController {
     }
     /**
      * 根据id获取对应的题目池
-     * @param userId
-     * @return
      */
 
     @PostMapping(value="/searchQuesByUserId",produces = MediaType.APPLICATION_JSON_VALUE)
