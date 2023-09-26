@@ -2,7 +2,7 @@ package com.exampro.controller.paper;
 
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
-import com.exampro.mapper.PapermanagementMapper;
+import com.exampro.mapper.paper.PapermanagementMapper;
 import com.exampro.model.paper.Papermanagement;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,6 +60,19 @@ public class PaperController {
             return ResponseEntity.ok(response.success("插入成功",true));
         }else {
             return ResponseEntity.ok(response.success("插入失败",false));
+        }
+    }
+    /**
+     * 根据试卷id查询试卷
+     */
+    @PostMapping("/searchPaperById")
+    @ApiOperation("根据试卷id查找试卷")
+    public ResponseEntity<ApiRest<?>> searchPaperById(@RequestParam("paperId") String paperId){
+        List<Papermanagement> rows = papermanagementMapper.selectPaperById(Integer.parseInt(paperId));
+        if(rows.isEmpty()){
+            return ResponseEntity.ok(response.success("没有试卷",emptyList));
+        }else {
+            return ResponseEntity.ok(response.success("查询成功",rows));
         }
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.exampro.mapper.PapermanagementMapper">
+<mapper namespace="com.exampro.mapper.paper.PapermanagementMapper">
   <resultMap id="BaseResultMap" type="com.exampro.model.paper.Papermanagement">
     <id column="PaperID" jdbcType="INTEGER" property="paperid" />
     <result column="PaperName" jdbcType="VARCHAR" property="papername" />

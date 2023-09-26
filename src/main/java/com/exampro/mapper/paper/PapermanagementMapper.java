@@ -1,4 +1,4 @@
-package com.exampro.mapper;
+package com.exampro.mapper.paper;
 
 import com.exampro.model.paper.Papermanagement;
 import org.apache.ibatis.annotations.Insert;
@@ -23,7 +23,15 @@ public interface PapermanagementMapper {
      * @return #{paperName}, #{objectiveScore}, #{totalScore}, #{subjectiveScore}, #{startTime}, #{numberOfExaminees}, #{userId} ,#{duration}
      */
     @Insert("INSERT INTO PaperManagement (paperName, objectiveScore, totalScore, subjectiveScore, startTime, numberOfExaminees, userId, duration) VALUES (#{paperName}, #{objectiveScore}, #{totalScore}, #{subjectiveScore}, #{startTime}, #{numberOfExaminees}, #{userId} ,#{duration})")
-            int insert(Papermanagement record);
+    int insert(Papermanagement record);
+
+    /**
+     * 根据试卷id查找对应的试卷
+     * @param
+     * @return
+     */
+    @Select("select * from papermanagement where paperId = #{paperId}")
+    List<Papermanagement> selectPaperById(Integer paperId);
 
     int deleteByPrimaryKey(Integer paperid);
 

@@ -69,6 +69,10 @@ public class Papermanagement implements Serializable {
      */
     private Integer duration;
 
+    public Papermanagement(Integer paperId) {
+        this.paperId = paperId;
+    }
+
     public Papermanagement(String paperName, Integer objectiveScore, Integer subjectiveScore, Date startTime, Integer numberOfExaminees, Integer userId, Integer duration) {
         this.paperName = paperName;
         this.objectiveScore = objectiveScore;
