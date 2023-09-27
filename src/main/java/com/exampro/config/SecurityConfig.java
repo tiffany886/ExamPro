@@ -14,7 +14,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-          //放行 /user 路径
+        //放行 /user 路径
         http.csrf().disable()
                 .authorizeRequests()
                 // .antMatchers("/user/**").permitAll()

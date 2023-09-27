@@ -1,6 +1,6 @@
 package com.exampro.mapper;
 
-import com.exampro.model.Exam;
+import com.exampro.model.exam.Exam;
 
 public interface ExamMapper {
     int deleteByPrimaryKey(Integer examid);

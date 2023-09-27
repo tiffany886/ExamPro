@@ -27,6 +27,23 @@ CREATE TABLE Exam (
     FOREIGN KEY (PaperID) REFERENCES PaperManagement(PaperID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='考试表';
 
+ALTER TABLE Exam
+    ADD ExamDuration INT NOT NULL COMMENT '考试时长（分钟）';
+
+DELIMITER //
+
+CREATE TRIGGER set_end_time
+    BEFORE INSERT ON Exam
+    FOR EACH ROW
+BEGIN
+    SET NEW.EndTime = DATE_ADD(NEW.StartTime, INTERVAL NEW.ExamDuration MINUTE);
+END;
+
+//
+
+DELIMITER ;
+
+
 -- 创建考试报名表
 DROP TABLE IF EXISTS `ExamRegistration`;
 CREATE TABLE ExamRegistration (
@@ -174,9 +191,8 @@ VALUES
 ('zhhh', 'e1ee0203ab28bb206f7b557722882de1', 1);
 
 # 题库
-INSERT INTO QuestionBank (BankName,UserID)
-VALUES
-('英语题库', 1),
+INSERT INTO QuestionBank (bankName,userID)
+VALUES ('英语题库', 1),
 ('数学题库', 1);
 
 INSERT INTO QuestionPool (QuestionType, QuestionDescription, UserID, QuestionAnswer)
