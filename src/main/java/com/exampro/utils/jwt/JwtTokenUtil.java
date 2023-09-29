@@ -19,7 +19,7 @@ public class JwtTokenUtil {
     /**
      * Token的过期时间，单位秒
      */
-    private Long ttl = 3600L;
+    private Long ttl = 24 * 3600L * 1000; // 设置为24小时
 
 
     /**
@@ -34,12 +34,14 @@ public class JwtTokenUtil {
          * 当前系统时间
          */
         long currentTimeMillis = System.currentTimeMillis();
+        System.out.println("当前时间："+currentTimeMillis);
+
 
         /**
          * 过期时间(24h)
          */
-        long expirationTimeMillis = currentTimeMillis + 24 * ttl;
-
+        long expirationTimeMillis = currentTimeMillis + ttl;
+        System.out.println("过期时间：" + expirationTimeMillis);
         /**
          * 指定加密算法和密钥
          * 添加载荷部分键值对 => 放置登录用户id
