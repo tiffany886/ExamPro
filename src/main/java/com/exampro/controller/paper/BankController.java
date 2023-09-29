@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/index")
 @Api(tags = "题库接口") // 这里定义了API的标签，可以用来分组接口
 public class BankController {
     @Autowired

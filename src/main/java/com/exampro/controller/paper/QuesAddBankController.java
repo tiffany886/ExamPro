@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 用于在题库中加题目
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/index")
 @Api(tags = "在题库中加题目")
 public class QuesAddBankController {
     @Autowired
