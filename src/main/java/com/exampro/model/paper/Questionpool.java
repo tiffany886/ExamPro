@@ -1,7 +1,5 @@
 package com.exampro.model.paper;
 
-import io.swagger.models.auth.In;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -62,6 +60,20 @@ public class Questionpool implements Serializable {
         this.userId = userId;
     }
 
+    public Questionpool(Integer questionId, String questionType, Date createTime, String questionDescription, String questionAnswer) {
+        this.questionId = questionId;
+        this.questionType = questionType;
+        this.createTime = createTime;
+        this.questionDescription = questionDescription;
+        this.questionAnswer = questionAnswer;
+    }
+
+    public Questionpool(String questionType, Date createTime, String questionDescription) {
+        this.questionType = questionType;
+        this.createTime = createTime;
+        this.questionDescription = questionDescription;
+    }
+
     public Integer getUserId() {
         return userId;
     }
@@ -86,7 +98,7 @@ public class Questionpool implements Serializable {
         this.questionId = questionid;
     }
 
-    public String getQuestiontype() {
+    public Object getQuestiontype() {
         return questionType;
     }
 

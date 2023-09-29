@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.exampro.util.DateFormat;
+import com.exampro.utils.paper.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;

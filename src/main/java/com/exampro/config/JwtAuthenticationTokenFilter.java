@@ -53,6 +53,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         // claims
         Date expirationDate = claims.getExpiration();
         Date currentDate = new Date();
+        System.out.println("过期时间"+expirationDate);
+        System.out.println("当前时间"+currentDate);
         if (currentDate.before(expirationDate)) {
             return null;
         }

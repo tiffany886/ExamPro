@@ -95,6 +95,7 @@ public class UserController {
         HashMap data = new HashMap();
         data.put("token",token);
         data.put("username",username);
+        data.put("userid",user.getUserid());
         return ResponseEntity.ok(response.success("登录成功！", data));
     }
 

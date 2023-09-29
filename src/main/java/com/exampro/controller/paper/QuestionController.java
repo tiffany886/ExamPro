@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.*;
+
+import static com.exampro.utils.paper.DateFormat.dateToString;
+import static com.exampro.utils.paper.DateFormat.stringToDate;
 
 @RestController
 @RequestMapping("/index")
@@ -47,13 +50,34 @@ public class QuestionController {
         ApiResponse<Boolean> response = new ApiResponse<>();
         System.out.println("--- userId="+userId);
         List<Questionpool> rows=questionpoolMapper.selectByPrimaryKey(Integer.parseInt(userId));
+
         if(rows.isEmpty()){
             return ResponseEntity.ok(response.success("没有题目",true));
         }else {
-            return ResponseEntity.ok(response.success("查询成功",rows));
+            List<HashMap<String,?>> res = transformData(rows);
+            return ResponseEntity.ok(response.success("查询成功",res));
         }
     }
 
+    /**
+     * 将请求参数二次封装
+     * @param responseData 数据库中查询的参数
+     * @return 进行二次封装
+     */
+    public static List<HashMap<String,?>> transformData(List<Questionpool> responseData){
+        List<HashMap<String,?>> transformedData = new ArrayList<>();
+        for (Questionpool item : responseData){
+            System.out.println(item);
+            HashMap<String,Object> data = new HashMap<>();
+            data.put("type",item.getQuestiontype());
+            data.put("description",item.getQuestiondescription());
+            data.put("answer",item.getQuestionanswer());
+            data.put("createTime",dateToString(item.getCreatetime()));
+            data.put("questionId",item.getQuestionid());
+            transformedData.add(data);
+        }
+        return transformedData;
+    }
     /**
      * 添加题目
      * @param questionType 题目类型

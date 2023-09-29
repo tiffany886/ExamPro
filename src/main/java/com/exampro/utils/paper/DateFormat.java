@@ -1,4 +1,5 @@
-package com.exampro.util;
+package com.exampro.utils.paper;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,11 +12,11 @@ import java.util.TimeZone;
  */
 public class DateFormat {
     // 输出Date类型
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     // 输出String类型
     static SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public Date stringToDate(String time) throws ParseException {
+    public static Date stringToDate(String time) throws ParseException {
             // 创建一个新的 SimpleDateFormat 对象，指定输出日期时间的格式
             // SimpleDateFormat outputDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
 
@@ -23,7 +24,7 @@ public class DateFormat {
             // outputDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
             return dateFormat.parse(time);
     }
-    public String dateToString(Date time) {
+    public static String dateToString(Date time) {
         return outputDateFormat.format(time);
     }
     public DateFormat(){}
