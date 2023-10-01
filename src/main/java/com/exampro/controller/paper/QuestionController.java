@@ -97,7 +97,7 @@ public class QuestionController {
         Questionpool questionpool = new Questionpool(questionType,questionDescription,questionAnswer,Integer.parseInt(userId));
         int row = questionpoolMapper.addQuestion(questionpool);
         if(row>0){
-            return ResponseEntity.ok(response.success("插入成功",true));
+            return ResponseEntity.ok(response.success("新增成功",true));
         }else {
             return ResponseEntity.ok(response.success("插入失败",false));
         }
