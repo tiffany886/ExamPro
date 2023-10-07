@@ -1,4 +1,4 @@
-package com.exampro.controller;
+package com.exampro.controller.user;
 
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
@@ -91,7 +91,7 @@ public class UserController {
             return ResponseEntity.ok(response.failure("密码不正确！登陆失败！", false));
         }
         // 生成Token并返回给客户端
-        String token = jwtTokenUtil.buildToken(user.getUserid(),username);
+        String token = jwtTokenUtil.buildToken(user.getUserid(),username,user.getRole());
         HashMap data = new HashMap();
         data.put("token",token);
         data.put("username",username);
@@ -99,7 +99,7 @@ public class UserController {
         return ResponseEntity.ok(response.success("登录成功！", data));
     }
 
-    @PostMapping(value = "/regUser",produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/reguser",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("注册用户")
     public ResponseEntity<?> regUser(@RequestParam("username") String username,
                                      @RequestParam("password") String password,@RequestParam("role") String role) {
@@ -114,12 +114,18 @@ public class UserController {
         try {
             // 加密密码
             PassInfo info = passHandler.buildPassword(password);
-            System.out.println(info);
             // 创建一个新的User对象，使用提供的用户名、密码和角色
             User newUser = new User(username, info.getPassword(), Integer.parseInt(role));
             // 将新用户插入数据库
             userMapper.insertNewUser(newUser);
-            return ResponseEntity.ok(response.success("注册用户成功！", true));
+            newUser = userMapper.findByUsername(username);
+            // 生成Token并返回给客户端
+            String token = jwtTokenUtil.buildToken(newUser.getUserid(),username,newUser.getRole());
+            HashMap data = new HashMap();
+            data.put("token",token);
+            data.put("username",username);
+            data.put("userid",newUser.getUserid());
+            return ResponseEntity.ok(response.success("注册用户成功！", data));
         } catch (Exception e) {
             // 如果在插入用户时出现异常，捕获异常并返回带有适当错误消息的错误响应
             return ResponseEntity.ok(response.failure("注册用户失败！" + e.getMessage(), false));

@@ -29,19 +29,17 @@ public class JwtTokenUtil {
      * @return
      */
 
-    public String buildToken(int userId, String userName) {
+    public String buildToken(int userId, String userName, int role) {
         /**
          * 当前系统时间
          */
         long currentTimeMillis = System.currentTimeMillis();
-        System.out.println("当前时间："+currentTimeMillis);
-
 
         /**
          * 过期时间(24h)
          */
         long expirationTimeMillis = currentTimeMillis + ttl;
-        System.out.println("过期时间：" + expirationTimeMillis);
+
         /**
          * 指定加密算法和密钥
          * 添加载荷部分键值对 => 放置登录用户id
@@ -54,6 +52,7 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .setId(userId+"")
                 .setSubject(userName)
+                .setAudience(role+"")
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(expirationTimeMillis))
                 .compact();
@@ -86,8 +85,12 @@ public class JwtTokenUtil {
      */
     public static void main(String[] args) {
         JwtTokenUtil jwtUtils = new JwtTokenUtil();
-        String token = jwtUtils.buildToken(1,"2123");
+        String token = jwtUtils.buildToken(2,"zhhh",0);
         System.out.println(token);
-        System.out.println(jwtUtils.parseToken(token));
+        Claims claims = jwtUtils.parseToken(token);
+        System.out.println(claims);
+        System.out.println(claims.getSubject()); // 用户名
+        System.out.println(claims.getId()); // 用户id
+        System.out.println(claims.getAudience()); // 用户角色
     }
 }

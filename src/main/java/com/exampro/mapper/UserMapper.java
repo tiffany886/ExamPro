@@ -1,10 +1,7 @@
 package com.exampro.mapper;
 
 import com.exampro.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -33,13 +30,28 @@ public interface UserMapper {
     @Insert("INSERT INTO user (username, password, role) VALUES (#{username}, #{password}, #{role})")
     int insertNewUser(User newUser);
 
-    int deleteByPrimaryKey(Integer userid);
+    /**
+     * 通过用户名id到对应的用户
+     */
+    @Select("select * from user where UserID = #{userid}")
+    User findByUserID(@Param("userid") Integer userid);
 
-    int insertSelective(User record);
+    /**
+     * 通过用户id修改用户密码
+     * @param newPassword
+     * @param userid
+     * @return
+     */
+    @Update("update user set Password = #{newPassword} where UserID = #{userid}")
+    int updateUserPwdByUserId(@Param("newPassword") String newPassword, @Param("userid") Integer userid);
 
-    User selectByPrimaryKey(Integer userid);
+    /**
+     * 通过用户id修改用户名
+     * @param newUsername
+     * @param userid
+     * @return
+     */
+    @Update("update user set Username = #{newUsername} where UserID = #{userid}")
+    int updateUsernameByUserId(@Param("newUsername") String newUsername, @Param("userid") Integer userid);
 
-    int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
 }
