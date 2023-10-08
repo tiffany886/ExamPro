@@ -2,7 +2,7 @@ package com.exampro.controller.exam;
 
 import com.exampro.constants.ApiResponse;
 import com.exampro.mapper.exam.ExamMapper;
-import com.exampro.model.exam.Exam;
+import com.exampro.model.exam.ExamInfoDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +31,13 @@ public class ExamController {
      */
     @GetMapping("/allExams")
     @ApiOperation("查询所有考试")
-    public ResponseEntity<?> findAllUsers(){
-        ApiResponse<Boolean> response = new ApiResponse<>();
-        List data = examMapper.findAllExams();
+    public ResponseEntity<?> findAllExams() {
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        List<ExamInfoDTO> data = examMapper.findAllExams();
         return ResponseEntity.ok(response.success("查询成功！", data));
     }
+
+    /**
+     * 立即报名
+     */
 }

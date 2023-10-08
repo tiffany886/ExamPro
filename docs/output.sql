@@ -62,15 +62,18 @@ CREATE TABLE `exam` (
   `ExamID` int NOT NULL AUTO_INCREMENT COMMENT '考试ID',
   `ExamName` varchar(255) NOT NULL COMMENT '考试名称',
   `ExamDescription` varchar(255) NOT NULL COMMENT '考试描述',
-  `StartTime` datetime NOT NULL COMMENT '开始时间',
-  `EndTime` datetime NOT NULL COMMENT '结束时间',
   `PaperID` int NOT NULL COMMENT '试卷ID',
+  `StartTime` datetime NOT NULL COMMENT '考试开始时间',
+  `EndTime` datetime NOT NULL COMMENT '考试结束时间',
   `ExamDuration` int NOT NULL COMMENT '考试时长（分钟）',
   PRIMARY KEY (`ExamID`),
   KEY `PaperID` (`PaperID`),
   CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`PaperID`) REFERENCES `papermanagement` (`PaperID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='考试表';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+ALTER TABLE exam
+    ADD NumberOfExaminees INT NOT NULL DEFAULT 0 COMMENT '考试人数';
 
 --
 -- Dumping data for table `exam`
@@ -88,17 +91,13 @@ UNLOCK TABLES;
 /*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `set_end_time` BEFORE INSERT ON `exam` FOR EACH ROW BEGIN
 
-    SET NEW.EndTime = DATE_ADD(NEW.StartTime, INTERVAL NEW.ExamDuration MINUTE);
-
-END */;;
-DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+
 
 --
 -- Table structure for table `examrecord`
@@ -212,9 +211,6 @@ CREATE TABLE `papermanagement` (
   `ObjectiveScore` int NOT NULL COMMENT '客观题分数',
   `TotalScore` int NOT NULL COMMENT '总分',
   `SubjectiveScore` int NOT NULL COMMENT '主观题分数',
-  `StartTime` datetime NOT NULL COMMENT '考试开始时间',
-  `EndTime` datetime NOT NULL COMMENT '考试结束时间',
-  `NumberOfExaminees` int NOT NULL COMMENT '考试人数',
   `UserID` int NOT NULL COMMENT '创建人ID',
   `Duration` int NOT NULL COMMENT '考试时长',
   PRIMARY KEY (`PaperID`),
@@ -229,7 +225,7 @@ CREATE TABLE `papermanagement` (
 
 LOCK TABLES `papermanagement` WRITE;
 /*!40000 ALTER TABLE `papermanagement` DISABLE KEYS */;
-INSERT INTO `papermanagement` VALUES (1,'小升初卷子',40,100,60,'2023-04-05 14:00:00','2023-04-05 16:00:00',40,1,120),(2,'英语四六级试卷',20,50,30,'2023-09-22 13:00:00','2023-09-22 15:00:00',100,1,120),(3,'教资科一考试试卷',25,60,35,'2023-09-23 13:00:00','2023-09-23 14:00:00',120,1,60),(4,'蓝桥杯考试',18,45,27,'2023-09-24 13:00:00','2023-09-24 15:00:00',90,1,120),(5,'佛系考试',20,75,55,'2023-06-05 07:12:00','2023-06-05 08:12:00',2,2,60);
+INSERT INTO `papermanagement` VALUES (1,'小升初卷子',40,100,60,1,120),(2,'英语四六级试卷',20,50,30,1,120),(3,'教资科一考试试卷',25,60,35,1,60),(4,'蓝桥杯考试',18,45,27,1,120),(5,'佛系考试',20,75,55,2,60);
 /*!40000 ALTER TABLE `papermanagement` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -257,11 +253,7 @@ DELIMITER ;
 /*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `CalculateEndTime` BEFORE INSERT ON `papermanagement` FOR EACH ROW BEGIN
-    SET NEW.EndTime = DATE_ADD(NEW.StartTime, INTERVAL NEW.Duration MINUTE);
-END */;;
-DELIMITER ;
+
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
@@ -323,32 +315,6 @@ LOCK TABLES `questionbank` WRITE;
 /*!40000 ALTER TABLE `questionbank` DISABLE KEYS */;
 INSERT INTO `questionbank` VALUES (1,'英语题库','2023-09-25 01:23:21',1),(2,'数学题库','2023-09-25 01:23:21',1),(3,'我的题库','2023-09-25 02:56:33',1),(4,'12','2023-10-03 09:16:06',1),(5,'我的题库','2023-10-03 09:16:38',1),(6,'英语题库2','2023-10-04 05:16:29',1),(7,'wo','2023-10-07 09:01:17',1);
 /*!40000 ALTER TABLE `questionbank` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `questionbankassociation`
---
-
-DROP TABLE IF EXISTS `questionbankassociation`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `questionbankassociation` (
-  `AssociationID` int NOT NULL AUTO_INCREMENT COMMENT '关联ID',
-  `QuestionID` int NOT NULL COMMENT '试题ID',
-  `BankID` int NOT NULL COMMENT '题库ID',
-  PRIMARY KEY (`AssociationID`),
-  KEY `BankID` (`BankID`),
-  CONSTRAINT `questionbankassociation_ibfk_1` FOREIGN KEY (`BankID`) REFERENCES `questionbank` (`BankID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='题目题库关联表';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `questionbankassociation`
---
-
-LOCK TABLES `questionbankassociation` WRITE;
-/*!40000 ALTER TABLE `questionbankassociation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `questionbankassociation` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -417,9 +383,9 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- 插入考试数据
-INSERT INTO exam (ExamName, ExamDescription, StartTime, EndTime, PaperID, ExamDuration)
+INSERT INTO exam (ExamName, ExamDescription, StartTime,EndTime,PaperID, ExamDuration)
 VALUES
-('考试1', '第一个考试描述', '2023-10-08 09:00:00', '2023-10-08 10:30:00', 1, 90),
-('考试2', '第二个考试描述', '2023-10-09 14:00:00', '2023-10-09 15:30:00', 2, 90),
-('考试3', '第三个考试描述', '2023-10-10 10:30:00', '2023-10-10 12:00:00', 3, 90);
+('考试1', '第一个考试描述','2023-06-05 07:12:00','2023-06-05 08:12:00', 1, 90),
+('考试2', '第二个考试描述','2023-06-05 07:12:00','2023-06-05 08:12:00', 2, 90),
+('考试3', '第三个考试描述','2023-06-05 07:12:00','2023-06-05 08:12:00', 3, 90);
 -- Dump completed on 2023-10-08 12:31:44
