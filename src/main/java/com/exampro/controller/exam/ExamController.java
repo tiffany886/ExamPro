@@ -33,7 +33,7 @@ public class ExamController {
     @ApiOperation("查询所有考试")
     public ResponseEntity<?> findAllUsers(){
         ApiResponse<Boolean> response = new ApiResponse<>();
-        List<Exam> data = examMapper.findAllExams();
+        List data = examMapper.findAllExams();
         return ResponseEntity.ok(response.success("查询成功！", data));
     }
 }
