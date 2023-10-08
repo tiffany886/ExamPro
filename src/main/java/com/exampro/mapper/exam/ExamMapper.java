@@ -14,16 +14,7 @@ public interface ExamMapper {
      * 查询所有试卷
      * @return
      */
-    @Select("SELECT\n" +
-            "pm.PaperID AS PaperId,\n" +
-            "e.ExamName,\n" +
-            "e.StartTime,\n" +
-            "e.EndTime,\n" +
-            "pm.NumberOfExaminees,\n" +
-            "pm.ObjectiveScore,\n" +
-            "pm.SubjectiveScore,\n" +
-            "u.Username AS CreateBy\n" +
-            "FROM exam AS e JOIN papermanagement AS pm ON e.PaperID = pm.PaperID JOIN user AS u ON pm.UserID = u.UserID;")
+    @Select("SELECT * FROM exam e JOIN papermanagement p ON e.PaperID = p.PaperID JOIN user u ON p.UserID = u.UserID;")
     List findAllExams();
 
     int deleteByPrimaryKey(Integer examid);
