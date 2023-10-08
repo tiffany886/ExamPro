@@ -16,14 +16,14 @@ public interface QuestionbankMapper {
      * 查询所有题库
      * @return
      */
-    @Select("select * from questionBank")
+    @Select("select * from questionBank order by createTime desc")
     List<Questionbank> selectAllBank();
 
     /**
      * 根据用户id查询题库
      * @return
      */
-    @Select("select * from questionBank where userId = #{userId}")
+    @Select("select * from questionBank where userId = #{userId} order by createTime desc")
     List<Questionbank> selectBankById(Integer userId);
 
     /**
@@ -33,6 +33,8 @@ public interface QuestionbankMapper {
      */
     @Insert("INSERT INTO questionBank (bankName, userId) VALUES (#{bankName}, #{userId})")
     int addBank(Questionbank record);
+
+
 
     int insert(Questionbank record);
 

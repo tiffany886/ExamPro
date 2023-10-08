@@ -18,6 +18,7 @@ import java.util.*;
 
 import static com.exampro.utils.paper.DateFormat.dateToString;
 import static com.exampro.utils.paper.DateFormat.stringToDate;
+import static com.exampro.utils.paper.transformQuesData.transformData;
 
 @RestController
 @RequestMapping("/index")
@@ -59,25 +60,7 @@ public class QuestionController {
         }
     }
 
-    /**
-     * 将请求参数二次封装
-     * @param responseData 数据库中查询的参数
-     * @return 进行二次封装
-     */
-    public static List<HashMap<String,?>> transformData(List<Questionpool> responseData){
-        List<HashMap<String,?>> transformedData = new ArrayList<>();
-        for (Questionpool item : responseData){
-            System.out.println(item);
-            HashMap<String,Object> data = new HashMap<>();
-            data.put("type",item.getQuestiontype());
-            data.put("description",item.getQuestiondescription());
-            data.put("answer",item.getQuestionanswer());
-            data.put("createTime",dateToString(item.getCreatetime()));
-            data.put("questionId",item.getQuestionid());
-            transformedData.add(data);
-        }
-        return transformedData;
-    }
+
     /**
      * 添加题目
      * @param questionType 题目类型
@@ -88,7 +71,7 @@ public class QuestionController {
      */
     @PostMapping(value = "/addQuestion",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("添加题目")
-    public ResponseEntity<ApiRest<Boolean>> addQuestion(@RequestParam("questiontype") String questionType,
+    public ResponseEntity<ApiRest<?>> addQuestion(@RequestParam("questiontype") String questionType,
                                                         @RequestParam("questiondescription") String questionDescription,
                                                         @RequestParam("userid") String userId,
                                                         @RequestParam("questionanswer") String questionAnswer
@@ -97,7 +80,9 @@ public class QuestionController {
         Questionpool questionpool = new Questionpool(questionType,questionDescription,questionAnswer,Integer.parseInt(userId));
         int row = questionpoolMapper.addQuestion(questionpool);
         if(row>0){
-            return ResponseEntity.ok(response.success("新增成功",true));
+            Integer questionId = questionpool.getQuestionId(); // 获取自动生成的 questionId
+            System.out.println(questionId);
+            return ResponseEntity.ok(response.success("新增成功",questionId));
         }else {
             return ResponseEntity.ok(response.success("插入失败",false));
         }

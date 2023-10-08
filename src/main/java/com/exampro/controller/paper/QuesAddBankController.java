@@ -3,6 +3,7 @@ package com.exampro.controller.paper;
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
 import com.exampro.mapper.paper.QuesAddBankMapper;
+import com.exampro.model.paper.Questionpool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+
+import static com.exampro.utils.paper.transformQuesData.transformData;
 
 /**
  * 用于在题库中加题目
@@ -41,5 +47,17 @@ public class QuesAddBankController {
             }else {
                 return ResponseEntity.ok(response.success("插入失败",false));
             }
+    }
+
+    @PostMapping(value = "/selectBankQuesByBankId",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("查找题库中加题目")
+    public ResponseEntity<ApiRest<?>> addQuestion(@RequestParam("bankid") String bankId){
+        List<Questionpool> rows = quesAddBankMapper.selectBankQuesByBankId(Integer.parseInt(bankId));
+        if(rows.isEmpty()){
+            return ResponseEntity.ok(response.success("没有题目",true));
+        }else {
+            List<HashMap<String,?>> res = transformData(rows);
+            return ResponseEntity.ok(response.success("查询成功",res));
+        }
     }
 }

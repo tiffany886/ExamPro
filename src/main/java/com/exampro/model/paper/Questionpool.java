@@ -90,7 +90,7 @@ public class Questionpool implements Serializable {
         this.questionAnswer = questionanswer;
     }
 
-    public Integer getQuestionid() {
+    public Integer getQuestionId() {
         return questionId;
     }
 
@@ -132,5 +132,9 @@ public class Questionpool implements Serializable {
                 ", questionanswer='" + questionAnswer + '\'' +
                 ", userid=" + userId +
                 '}';
+    }
+
+    public Object getQuestionid() {
+        return questionId;
     }
 }

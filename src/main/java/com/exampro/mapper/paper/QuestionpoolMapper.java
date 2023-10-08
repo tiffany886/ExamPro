@@ -3,6 +3,7 @@ package com.exampro.mapper.paper;
 import com.exampro.model.paper.Questionpool;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 
@@ -13,20 +14,25 @@ public interface QuestionpoolMapper {
     /**
      * 查询所有题目
      */
-    @Select("select * from questionPool")
+    @Select("select * from questionPool order by createTime desc")
     List<Questionpool> selectAllQuestion();
 
     /**
      * 通过用户名获取对应的题目池
      */
-    @Select("select * from questionPool where userId = #{userId}")
+    @Select("select * from questionPool where userId = #{userId} order by createTime desc")
     List<Questionpool> selectByPrimaryKey(Integer userId);
 
     /**
      * 添加题目
      */
+    @Options(useGeneratedKeys = true,keyProperty = "questionId",keyColumn = "QuestionID")
     @Insert("INSERT INTO questionPool (questionType, questionDescription, userId,questionAnswer) VALUES (#{questionType}, #{questionDescription}, #{userId}, #{questionAnswer})")
     int addQuestion(Questionpool record);
+
+    /**
+     * 查询最新天
+     */
 
     int insertSelective(Questionpool record);
 
