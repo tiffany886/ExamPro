@@ -49,6 +49,7 @@ public class QuesAddBankController {
             }
     }
 
+
     @PostMapping(value = "/selectBankQuesByBankId",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("查找题库中加题目")
     public ResponseEntity<ApiRest<?>> addQuestion(@RequestParam("bankid") String bankId){
