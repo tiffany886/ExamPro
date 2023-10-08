@@ -30,6 +30,10 @@ CREATE TABLE Exam (
 ALTER TABLE Exam
     ADD ExamDuration INT NOT NULL COMMENT '考试时长（分钟）';
 
+ALTER TABLE exam
+    ADD NumberOfExaminees INT NOT NULL DEFAULT 0 COMMENT '考试人数';
+
+
 DELIMITER //
 
 CREATE TRIGGER set_end_time
@@ -42,6 +46,8 @@ END;
 //
 
 DELIMITER ;
+
+
 
 
 -- 创建考试报名表
@@ -238,3 +244,9 @@ VALUES
 ('教资科一考试试卷', 25, 35, '2023-9-23 13:00:00', 120, 1, 60),
 ('蓝桥杯考试', 18, 27, '2023-9-24 13:00:00',  90, 1, 120);
 
+-- 插入考试数据
+INSERT INTO exam (ExamName, ExamDescription, StartTime, EndTime, PaperID, ExamDuration)
+VALUES
+('考试1', '第一个考试描述', '2023-10-08 09:00:00', '2023-10-08 10:30:00', 1, 90),
+('考试2', '第二个考试描述', '2023-10-09 14:00:00', '2023-10-09 15:30:00', 2, 90),
+('考试3', '第三个考试描述', '2023-10-10 10:30:00', '2023-10-10 12:00:00', 3, 90);
