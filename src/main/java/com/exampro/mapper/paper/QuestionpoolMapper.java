@@ -27,7 +27,7 @@ public interface QuestionpoolMapper {
      * 添加题目
      */
     @Options(useGeneratedKeys = true,keyProperty = "questionId",keyColumn = "QuestionID")
-    @Insert("INSERT INTO questionPool (questionType, questionDescription, userId,questionAnswer) VALUES (#{questionType}, #{questionDescription}, #{userId}, #{questionAnswer})")
+    @Insert("INSERT INTO questionPool (questionType, questionDescription,userId,questionAnswer,questionScore) VALUES (#{questionType}, #{questionDescription},#{userId},#{questionAnswer},#{questionScore})")
     int addQuestion(Questionpool record);
 
     /**

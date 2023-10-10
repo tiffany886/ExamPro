@@ -27,6 +27,8 @@ public class QuestionController {
     @Autowired
     private QuestionpoolMapper questionpoolMapper;
 
+    List<Object> emptyList = new ArrayList<>();
+
     /**
      * 获取全部题目
      */
@@ -36,7 +38,7 @@ public class QuestionController {
         ApiResponse<Boolean> response = new ApiResponse<>();
         List<Questionpool> rows=questionpoolMapper.selectAllQuestion();
         if(rows.isEmpty()){
-            return ResponseEntity.ok(response.success("没有题目",true));
+            return ResponseEntity.ok(response.success("没有题目",emptyList));
         }else {
             return ResponseEntity.ok(response.success("查询成功",rows));
         }
@@ -49,11 +51,10 @@ public class QuestionController {
     @ApiOperation("根据id获取对应的题目池")
     public ResponseEntity<ApiRest<?>> searchQuesByUserId(@RequestParam("userid") String userId){
         ApiResponse<Boolean> response = new ApiResponse<>();
-        System.out.println("--- userId="+userId);
+        // System.out.println("--- userId="+userId);
         List<Questionpool> rows=questionpoolMapper.selectByPrimaryKey(Integer.parseInt(userId));
-
         if(rows.isEmpty()){
-            return ResponseEntity.ok(response.success("没有题目",true));
+            return ResponseEntity.ok(response.success("没有题目",emptyList));
         }else {
             List<HashMap<String,?>> res = transformData(rows);
             return ResponseEntity.ok(response.success("查询成功",res));
@@ -74,10 +75,11 @@ public class QuestionController {
     public ResponseEntity<ApiRest<?>> addQuestion(@RequestParam("questiontype") String questionType,
                                                         @RequestParam("questiondescription") String questionDescription,
                                                         @RequestParam("userid") String userId,
-                                                        @RequestParam("questionanswer") String questionAnswer
+                                                        @RequestParam("questionanswer") String questionAnswer,
+                                                        @RequestParam("questionscore") String questionScore
                                                         ){
         ApiResponse<Boolean> response = new ApiResponse<>();
-        Questionpool questionpool = new Questionpool(questionType,questionDescription,questionAnswer,Integer.parseInt(userId));
+        Questionpool questionpool = new Questionpool(questionType,questionDescription,Integer.parseInt(userId),questionAnswer,Integer.parseInt(questionScore));
         int row = questionpoolMapper.addQuestion(questionpool);
         if(row>0){
             Integer questionId = questionpool.getQuestionId(); // 获取自动生成的 questionId
