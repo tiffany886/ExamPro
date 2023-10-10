@@ -72,8 +72,11 @@ public class ExamController {
      */
     @PostMapping("/regExam")
     @ApiOperation("立即报名考试")
-    public ResponseEntity<?> regExam(@RequestParam("examID") Integer examID,@RequestParam("userID") Integer userID){
+    public ResponseEntity<?> regExam(@RequestHeader("Authorization") String token, @RequestParam("examID") Integer examID){
         ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        // 解析token获取用户id
+        Claims claims = jwtTokenUtil.parseToken(token);
+        Integer userID = Integer.parseInt(claims.getId());
         try{
             Integer[] userIds = examregistrationMapper.getUserIdsByExamID(examID);
             // 如果已经报名成功就不需要重复插入
