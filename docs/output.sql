@@ -225,7 +225,6 @@ CREATE TABLE `papermanagement` (
   `TotalScore` int NOT NULL COMMENT '总分',
   `SubjectiveScore` int NOT NULL COMMENT '主观题分数',
   `UserID` int NOT NULL COMMENT '创建人ID',
-  `Duration` int NOT NULL COMMENT '考试时长',
   PRIMARY KEY (`PaperID`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `papermanagement_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`)
@@ -238,9 +237,10 @@ CREATE TABLE `papermanagement` (
 
 LOCK TABLES `papermanagement` WRITE;
 /*!40000 ALTER TABLE `papermanagement` DISABLE KEYS */;
-INSERT INTO `papermanagement` VALUES (1,'小升初卷子',40,100,60,1,120),(2,'英语四六级试卷',20,50,30,1,120),(3,'教资科一考试试卷',25,60,35,1,60),(4,'蓝桥杯考试',18,45,27,1,120),(5,'佛系考试',20,75,55,2,60);
+INSERT INTO `papermanagement` VALUES (1,'小升初卷子',0,0,0,1),(2,'英语四六级试卷',0,0,0,1),(3,'教资科一考试试卷',0,0,0,1),(4,'蓝桥杯考试',0,0,0,1),(5,'佛系考试',0,0,0,2);
 /*!40000 ALTER TABLE `papermanagement` ENABLE KEYS */;
 UNLOCK TABLES;
+
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -284,9 +284,8 @@ CREATE TABLE `paperquestion` (
   `PaperID` int NOT NULL COMMENT '试卷ID',
   `QuestionID` int NOT NULL COMMENT '题目ID',
   `QuestionType` varchar(255) NOT NULL COMMENT '题目类型',
-  `Score` int NOT NULL COMMENT '分数',
-  `MultipleChoiceOrder` int NOT NULL COMMENT '选择题顺序',
-  `ObjectiveOrder` int NOT NULL COMMENT '客观题顺序',
+  `Score` int NOT NULL COMMENT '题目分数',
+  `Order` int NOT NULL UNIQUE COMMENT '题目顺序',
   PRIMARY KEY (`LinkID`),
   KEY `PaperID` (`PaperID`),
   CONSTRAINT `paperquestion_ibfk_1` FOREIGN KEY (`PaperID`) REFERENCES `papermanagement` (`PaperID`)
@@ -353,10 +352,36 @@ CREATE TABLE `questionpool` (
 --
 -- Dumping data for table `questionpool`
 --
-
+ALTER TABLE `questionpool` ADD COLUMN `questionScore` int NOT NULL COMMENT '题目分数';
 LOCK TABLES `questionpool` WRITE;
 /*!40000 ALTER TABLE `questionpool` DISABLE KEYS */;
-INSERT INTO `questionpool` VALUES (1,'0','What is 2 + 2?',1,'4','2023-09-25 01:23:21'),(2,'0','What is the capital of France?',1,'Paris','2023-09-25 01:23:21'),(3,'0','What is 3 x 3?',1,'9','2023-09-25 01:23:21'),(16,'0','主观题',1,'答案','2023-10-01 05:15:37'),(17,'1','我是单钻(exampro)A=下拉&B=将大量时间&C=大数据&D=爱上了的话',1,'B','2023-10-01 05:17:13'),(18,'2','ashldk(exampro)A=爱死了&B=阿达，&C=dasjl&D=打死了很久',1,'B,C','2023-10-01 05:22:09'),(19,'0','asdas',1,'sdad','2023-10-01 05:29:36'),(20,'0','weqewe',1,'qeweqw','2023-10-01 05:32:00'),(21,'0','psmtimuzhi今天吃什么吗',3,'吃玉米吃烧烤','2023-10-03 03:38:42'),(22,'1','1+1?(exampro)A=3&B=2&C=4&D=5',3,'B','2023-10-03 03:38:58'),(23,'2','4+4=? 7-2=?(exampro)A=1&B=2&C=5&D=8',3,'C,D','2023-10-03 03:39:37'),(24,'1','“神舟十号”飞船的速度约是每秒7.8km，而人步行的速度是每秒0.0012km。“神舟十号”飞船的速度是人步行速度的( 　)倍。(exampro)A=65&B=650&C=6500&D=65000',3,'C','2023-10-03 03:45:14'),(25,'1','12(exampro)A=12&B=2&C=21&D=21',3,'A','2023-10-03 03:45:50'),(26,'1','大苏打撒(exampro)A=阿斯顿&B=打算&C=打算&D=vdf',1,'D','2023-10-03 05:40:57'),(27,'0','111',1,'1111','2023-10-08 00:57:32'),(28,'0','3333',1,'333','2023-10-08 00:58:30'),(29,'0','55',1,'55','2023-10-08 01:00:22'),(30,'0','99',1,'99','2023-10-08 01:42:00'),(31,'0','44',1,'44','2023-10-08 01:43:03'),(32,'0','88',1,'88','2023-10-08 01:45:02'),(33,'0','77',1,'77','2023-10-08 01:47:27'),(34,'0','11',1,'11','2023-10-08 01:48:09'),(35,'0','33',1,'33','2023-10-08 01:48:27'),(36,'2','我是多选题(exampro)A=534&B=534&C=534&D=534',1,'C','2023-10-08 02:46:51'),(37,'0','3242',1,'32434','2023-10-08 02:55:00');
+INSERT INTO `questionpool` VALUES
+(1, '0', 'What is 2 + 2?', 1, '4', '2023-09-25 01:23:21', 10),
+(2, '0', 'What is the capital of France?', 1, 'Paris', '2023-09-25 01:23:21', 10),
+(3, '0', 'What is 3 x 3?', 1, '9', '2023-09-25 01:23:21', 10),
+(16, '0', '主观题', 1, '答案', '2023-10-01 05:15:37', 10),
+(17, '1', '我是单钻(exampro)A=下拉&B=将大量时间&C=大数据&D=爱上了的话', 1, 'B', '2023-10-01 05:17:13', 3),
+(18, '2', 'ashldk(exampro)A=爱死了&B=阿达，&C=dasjl&D=打死了很久', 1, 'B,C', '2023-10-01 05:22:09', 5),
+(19, '0', 'asdas', 1, 'sdad', '2023-10-01 05:29:36', 10),
+(20, '0', 'weqewe', 1, 'qeweqw', '2023-10-01 05:32:00', 10),
+(21, '0', 'psmtimuzhi今天吃什么吗', 3, '吃玉米吃烧烤', '2023-10-03 03:38:42', 10),
+(22, '1', '1+1?(exampro)A=3&B=2&C=4&D=5', 3, 'B', '2023-10-03 03:38:58', 3),
+(23, '2', '4+4=? 7-2=?(exampro)A=1&B=2&C=5&D=8', 3, 'C,D', '2023-10-03 03:39:37', 5),
+(24, '1', '“神舟十号”飞船的速度约是每秒7.8km，而人步行的速度是每秒0.0012km。“神舟十号”飞船的速度是人步行速度的( 　)倍。(exampro)A=65&B=650&C=6500&D=65000', 3, 'C', '2023-10-03 03:45:14', 3),
+(25, '1', '12(exampro)A=12&B=2&C=21&D=21', 3, 'A', '2023-10-03 03:45:50', 3),
+(26, '1', '大苏打撒(exampro)A=阿斯顿&B=打算&C=打算&D=vdf', 1, 'D', '2023-10-03 05:40:57', 3),
+(27, '0', '111', 1, '1111', '2023-10-08 00:57:32', 10),
+(28, '0', '3333', 1, '333', '2023-10-08 00:58:30', 10),
+(29, '0', '55', 1, '55', '2023-10-08 01:00:22', 10),
+(30, '0', '99', 1, '99', '2023-10-08 01:42:00', 10),
+(31, '0', '44', 1, '44', '2023-10-08 01:43:03', 10),
+(32, '0', '88', 1, '88', '2023-10-08 01:45:02', 10),
+(33, '0', '77', 1, '77', '2023-10-08 01:47:27', 10),
+(34, '0', '11', 1, '11', '2023-10-08 01:48:09', 10),
+(35, '0', '33', 1, '33', '2023-10-08 01:48:27', 10),
+(36, '2', '我是多选题(exampro)A=534&B=534&C=534&D=534', 1, 'C', '2023-10-08 02:46:51', 5),
+(37, '0', '3242', 1, '32434', '2023-10-08 02:55:00', 10);
+
 /*!40000 ALTER TABLE `questionpool` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,3 +427,72 @@ VALUES
 ('考试2', '第二个考试描述','2023-06-05 07:12:00', 2, 90,1),
 ('考试3', '第三个考试描述','2023-06-05 07:12:00', 3, 90,1);
 -- Dump completed on 2023-10-08 12:31:44
+
+DELIMITER //
+
+CREATE TRIGGER UpdatePaperScores
+    AFTER INSERT ON paperquestion FOR EACH ROW
+BEGIN
+    DECLARE paperObjectiveScore INT;
+    DECLARE paperSubjectiveScore INT;
+    DECLARE scoreToAdd INT;
+
+    -- 获取题目类型
+    SET @questionType = NEW.QuestionType;
+
+    -- 获取试卷的当前客观分数和主观分数
+    SELECT ObjectiveScore, SubjectiveScore INTO paperObjectiveScore, paperSubjectiveScore
+    FROM papermanagement
+    WHERE PaperID = NEW.PaperID;
+
+    -- 根据题目类型确定分数增加值
+    IF @questionType IN ('1', '2') THEN
+        -- 客观题，分数增加逻辑
+        SET scoreToAdd = NEW.Score; -- 或者你需要的客观题分数增加值
+        SET paperObjectiveScore = paperObjectiveScore + scoreToAdd;
+    ELSE
+        -- 主观题，分数增加逻辑
+        SET scoreToAdd = NEW.Score; -- 或者你需要的主观题分数增加值
+        SET paperSubjectiveScore = paperSubjectiveScore + scoreToAdd;
+    END IF;
+
+    -- 更新试卷的客观分数和主观分数
+    UPDATE papermanagement
+    SET ObjectiveScore = paperObjectiveScore, SubjectiveScore = paperSubjectiveScore ,TotalScore = paperObjectiveScore+paperSubjectiveScore
+    WHERE PaperID = NEW.PaperID;
+
+
+END;
+//
+
+DELIMITER ;
+
+INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, `Order`,Score)
+VALUES
+(1, 1, 0, 1,10);
+INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, `Order`,Score)
+VALUES
+(1, 2, 0, 2,20);
+INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, `Order`,Score)
+VALUES
+(1, 3, 0, 3,30);
+
+-- 创建一个在插入 examregistration 表时更新 NumberOfExaminees 的触发器
+DELIMITER //
+CREATE TRIGGER updateNumberOfExaminees
+    AFTER INSERT ON examregistration
+    FOR EACH ROW
+BEGIN
+    -- 在 exam 表中更新 NumberOfExaminees 列
+    UPDATE exam
+    SET NumberOfExaminees = NumberOfExaminees + 1
+    WHERE ExamID = NEW.ExamID;
+END;
+//
+DELIMITER ;
+
+insert into examregistration (ExamID,UserID)
+values (1,1);
+
+insert into examregistration (ExamID,UserID)
+values (1,2);
