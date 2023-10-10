@@ -59,21 +59,34 @@ DROP TABLE IF EXISTS `exam`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `exam` (
-  `ExamID` int NOT NULL AUTO_INCREMENT COMMENT '考试ID',
-  `ExamName` varchar(255) NOT NULL COMMENT '考试名称',
-  `ExamDescription` varchar(255) NOT NULL COMMENT '考试描述',
-  `PaperID` int NOT NULL COMMENT '试卷ID',
-  `StartTime` datetime NOT NULL COMMENT '考试开始时间',
-  `EndTime` datetime NOT NULL COMMENT '考试结束时间',
-  `ExamDuration` int NOT NULL COMMENT '考试时长（分钟）',
-  PRIMARY KEY (`ExamID`),
-  KEY `PaperID` (`PaperID`),
-  CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`PaperID`) REFERENCES `papermanagement` (`PaperID`)
+                        `ExamID` int NOT NULL AUTO_INCREMENT COMMENT '考试ID',
+                        `ExamName` varchar(255) NOT NULL COMMENT '考试名称',
+                        `ExamDescription` varchar(255) NOT NULL COMMENT '考试描述',
+                        `PaperID` int NOT NULL COMMENT '试卷ID',
+                        `StartTime` datetime NOT NULL COMMENT '考试开始时间',
+                        `EndTime` datetime NOT NULL COMMENT '考试结束时间',
+                        `ExamDuration` int NOT NULL COMMENT '考试时长（分钟）',
+                        `NumberOfExaminees` INT NOT NULL DEFAULT 0 COMMENT '考试人数',
+                        `UserID` INT NOT NULL COMMENT '创建人ID',
+                        PRIMARY KEY (`ExamID`),
+                        KEY `PaperID` (`PaperID`),
+                        CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`PaperID`) REFERENCES `papermanagement` (`PaperID`),
+                        CONSTRAINT `fk_user` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='考试表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-ALTER TABLE exam
-    ADD NumberOfExaminees INT NOT NULL DEFAULT 0 COMMENT '考试人数';
+DELIMITER //
+
+CREATE TRIGGER set_end_time
+    BEFORE INSERT ON Exam
+    FOR EACH ROW
+BEGIN
+    SET NEW.EndTime = DATE_ADD(NEW.StartTime, INTERVAL NEW.ExamDuration MINUTE);
+END;
+
+//
+
+DELIMITER ;
 
 --
 -- Dumping data for table `exam`
@@ -383,9 +396,9 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- 插入考试数据
-INSERT INTO exam (ExamName, ExamDescription, StartTime,EndTime,PaperID, ExamDuration)
+INSERT INTO exam (ExamName, ExamDescription, StartTime,PaperID, ExamDuration,UserID)
 VALUES
-('考试1', '第一个考试描述','2023-06-05 07:12:00','2023-06-05 08:12:00', 1, 90),
-('考试2', '第二个考试描述','2023-06-05 07:12:00','2023-06-05 08:12:00', 2, 90),
-('考试3', '第三个考试描述','2023-06-05 07:12:00','2023-06-05 08:12:00', 3, 90);
+('考试1', '第一个考试描述','2023-06-05 07:12:00', 1, 90,1),
+('考试2', '第二个考试描述','2023-06-05 07:12:00', 2, 90,1),
+('考试3', '第三个考试描述','2023-06-05 07:12:00', 3, 90,1);
 -- Dump completed on 2023-10-08 12:31:44

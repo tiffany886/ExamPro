@@ -4,103 +4,115 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Exam implements Serializable {
-    /**
-     * 考试ID
-     */
-    private Integer examId;
+        private int examID;
+        private String examName;
+        private String examDescription;
+        private int paperID;
+        private Date startTime;
+        private Date endTime;
+        private int examDuration;
+        private int numberOfExaminees;
+        private int userID;
 
-    /**
-     * 考试名称
-     */
-    private String examName;
+        // 在这里添加构造函数、Getter和Setter方法
 
-    /**
-     * 考试描述
-     */
-    private String examDescription;
 
-    /**
-     * 开始时间
-     */
-    private Date startTime;
-
-    /**
-     * 结束时间
-     */
-    private Date endTime;
-    /**
-     * 考试时长
-     */
-    private Integer duration;
-
-    public Exam(Integer examId, String examName, String examDescription, Date startTime, Date endTime, Integer duration) {
-        this.examId = examId;
+    public Exam(int examID, String examName, String examDescription, int paperID, Date startTime, Date endTime, int examDuration, int numberOfExaminees, int userID) {
+        this.examID = examID;
         this.examName = examName;
         this.examDescription = examDescription;
+        this.paperID = paperID;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.duration = duration;
-    }
-
-    public Integer getExamId() {
-        return examId;
-    }
-
-    public void setExamId(Integer examId) {
-        this.examId = examId;
-    }
-
-    public String getExamName() {
-        return examName;
-    }
-
-    public void setExamName(String examName) {
-        this.examName = examName;
-    }
-
-    public String getExamDescription() {
-        return examDescription;
-    }
-
-    public void setExamDescription(String examDescription) {
-        this.examDescription = examDescription;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
+        this.examDuration = examDuration;
+        this.numberOfExaminees = numberOfExaminees;
+        this.userID = userID;
     }
 
     @Override
     public String toString() {
         return "Exam{" +
-                "examId=" + examId +
+                "examID=" + examID +
                 ", examName='" + examName + '\'' +
                 ", examDescription='" + examDescription + '\'' +
+                ", paperID=" + paperID +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                ", duration=" + duration +
+                ", examDuration=" + examDuration +
+                ", numberOfExaminees=" + numberOfExaminees +
+                ", userID=" + userID +
                 '}';
     }
-}
 
+    public int getExamID() {
+            return examID;
+        }
 
+        public void setExamID(int examID) {
+            this.examID = examID;
+        }
+
+        public String getExamName() {
+            return examName;
+        }
+
+        public void setExamName(String examName) {
+            this.examName = examName;
+        }
+
+        public String getExamDescription() {
+            return examDescription;
+        }
+
+        public void setExamDescription(String examDescription) {
+            this.examDescription = examDescription;
+        }
+
+        public int getPaperID() {
+            return paperID;
+        }
+
+        public void setPaperID(int paperID) {
+            this.paperID = paperID;
+        }
+
+        public Date getStartTime() {
+            return startTime;
+        }
+
+        public void setStartTime(Date startTime) {
+            this.startTime = startTime;
+        }
+
+        public Date getEndTime() {
+            return endTime;
+        }
+
+        public void setEndTime(Date endTime) {
+            this.endTime = endTime;
+        }
+
+        public int getExamDuration() {
+            return examDuration;
+        }
+
+        public void setExamDuration(int examDuration) {
+            this.examDuration = examDuration;
+        }
+
+        public int getNumberOfExaminees() {
+            return numberOfExaminees;
+        }
+
+        public void setNumberOfExaminees(int numberOfExaminees) {
+            this.numberOfExaminees = numberOfExaminees;
+        }
+
+        public int getUserID() {
+            return userID;
+        }
+
+        public void setUserID(int userID) {
+            this.userID = userID;
+        }
+    }
