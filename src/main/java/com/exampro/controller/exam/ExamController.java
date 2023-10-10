@@ -10,7 +10,6 @@ import com.exampro.utils.paper.DateFormat;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,7 @@ import java.util.List;
  * 考试
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/exam")
 @Api(tags = "考试相关接口")
 public class ExamController {
     /**
