@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +29,8 @@ import static com.exampro.utils.paper.transformQuesData.transformData;
 public class QuesAddBankController {
     @Autowired
     private QuesAddBankMapper quesAddBankMapper;
+
+    List<Object> emptyList = new ArrayList<>();
 
     ApiResponse<Boolean> response = new ApiResponse<>();
 
@@ -55,7 +58,7 @@ public class QuesAddBankController {
     public ResponseEntity<ApiRest<?>> addQuestion(@RequestParam("bankid") String bankId){
         List<Questionpool> rows = quesAddBankMapper.selectBankQuesByBankId(Integer.parseInt(bankId));
         if(rows.isEmpty()){
-            return ResponseEntity.ok(response.success("没有题目",true));
+            return ResponseEntity.ok(response.success("没有题目",emptyList));
         }else {
             List<HashMap<String,?>> res = transformData(rows);
             return ResponseEntity.ok(response.success("查询成功",res));

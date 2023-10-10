@@ -18,19 +18,17 @@ public class Questionpool implements Serializable {
      *
      */
     private String questionType;
-
-    /**
-     * 创建时间
-     *
-     */
-    private Date createTime;
-
     /**
      * 题目描述
      *
      */
     private String questionDescription;
-
+    /**
+     *
+     * 所属用户
+     * @param questionid
+     */
+    private Integer userId;
     /**
      * 问题答案
      * @return
@@ -38,103 +36,84 @@ public class Questionpool implements Serializable {
     private String questionAnswer;
 
     /**
+     * 创建时间
      *
-     * 所属用户
-     * @param questionid
      */
-    private Integer userId;
+    private Date createTime;
 
-    public Questionpool(String questionType, String questionDescription, String questionAnswer, Integer userId) {
-        this.questionType = questionType;
-        this.questionDescription = questionDescription;
-        this.questionAnswer = questionAnswer;
-        this.userId = userId;
-    }
+    private Integer questionScore;
 
-    public Questionpool(Integer questionid, String questiontype, String questiondescription, Integer userId , String questionanswer, Date createtime) {
-        this.questionId = questionid;
-        this.questionType = questiontype;
-        this.createTime = createtime;
-        this.questionDescription = questiondescription;
-        this.questionAnswer = questionanswer;
-        this.userId = userId;
-    }
-
-    public Questionpool(Integer questionId, String questionType, Date createTime, String questionDescription, String questionAnswer) {
+    public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
-        this.questionType = questionType;
-        this.createTime = createTime;
-        this.questionDescription = questionDescription;
-        this.questionAnswer = questionAnswer;
     }
 
-    public Questionpool(String questionType, Date createTime, String questionDescription) {
+    public void setQuestionType(String questionType) {
         this.questionType = questionType;
-        this.createTime = createTime;
-        this.questionDescription = questionDescription;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public void setQuestionDescription(String questionDescription) {
+        this.questionDescription = questionDescription;
     }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public String getQuestionanswer() {
-        return questionAnswer;
+    public void setQuestionAnswer(String questionAnswer) {
+        this.questionAnswer = questionAnswer;
     }
 
-    public void setQuestionanswer(String questionanswer) {
-        this.questionAnswer = questionanswer;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public void setQuestionScore(Integer questionScore) {
+        this.questionScore = questionScore;
+    }
+
+    public Questionpool(Integer questionId, String questionType, String questionDescription, Integer userId, String questionAnswer, Date createTime, Integer questionScore) {
+        this.questionId = questionId;
+        this.questionType = questionType;
+        this.questionDescription = questionDescription;
+        this.userId = userId;
+        this.questionAnswer = questionAnswer;
+        this.createTime = createTime;
+        this.questionScore = questionScore;
     }
 
     public Integer getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionid(Integer questionid) {
-        this.questionId = questionid;
-    }
-
-    public Object getQuestiontype() {
+    public String getQuestionType() {
         return questionType;
     }
 
-    public void setQuestiontype(String questiontype) {
-        this.questionType = questiontype;
-    }
-
-    public Date getCreatetime() {
-        return createTime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createTime = createtime;
-    }
-
-    public String getQuestiondescription() {
+    public String getQuestionDescription() {
         return questionDescription;
     }
 
-    public void setQuestiondescription(String questiondescription) {
-        this.questionDescription = questiondescription;
+    public Integer getUserId() {
+        return userId;
     }
 
-    @Override
-    public String toString() {
-        return "Questionpool{" +
-                "questionid=" + questionId +
-                ", questiontype='" + questionType + '\'' +
-                ", createtime=" + createTime +
-                ", questiondescription='" + questionDescription + '\'' +
-                ", questionanswer='" + questionAnswer + '\'' +
-                ", userid=" + userId +
-                '}';
+    public String getQuestionAnswer() {
+        return questionAnswer;
     }
 
-    public Object getQuestionid() {
-        return questionId;
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public Integer getQuestionScore() {
+        return questionScore;
+    }
+
+    public Questionpool(String questionType, String questionDescription, Integer userId, String questionAnswer, Integer questionScore) {
+        this.questionType = questionType;
+        this.questionDescription = questionDescription;
+        this.userId = userId;
+        this.questionAnswer = questionAnswer;
+        this.questionScore = questionScore;
     }
 }

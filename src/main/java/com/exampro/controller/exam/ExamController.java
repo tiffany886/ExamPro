@@ -22,7 +22,7 @@ import java.util.List;
  * 考试
  */
 @RestController
-@RequestMapping("/exam")
+@RequestMapping("/user")
 @Api(tags = "考试相关接口")
 public class ExamController {
     /**

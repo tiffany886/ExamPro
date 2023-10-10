@@ -18,12 +18,13 @@ public class transformQuesData {
         List<HashMap<String,?>> transformedData = new ArrayList<>();
         for (Questionpool item : responseData){
             System.out.println(item);
-            HashMap<String,Object> data = new HashMap<>();
-            data.put("type",item.getQuestiontype());
-            data.put("description",item.getQuestiondescription());
-            data.put("answer",item.getQuestionanswer());
-            data.put("createTime",dateToString(item.getCreatetime()));
-            data.put("questionId",item.getQuestionid());
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("type",item.getQuestionType());
+            data.put("description",item.getQuestionDescription());
+            data.put("answer",item.getQuestionAnswer());
+            data.put("createTime",dateToString(item.getCreateTime()));
+            data.put("questionId",item.getQuestionId());
+            data.put("questionStore",item.getQuestionScore());
             transformedData.add(data);
         }
         return transformedData;
