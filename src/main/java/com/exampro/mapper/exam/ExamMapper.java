@@ -16,7 +16,7 @@ public interface ExamMapper {
      * @return
      */
     @Select("SELECT\n" +
-            "    e.PaperID AS PaperId,\n" +
+            "    e.ExamID AS ExamID,\n" +
             "    e.ExamName,\n" +
             "    e.StartTime,\n" +
             "    e.EndTime,\n" +
@@ -31,7 +31,7 @@ public interface ExamMapper {
             "        JOIN\n" +
             "    `user` u ON e.UserID = u.UserID;")
     @Results({
-            @Result(column = "PaperId", property = "PaperId"),
+            @Result(column = "ExamID", property = "ExamID"),
             @Result(column = "ExamName", property = "ExamName"),
             @Result(column = "StartTime", property = "StartTime"),
             @Result(column = "EndTime", property = "EndTime"),

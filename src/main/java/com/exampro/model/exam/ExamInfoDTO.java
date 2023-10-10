@@ -1,7 +1,7 @@
 package com.exampro.model.exam;
 
 public class ExamInfoDTO {
-    private String PaperId;
+    private String ExamID;
     private String ExamName;
     private String StartTime;
     private String EndTime;
@@ -12,26 +12,13 @@ public class ExamInfoDTO {
 
     // 添加 getters 和 setters
 
-    @Override
-    public String toString() {
-        return "ExamInfoDTO{" +
-                "PaperId='" + PaperId + '\'' +
-                ", ExamName='" + ExamName + '\'' +
-                ", StartTime='" + StartTime + '\'' +
-                ", EndTime='" + EndTime + '\'' +
-                ", NumberOfExaminees='" + NumberOfExaminees + '\'' +
-                ", ObjectiveScore=" + ObjectiveScore +
-                ", SubjectiveScore=" + SubjectiveScore +
-                ", CreatedBy='" + CreatedBy + '\'' +
-                '}';
+
+    public String getExamID() {
+        return ExamID;
     }
 
-    public String getPaperId() {
-        return PaperId;
-    }
-
-    public void setPaperId(String paperId) {
-        PaperId = paperId;
+    public void setExamID(String examID) {
+        ExamID = examID;
     }
 
     public String getExamName() {
