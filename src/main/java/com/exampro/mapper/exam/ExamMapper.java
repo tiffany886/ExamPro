@@ -29,7 +29,7 @@ public interface ExamMapper {
             "        JOIN\n" +
             "    papermanagement p ON e.PaperID = p.PaperID\n" +
             "        JOIN\n" +
-            "    `user` u ON e.UserID = u.UserID;")
+            "    `user` u ON e.UserID = u.UserID order by e.examID desc;")
     @Results({
             @Result(column = "ExamID", property = "ExamID"),
             @Result(column = "ExamName", property = "ExamName"),
@@ -47,7 +47,7 @@ public interface ExamMapper {
      * @param userID
      * @return
      */
-    @Select("SELECT * FROM exam WHERE UserID = #{userID};")
+    @Select("SELECT * FROM exam WHERE UserID = #{userID} order by examID desc")
     List<Exam> findUserExams(@Param("userID") Integer userID);
 
     /**
@@ -60,7 +60,7 @@ public interface ExamMapper {
      * @return
      */
     @Insert(" INSERT INTO exam (ExamName, ExamDescription, PaperID, StartTime, ExamDuration,UserID )\n" +
-            "VALUES (#{examName}, #{examDescription}, #{paperID}, #{startTime}, #{examDuration}, #{userID})")
+            "VALUES (#{examName}, #{examDescription}, #{paperID}, #{startTime}, #{examDuration}, #{userID});")
     Integer addExam(@Param("examName") String examName, @Param("examDescription") String examDescription,
                     @Param("paperID") Integer paperID, @Param("startTime") Date startTime,
                     @Param("examDuration") Integer examDuration,@Param("userID") Integer userID);
