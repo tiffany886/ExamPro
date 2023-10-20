@@ -392,12 +392,14 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
+-- 创建user表，并添加外键约束
 CREATE TABLE `user` (
-  `UserID` int NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `Username` varchar(255) NOT NULL COMMENT '用户名',
-  `Password` varchar(255) NOT NULL COMMENT '密码',
-  `Role` int NOT NULL COMMENT '身份',
-  PRIMARY KEY (`UserID`)
+                        `UserID` int NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                        `Username` varchar(255) NOT NULL COMMENT '用户名',
+                        `Password` varchar(255) NOT NULL COMMENT '密码',
+                        `RoleID` int NOT NULL COMMENT '角色ID',
+                        PRIMARY KEY (`UserID`),
+                        CONSTRAINT `fk_role` FOREIGN KEY (`RoleID`) REFERENCES `role` (`RoleID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -496,3 +498,50 @@ values (1,1);
 
 insert into examregistration (ExamID,UserID)
 values (1,2);
+
+
+-- 题目审核表
+CREATE TABLE `question_review` (
+                                   `ReviewID` INT NOT NULL AUTO_INCREMENT COMMENT '审核ID',
+                                   `QuestionID` INT NOT NULL COMMENT '题目ID',
+                                   `ReviewStatus` INT NOT NULL DEFAULT 0 COMMENT '审核情况',
+                                   PRIMARY KEY (`ReviewID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='题目审核表';
+
+-- 试卷审核表
+CREATE TABLE `paper_review` (
+                                `ReviewID` INT NOT NULL AUTO_INCREMENT COMMENT '审核ID',
+                                `PaperID` INT NOT NULL COMMENT '试卷ID',
+                                `PrimaryReviewStatus` INT NOT NULL DEFAULT 0 COMMENT '初级审核情况',
+                                `FinalReviewStatus` INT NOT NULL DEFAULT 0 COMMENT '终极审核情况',
+                                PRIMARY KEY (`ReviewID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='试卷审核表';
+
+-- 角色表
+CREATE TABLE `role` (
+                        `RoleID` INT NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+                        `RoleName` VARCHAR(255) NOT NULL COMMENT '角色名称',
+                        PRIMARY KEY (`RoleID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色表';
+
+-- 监考记录表
+CREATE TABLE `proctoring_record` (
+                                     `RecordID` INT NOT NULL AUTO_INCREMENT COMMENT '记录ID',
+                                     `ExamineeID` INT NOT NULL COMMENT '考生ID',
+                                     `ExamID` INT NOT NULL COMMENT '考试ID',
+                                     `ProctorID` INT NOT NULL COMMENT '监考人ID',
+                                     `IssueContent` VARCHAR(255) NOT NULL COMMENT '问题内容',
+                                     `Time` DATETIME NOT NULL COMMENT '时间',
+                                     `SenderID` INT NOT NULL COMMENT '发送人ID',
+                                     PRIMARY KEY (`RecordID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='监考记录表';
+
+-- 向角色表插入默认数据
+INSERT INTO `role` (`RoleName`) VALUES
+('初级审核员'),
+('终极审核员'),
+('考试管理员'),
+('考生'),
+('出卷人'),
+('监考人'),
+('评卷人');
