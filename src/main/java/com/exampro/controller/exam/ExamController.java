@@ -113,11 +113,11 @@ public class ExamController {
             Date beginTime = DateFormat.stringToDate(startTime);
             Integer affectedRows = examMapper.addExam(examName,examDescription,paperID,beginTime,examDuration,userID);
             if(affectedRows != 1){
-                return ResponseEntity.ok("创建考试失败！请重新尝试！");
+                return ResponseEntity.ok(response.failure("创建考试失败！请重新尝试！"));
             }
             return ResponseEntity.ok(response.success("创建考试成功！"));
         }catch (Exception e){
-            return ResponseEntity.ok(response.success("创建考试失败！" + e.getMessage()));
+            return ResponseEntity.ok(response.failure("创建考试失败！" + e.getMessage()));
         }
     }
 
