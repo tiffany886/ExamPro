@@ -3,7 +3,10 @@ package com.exampro.controller.paper;
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
 import com.exampro.mapper.paper.PapermanagementMapper;
+import com.exampro.model.exam.ExamInfoDTO;
 import com.exampro.model.paper.Papermanagement;
+import com.exampro.utils.jwt.JwtTokenUtil;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +26,17 @@ public class PaperController {
     private PapermanagementMapper papermanagementMapper;
 
     List<Object> emptyList = new ArrayList<>();
+
     ApiResponse<Boolean> response = new ApiResponse<>();
 
     DateFormat dateFormat = new DateFormat();
+
+    /**
+     * 注入 JwtTokenUtil
+     */
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     /**
      * 查询试卷
      * @return
@@ -47,19 +58,28 @@ public class PaperController {
      */
     @PostMapping("/addPaper")
     @ApiOperation("添加试卷")
-    public ResponseEntity<ApiRest<Boolean>> addPaper(@RequestParam("paperName") String paperName,
+    public ResponseEntity<ApiRest<Boolean>> addPaper(@RequestHeader("Authorization") String token,
+                                                     @RequestParam("paperName") String paperName,
                                                      @RequestParam("objectiveScore") String objectiveScore,
                                                      @RequestParam("subjectiveScore") String subjectiveScore,
-                                                     @RequestParam("startTime") String startTime,
-                                                     @RequestParam("numberOfExaminees") String numberOfExaminees,
-                                                     @RequestParam("userId") String userId,
-                                                     @RequestParam("duration") String duration) throws ParseException {
-        Papermanagement papermanagement = new Papermanagement(paperName,Integer.parseInt(objectiveScore),Integer.parseInt(subjectiveScore), dateFormat.stringToDate(startTime),Integer.parseInt(numberOfExaminees),Integer.parseInt(userId),Integer.parseInt(duration));
-        int row = papermanagementMapper.insert(papermanagement);
-        if(row>0){
-            return ResponseEntity.ok(response.success("插入成功",true));
-        }else {
-            return ResponseEntity.ok(response.success("插入失败",false));
+                                                     @RequestParam("totalScore") String totalScore) throws ParseException {
+
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        // 解析token获取用户id
+        Claims claims = jwtTokenUtil.parseToken(token);
+        Integer userID = Integer.parseInt(claims.getId());
+
+        // 在这里进行类型转换
+        Integer objScore = Integer.parseInt(objectiveScore);
+        Integer totScore = Integer.parseInt(totalScore);
+        Integer subScore = Integer.parseInt(subjectiveScore);
+
+        int result = papermanagementMapper.insertPaper(paperName, objScore, totScore, subScore, userID);
+
+        if (result > 0) {
+            return ResponseEntity.ok(response.success("添加试卷成功", true));
+        } else {
+            return ResponseEntity.ok(response.failure("添加试卷失败",false));
         }
     }
     /**

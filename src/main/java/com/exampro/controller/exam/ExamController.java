@@ -31,7 +31,7 @@ public class ExamController {
     private ExamMapper examMapper;
 
     /**
-     * 注入ExamMapper
+     * 注入examregistrationMapper
      */
     @Autowired
     private ExamregistrationMapper examregistrationMapper;
