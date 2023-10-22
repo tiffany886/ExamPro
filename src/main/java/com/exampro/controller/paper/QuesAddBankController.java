@@ -3,6 +3,9 @@ package com.exampro.controller.paper;
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
 import com.exampro.mapper.paper.QuesAddBankMapper;
+import com.exampro.mapper.paper.QuestionbankMapper;
+import com.exampro.model.paper.Bankquestion;
+import com.exampro.model.paper.Questionbank;
 import com.exampro.model.paper.Questionpool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +32,8 @@ import static com.exampro.utils.paper.transformQuesData.transformData;
 public class QuesAddBankController {
     @Autowired
     private QuesAddBankMapper quesAddBankMapper;
-
+    @Autowired
+    private QuestionbankMapper questionbankMapper;
     List<Object> emptyList = new ArrayList<>();
 
     ApiResponse<Boolean> response = new ApiResponse<>();
@@ -44,11 +48,17 @@ public class QuesAddBankController {
     @ApiOperation("题库中加题目")
     public ResponseEntity<ApiRest<Boolean>> addQuestion(@RequestParam("bankid") String bankId,
                                                         @RequestParam("questionid") String questionId){
+        List<Questionpool> bankIds = quesAddBankMapper.selectBankQuesByBankId(Integer.parseInt(bankId));
+        for(Questionpool questionbank : bankIds ){
+            if((questionbank.getQuestionId()).equals((Integer.parseInt(questionId)))){
+                return ResponseEntity.ok(response.failure("你已经将"+questionId+"号题加入"+bankId+"号题库",false));
+            }
+        }
         int row = quesAddBankMapper.addQuesInBank(Integer.parseInt(bankId),Integer.parseInt(questionId));
-            if(row > 0){
-                return ResponseEntity.ok(response.success("插入成功",true));
+            if(row>0){
+                return ResponseEntity.ok(response.success("成功将"+questionId+"号题加入"+bankId+"号题库",true));
             }else {
-                return ResponseEntity.ok(response.success("插入失败",false));
+                return ResponseEntity.ok(response.failure("插入失败",false));
             }
     }
 

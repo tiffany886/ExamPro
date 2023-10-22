@@ -1,10 +1,7 @@
 package com.exampro.mapper.paper;
 
 import com.exampro.model.paper.Questionpool;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,16 +28,18 @@ public interface QuestionpoolMapper {
     int addQuestion(Questionpool record);
 
     /**
-     * 查询最新天
+     * 修改状态为通过 根据题目id
      */
+    @Update("UPDATE questionpool\n" +
+            "SET juniorState = 1\n" +
+            "WHERE QuestionID = #{questionId};\n")
+    int changQuesPassById(int questionId);
 
-    int insertSelective(Questionpool record);
-
-    int deleteByPrimaryKey(Integer questionid);
-
-    int updateByPrimaryKeySelective(Questionpool record);
-
-    int updateByPrimaryKeyWithBLOBs(Questionpool record);
-
-    int updateByPrimaryKey(Questionpool record);
+    /**
+     * 修改状态为不通过
+     */
+    @Update("UPDATE questionpool\n" +
+            "SET juniorState = 2\n" +
+            "WHERE QuestionID = #{questionId};\n")
+    int changQuesRefuseById(int questionId);
 }

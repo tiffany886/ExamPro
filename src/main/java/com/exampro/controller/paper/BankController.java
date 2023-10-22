@@ -4,6 +4,8 @@ import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
 import com.exampro.mapper.paper.QuestionbankMapper;
 import com.exampro.model.paper.Questionbank;
+import com.exampro.utils.jwt.JwtTokenUtil;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ import java.util.List;
 public class BankController {
     @Autowired
     private QuestionbankMapper questionbankMapper;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     ApiResponse<Boolean> response = new ApiResponse<>();
     List<Object> emptyList = new ArrayList<>();
 
@@ -62,6 +67,19 @@ public class BankController {
                                                         @RequestParam("userid") String userId){
         Questionbank questionbank = new Questionbank(bankName,Integer.parseInt(userId));
         int row = questionbankMapper.addBank(questionbank);
+        if(row>0){
+            return ResponseEntity.ok(response.success("插入成功",true));
+        }else {
+            return ResponseEntity.ok(response.success("插入失败",false));
+        }
+    }
+
+    @PostMapping(value = "/updateBank")
+    @ApiOperation("修改题库")
+    public ResponseEntity<ApiRest<Boolean>> updateBank(@RequestParam("bankname") String bankName,@RequestHeader("Authorization") String token){
+        Claims claims = jwtTokenUtil.parseToken(token);
+        Integer userID = Integer.parseInt(claims.getId());
+        int row = questionbankMapper.updateBank(bankName,userID);
         if(row>0){
             return ResponseEntity.ok(response.success("插入成功",true));
         }else {

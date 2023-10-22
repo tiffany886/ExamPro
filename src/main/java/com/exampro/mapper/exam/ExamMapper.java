@@ -64,4 +64,20 @@ public interface ExamMapper {
     Integer addExam(@Param("examName") String examName, @Param("examDescription") String examDescription,
                     @Param("paperID") Integer paperID, @Param("startTime") Date startTime,
                     @Param("examDuration") Integer examDuration,@Param("userID") Integer userID);
+
+    /**
+     * 修改状态为通过
+     */
+    @Update("UPDATE exam\n" +
+            "SET juniorState = 1\n" +
+            "WHERE examID = #{examID};\n")
+    int changExamPassById(int examId);
+
+    /**
+     * 修改状态为不通过
+     */
+    @Update("UPDATE exam\n" +
+            "SET juniorState = 2\n" +
+            "WHERE examID = #{examID};\n")
+    int changExamRefuseById(int examId);
 }
