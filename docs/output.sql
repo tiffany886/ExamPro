@@ -51,6 +51,12 @@ INSERT INTO `bankquestion` VALUES (1,1,1),(3,1,31),(4,1,32),(5,1,33),(6,1,34),(7
 /*!40000 ALTER TABLE `bankquestion` ENABLE KEYS */;
 UNLOCK TABLES;
 
+-- Add the new column with a default value
+ALTER TABLE `bankquestion` ADD COLUMN `ultimateState` INT NOT NULL DEFAULT 0 COMMENT '终极审核状态';
+
+-- Update the existing data to set the new column to 0
+UPDATE `bankquestion` SET `ultimateState` = 0;
+
 --
 -- Table structure for table `exam`
 --
@@ -87,6 +93,14 @@ END;
 //
 
 DELIMITER ;
+
+-- Add the new columns with default values
+ALTER TABLE `exam` ADD COLUMN `ultimateState` INT NOT NULL DEFAULT 0 COMMENT '终极审核状态';
+ALTER TABLE `exam` ADD COLUMN `juniorState` INT NOT NULL DEFAULT 0 COMMENT '初级审核状态';
+
+-- Update the existing data to set the new columns to 0
+UPDATE `exam` SET `ultimateState` = 0, `juniorState` = 0;
+
 
 --
 -- Dumping data for table `exam`
@@ -241,6 +255,14 @@ INSERT INTO `papermanagement` VALUES (1,'小升初卷子',0,0,0,1),(2,'英语四
 /*!40000 ALTER TABLE `papermanagement` ENABLE KEYS */;
 UNLOCK TABLES;
 
+-- Add the new columns with default values
+ALTER TABLE `papermanagement` ADD COLUMN `ultimateState` INT NOT NULL DEFAULT 0 COMMENT '终极审核状态';
+ALTER TABLE `papermanagement` ADD COLUMN `juniorState` INT NOT NULL DEFAULT 0 COMMENT '初级审核状态';
+
+-- Update the existing data to set the new columns to 0
+UPDATE `papermanagement` SET `ultimateState` = 0, `juniorState` = 0;
+
+
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -384,6 +406,13 @@ INSERT INTO `questionpool` VALUES
 
 /*!40000 ALTER TABLE `questionpool` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+-- Add the new column with a default value
+ALTER TABLE `questionpool` ADD COLUMN `juniorState` INT NOT NULL DEFAULT 0 COMMENT '初级审核状态';
+
+-- Update the existing data to set the new column to 0
+UPDATE `questionpool` SET `juniorState` = 0;
 
 --
 -- Table structure for table `user`
@@ -545,3 +574,5 @@ INSERT INTO `role` (`RoleName`) VALUES
 ('出卷人'),
 ('监考人'),
 ('评卷人');
+
+

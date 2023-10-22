@@ -4,6 +4,7 @@ import com.exampro.model.paper.Questionbank;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -34,7 +35,15 @@ public interface QuestionbankMapper {
     @Insert("INSERT INTO questionBank (bankName, userId) VALUES (#{bankName}, #{userId})")
     int addBank(Questionbank record);
 
-
+    /**
+     * 修改题库名称
+     * @param
+     * @return
+     */
+    @Update("UPDATE questionbank\n" +
+            "SET BankName = #{bankName}\n" +
+            "WHERE BankID = #{userId};\n")
+    int updateBank(String bankName,Integer userId);
 
     int insert(Questionbank record);
 
