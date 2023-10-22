@@ -1,10 +1,7 @@
 package com.exampro.mapper.paper;
 
 import com.exampro.model.paper.Papermanagement;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,7 +17,7 @@ public interface PapermanagementMapper {
 
     /**
      * 添加试卷
-     * @param record
+     * @param
      * @return #{paperName}, #{objectiveScore}, #{totalScore}, #{subjectiveScore}, #{startTime}, #{numberOfExaminees}, #{userId} ,#{duration}
      */
     @Insert("INSERT INTO papermanagement (PaperName, ObjectiveScore, TotalScore, SubjectiveScore, UserID) " +
@@ -38,15 +35,19 @@ public interface PapermanagementMapper {
     @Select("select * from papermanagement where paperId = #{paperId}")
     List<Papermanagement> selectPaperById(Integer paperId);
 
-    int deleteByPrimaryKey(Integer paperid);
+    /**
+     * 修改状态为通过
+     */
+    @Update("UPDATE papermanagement\n" +
+            "SET juniorState = 1\n" +
+            "WHERE paperId = #{paperId};\n")
+    int changPaperPassById(int paperId);
 
-
-
-    int insertSelective(Papermanagement record);
-
-    List<Papermanagement> selectByPrimaryKey(Integer paperid);
-
-    int updateByPrimaryKeySelective(Papermanagement record);
-
-    int updateByPrimaryKey(Papermanagement record);
+    /**
+     * 修改状态为不通过
+     */
+    @Update("UPDATE papermanagement\n" +
+            "SET juniorState = 2\n" +
+            "WHERE paperId = #{paperId};\n")
+    int changPaperRefuseById(int paperId);
 }

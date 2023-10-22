@@ -69,6 +69,40 @@ public class Papermanagement implements Serializable {
      */
     private Integer duration;
 
+    private int ultimateState;
+    private int juniorState;
+
+    public Papermanagement(Integer paperId, String paperName, Integer objectiveScore, Integer totalScore, Integer subjectiveScore, Date startTime, Date endTime, Integer numberOfExaminees, Integer userId, Integer duration, int ultimateState, int juniorState) {
+        this.paperId = paperId;
+        this.paperName = paperName;
+        this.objectiveScore = objectiveScore;
+        this.totalScore = totalScore;
+        this.subjectiveScore = subjectiveScore;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.numberOfExaminees = numberOfExaminees;
+        this.userId = userId;
+        this.duration = duration;
+        this.ultimateState = ultimateState;
+        this.juniorState = juniorState;
+    }
+
+    public int getUltimateState() {
+        return ultimateState;
+    }
+
+    public void setUltimateState(int ultimateState) {
+        this.ultimateState = ultimateState;
+    }
+
+    public int getJuniorState() {
+        return juniorState;
+    }
+
+    public void setJuniorState(int juniorState) {
+        this.juniorState = juniorState;
+    }
+
     public Papermanagement(Integer paperId) {
         this.paperId = paperId;
     }

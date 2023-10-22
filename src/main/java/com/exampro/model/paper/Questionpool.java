@@ -41,6 +41,29 @@ public class Questionpool implements Serializable {
      */
     private Date createTime;
 
+    private int juniorState;
+
+    public Questionpool(Integer questionId, String questionType, String questionDescription, Integer userId, String questionAnswer, Date createTime, int juniorState, Integer questionScore) {
+        this.questionId = questionId;
+        this.questionType = questionType;
+        this.questionDescription = questionDescription;
+        this.userId = userId;
+        this.questionAnswer = questionAnswer;
+        this.createTime = createTime;
+        this.juniorState = juniorState;
+        this.questionScore = questionScore;
+    }
+
+    public int getJuniorState() {
+        return juniorState;
+    }
+
+    public void setJuniorState(int juniorState) {
+        this.juniorState = juniorState;
+    }
+
+
+
     private Integer questionScore;
 
     public void setQuestionId(Integer questionId) {
@@ -114,6 +137,15 @@ public class Questionpool implements Serializable {
         this.questionDescription = questionDescription;
         this.userId = userId;
         this.questionAnswer = questionAnswer;
+        this.questionScore = questionScore;
+    }
+
+    public Questionpool(String questionType, String questionDescription, Integer userId, String questionAnswer, int juniorState, Integer questionScore) {
+        this.questionType = questionType;
+        this.questionDescription = questionDescription;
+        this.userId = userId;
+        this.questionAnswer = questionAnswer;
+        this.juniorState = juniorState;
         this.questionScore = questionScore;
     }
 }

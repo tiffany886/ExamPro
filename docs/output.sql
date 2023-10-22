@@ -307,7 +307,6 @@ CREATE TABLE `paperquestion` (
   `QuestionID` int NOT NULL COMMENT '题目ID',
   `QuestionType` varchar(255) NOT NULL COMMENT '题目类型',
   `Score` int NOT NULL COMMENT '题目分数',
-  `Order` int NOT NULL UNIQUE COMMENT '题目顺序',
   PRIMARY KEY (`LinkID`),
   KEY `PaperID` (`PaperID`),
   CONSTRAINT `paperquestion_ibfk_1` FOREIGN KEY (`PaperID`) REFERENCES `papermanagement` (`PaperID`)
@@ -498,15 +497,15 @@ END;
 
 DELIMITER ;
 
-INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, `Order`,Score)
+INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, Score)
 VALUES
-(1, 1, 0, 1,10);
-INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, `Order`,Score)
+(1, 1, 0, 10);
+INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, Score)
 VALUES
-(1, 2, 0, 2,20);
-INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, `Order`,Score)
+(1, 2, 0, 20);
+INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, Score)
 VALUES
-(1, 3, 0, 3,30);
+(1, 3, 0, 30);
 
 -- 创建一个在插入 examregistration 表时更新 NumberOfExaminees 的触发器
 DELIMITER //
