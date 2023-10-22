@@ -3,6 +3,7 @@ package com.exampro.controller.paper;
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
 import com.exampro.mapper.paper.PapermanagementMapper;
+import com.exampro.model.Paperquestion;
 import com.exampro.model.exam.ExamInfoDTO;
 import com.exampro.model.paper.Papermanagement;
 import com.exampro.utils.jwt.JwtTokenUtil;
@@ -82,6 +83,7 @@ public class PaperController {
             return ResponseEntity.ok(response.failure("添加试卷失败",false));
         }
     }
+
     /**
      * 根据试卷id查询试卷
      */
@@ -93,6 +95,20 @@ public class PaperController {
             return ResponseEntity.ok(response.success("没有试卷",emptyList));
         }else {
             return ResponseEntity.ok(response.success("查询成功",rows));
+        }
+    }
+
+    /**
+     * 向试卷添加题目
+     */
+    @PostMapping("/addQuesById")
+    @ApiOperation("根据试卷id查找试卷")
+    public ResponseEntity<ApiRest<?>> addQuesById(@RequestBody List<Paperquestion> paperquestions){
+        try {
+            return ResponseEntity.ok(response.success("Data inserted successfully",paperquestions));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(response.success("Error inserting data: " + e.getMessage()));
         }
     }
 }

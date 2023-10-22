@@ -15,7 +15,7 @@ public interface PapermanagementMapper {
      * 查找全部的试卷
      * @return
      */
-    @Select("select * from papermanagement")
+    @Select("select * from papermanagement order by PaperID desc")
     List<Papermanagement> selectAllPaper();
 
     /**

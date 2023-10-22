@@ -37,6 +37,7 @@ public class QuestionController {
     public ResponseEntity<ApiRest<?>> searchAllQues(){
         ApiResponse<Boolean> response = new ApiResponse<>();
         List<Questionpool> rows=questionpoolMapper.selectAllQuestion();
+
         if(rows.isEmpty()){
             return ResponseEntity.ok(response.success("没有题目",emptyList));
         }else {

@@ -45,7 +45,7 @@ public class QuesAddBankController {
     public ResponseEntity<ApiRest<Boolean>> addQuestion(@RequestParam("bankid") String bankId,
                                                         @RequestParam("questionid") String questionId){
         int row = quesAddBankMapper.addQuesInBank(Integer.parseInt(bankId),Integer.parseInt(questionId));
-            if(row>0){
+            if(row > 0){
                 return ResponseEntity.ok(response.success("插入成功",true));
             }else {
                 return ResponseEntity.ok(response.success("插入失败",false));
