@@ -9,10 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -94,6 +91,10 @@ public class QuestionController {
     /**
      * 查询通过审核的题目 selectQuesPass
      */
+
+    @ApiOperation("查询通过审核的题目")
+    @GetMapping(value="/selectQuesPass",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiRest<?>> selectQuesPass(){
         ApiResponse<Boolean> response = new ApiResponse<>();
         List<Questionpool> rows=questionpoolMapper.selectQuesPass();
         if(rows.isEmpty()){
