@@ -43,6 +43,28 @@ public class Questionpool implements Serializable {
 
     private int juniorState;
 
+    private int ultimateState;
+
+    public int getUltimateState() {
+        return ultimateState;
+    }
+
+    public void setUltimateState(int ultimateState) {
+        this.ultimateState = ultimateState;
+    }
+
+    public Questionpool(Integer questionId, String questionType, String questionDescription, Integer userId, String questionAnswer, Date createTime, int juniorState, int ultimateState, Integer questionScore) {
+        this.questionId = questionId;
+        this.questionType = questionType;
+        this.questionDescription = questionDescription;
+        this.userId = userId;
+        this.questionAnswer = questionAnswer;
+        this.createTime = createTime;
+        this.juniorState = juniorState;
+        this.ultimateState = ultimateState;
+        this.questionScore = questionScore;
+    }
+
     public Questionpool(Integer questionId, String questionType, String questionDescription, Integer userId, String questionAnswer, Date createTime, int juniorState, Integer questionScore) {
         this.questionId = questionId;
         this.questionType = questionType;

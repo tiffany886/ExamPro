@@ -49,4 +49,21 @@ public interface PapermanagementMapper {
             "SET juniorState = 2\n" +
             "WHERE paperId = #{paperId};\n")
     int changPaperRefuseById(int paperId);
+
+
+    /**
+     * 修改状态为通过 终极
+     */
+    @Update("UPDATE papermanagement\n" +
+            "SET ultimateState = 1\n" +
+            "WHERE paperId = #{paperId};\n")
+    int changPaperPassLast(int paperId);
+
+    /**
+     * 修改状态为不通过 终极
+     */
+    @Update("UPDATE papermanagement\n" +
+            "SET ultimateState = 2\n" +
+            "WHERE paperId = #{paperId};\n")
+    int changPaperRefuseLast(int paperId);
 }

@@ -80,4 +80,20 @@ public interface ExamMapper {
             "SET juniorState = 2\n" +
             "WHERE examID = #{examID};\n")
     int changExamRefuseById(int examId);
+
+    /**
+     * 修改状态为通过
+     */
+    @Update("UPDATE exam\n" +
+            "SET ultimateState = 1\n" +
+            "WHERE examID = #{examID};\n")
+    int changExamPassLast(int examId);
+
+    /**
+     * 修改状态为不通过
+     */
+    @Update("UPDATE exam\n" +
+            "SET ultimateState = 2\n" +
+            "WHERE examID = #{examID};\n")
+    int changExamRefuseLast(int examId);
 }

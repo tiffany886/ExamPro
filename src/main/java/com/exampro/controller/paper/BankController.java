@@ -34,7 +34,7 @@ public class BankController {
      */
     @GetMapping(value="/searchAllBank")
     @ApiOperation("查询所有题库") // 在这里定义接口的名字
-    public ResponseEntity<ApiRest<?>> searchAllQues(){
+    public ResponseEntity<ApiRest<?>> searchAllBank(){
         List<Questionbank> rows=questionbankMapper.selectAllBank();
         System.out.println(rows);
         if(rows.isEmpty()){
@@ -76,14 +76,12 @@ public class BankController {
 
     @PostMapping(value = "/updateBank")
     @ApiOperation("修改题库")
-    public ResponseEntity<ApiRest<Boolean>> updateBank(@RequestParam("bankname") String bankName,@RequestHeader("Authorization") String token){
-        Claims claims = jwtTokenUtil.parseToken(token);
-        Integer userID = Integer.parseInt(claims.getId());
-        int row = questionbankMapper.updateBank(bankName,userID);
+    public ResponseEntity<ApiRest<Boolean>> updateBank(@RequestParam("bankname") String bankName,@RequestParam("bankId") Integer bankId){
+        int row = questionbankMapper.updateBank(bankName,bankId);
         if(row>0){
-            return ResponseEntity.ok(response.success("插入成功",true));
+            return ResponseEntity.ok(response.success("修改成功",true));
         }else {
-            return ResponseEntity.ok(response.success("插入失败",false));
+            return ResponseEntity.ok(response.success("修改失败",false));
         }
     }
 }

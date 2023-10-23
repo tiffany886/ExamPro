@@ -42,8 +42,8 @@ public interface QuestionbankMapper {
      */
     @Update("UPDATE questionbank\n" +
             "SET BankName = #{bankName}\n" +
-            "WHERE BankID = #{userId};\n")
-    int updateBank(String bankName,Integer userId);
+            "WHERE bankId = #{bankId};\n")
+    int updateBank(String bankName,Integer bankId);
 
     int insert(Questionbank record);
 
