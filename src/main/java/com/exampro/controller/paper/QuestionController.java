@@ -89,4 +89,16 @@ public class QuestionController {
             return ResponseEntity.ok(response.success("插入失败",false));
         }
     }
+
+    /**
+     * 查询通过审核的题目 selectQuesPass
+     */
+        ApiResponse<Boolean> response = new ApiResponse<>();
+        List<Questionpool> rows=questionpoolMapper.selectQuesPass();
+        if(rows.isEmpty()){
+            return ResponseEntity.ok(response.success("没有题目",emptyList));
+        }else {
+            return ResponseEntity.ok(response.success("查询成功",rows));
+        }
+    }
 }

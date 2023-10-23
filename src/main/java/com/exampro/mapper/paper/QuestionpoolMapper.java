@@ -42,4 +42,12 @@ public interface QuestionpoolMapper {
             "SET juniorState = 2\n" +
             "WHERE QuestionID = #{questionId};\n")
     int changQuesRefuseById(int questionId);
+
+    /**
+     * 获得初级审批通过的试题
+     */
+    @Select("SELECT * \n" +
+            "FROM questionpool \n" +
+            "WHERE juniorState = 1 order by createTime desc;\n")
+    List<Questionpool> selectQuesPass();
 }
