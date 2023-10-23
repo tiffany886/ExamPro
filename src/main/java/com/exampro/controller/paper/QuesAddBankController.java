@@ -74,4 +74,16 @@ public class QuesAddBankController {
             return ResponseEntity.ok(response.success("查询成功",res));
         }
     }
+
+    @PostMapping(value = "/selectBankQuesPass",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("查找题库中通过的题目")
+    public ResponseEntity<ApiRest<?>> selectBankQuesPass(@RequestParam("bankid") String bankId){
+        List<Questionpool> rows = quesAddBankMapper.selectBankQuesPass(Integer.parseInt(bankId));
+        if(rows.isEmpty()){
+            return ResponseEntity.ok(response.success("没有题目",emptyList));
+        }else {
+            List<HashMap<String,?>> res = transformData(rows);
+            return ResponseEntity.ok(response.success("查询成功",res));
+        }
+    }
 }

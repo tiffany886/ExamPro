@@ -1,14 +1,8 @@
-package com.exampro.model;
+package com.exampro.model.paper;
 
 import java.io.Serializable;
 
 public class Paperquestion implements Serializable {
-    /**
-     * 关联ID
-     *
-     * @mbg.generated
-     */
-    private Integer linkid;
 
     /**
      * 试卷ID
@@ -37,16 +31,6 @@ public class Paperquestion implements Serializable {
      * @mbg.generated
      */
     private Integer score;
-
-    private static final long serialVersionUID = 1L;
-
-    public Integer getLinkid() {
-        return linkid;
-    }
-
-    public void setLinkid(Integer linkid) {
-        this.linkid = linkid;
-    }
 
     public Integer getPaperid() {
         return paperid;
@@ -82,17 +66,11 @@ public class Paperquestion implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", linkid=").append(linkid);
-        sb.append(", paperid=").append(paperid);
-        sb.append(", questionid=").append(questionid);
-        sb.append(", questiontype=").append(questiontype);
-        sb.append(", score=").append(score);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "Paperquestion{" +
+                "paperid=" + paperid +
+                ", questionid=" + questionid +
+                ", questiontype='" + questiontype + '\'' +
+                ", score=" + score +
+                '}';
     }
 }

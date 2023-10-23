@@ -20,11 +20,10 @@ public interface PapermanagementMapper {
      * @param
      * @return #{paperName}, #{objectiveScore}, #{totalScore}, #{subjectiveScore}, #{startTime}, #{numberOfExaminees}, #{userId} ,#{duration}
      */
+    @Options(useGeneratedKeys = true,keyProperty = "paperId",keyColumn = "PaperID")
     @Insert("INSERT INTO papermanagement (PaperName, ObjectiveScore, TotalScore, SubjectiveScore, UserID) " +
-            "VALUES (#{paperName}, #{objectiveScore}, #{totalScore}, #{subjectiveScore}, #{userID})")
-    int insertPaper(@Param("paperName") String paperName, @Param("objectiveScore") Integer objectiveScore,
-                    @Param("totalScore") Integer totalScore, @Param("subjectiveScore") Integer subjectiveScore,
-                    @Param("userID") Integer userID);
+            "VALUES (#{paperName}, #{objectiveScore}, #{totalScore}, #{subjectiveScore}, #{userId})")
+    int insertPaper(Papermanagement papermanagement);
 
 
     /**

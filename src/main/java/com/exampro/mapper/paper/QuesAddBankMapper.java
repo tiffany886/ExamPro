@@ -21,4 +21,11 @@ public interface QuesAddBankMapper {
             "WHERE bq.BankID = #{bankId} order by createTime desc")
     List<Questionpool> selectBankQuesByBankId(Integer userId);
 
+    // 找某一个题库中通过的题
+    @Select("SELECT qp.*\n" +
+            "FROM questionpool qp\n" +
+            "         INNER JOIN bankquestion bq ON qp.QuestionID = bq.QuestionID\n" +
+            "WHERE bq.BankID = #{bankId} and bq.ultimateState = 1 order by createTime desc")
+    List<Questionpool> selectBankQuesPass(Integer userId);
+
 }

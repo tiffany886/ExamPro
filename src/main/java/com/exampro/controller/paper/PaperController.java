@@ -3,9 +3,10 @@ package com.exampro.controller.paper;
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
 import com.exampro.mapper.paper.PapermanagementMapper;
-import com.exampro.model.Paperquestion;
-import com.exampro.model.exam.ExamInfoDTO;
+import com.exampro.mapper.paper.PaperquestionMapper;
+import com.exampro.model.paper.Paperquestion;
 import com.exampro.model.paper.Papermanagement;
+import com.exampro.model.paper.paperQuesItem;
 import com.exampro.utils.jwt.JwtTokenUtil;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import com.exampro.utils.paper.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -39,6 +41,13 @@ public class PaperController {
     private JwtTokenUtil jwtTokenUtil;
 
     /**
+     * 注入试卷题目mapper
+     */
+    @Autowired
+    private PaperquestionMapper paperquestionMapper;
+
+
+    /**
      * 查询试卷
      * @return
      */
@@ -56,31 +65,35 @@ public class PaperController {
     /**
      * 添加试卷
      * (#{PaperName}, #{ObjectiveScore}, #{TotalScore}, #{SubjectiveScore}, #{StartTime}, #{EndTime},#{NumberOfExaminees}, #{UserID}
+     * @return
      */
     @PostMapping("/addPaper")
     @ApiOperation("添加试卷")
-    public ResponseEntity<ApiRest<Boolean>> addPaper(@RequestHeader("Authorization") String token,
+    public ResponseEntity<ApiRest<HashMap>> addPaper(@RequestHeader("Authorization") String token,
                                                      @RequestParam("paperName") String paperName,
                                                      @RequestParam("objectiveScore") String objectiveScore,
                                                      @RequestParam("subjectiveScore") String subjectiveScore,
                                                      @RequestParam("totalScore") String totalScore) throws ParseException {
 
-        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        ApiResponse<HashMap> response = new ApiResponse<>();
         // 解析token获取用户id
         Claims claims = jwtTokenUtil.parseToken(token);
-        Integer userID = Integer.parseInt(claims.getId());
+        Integer userId = Integer.parseInt(claims.getId());
 
         // 在这里进行类型转换
         Integer objScore = Integer.parseInt(objectiveScore);
         Integer totScore = Integer.parseInt(totalScore);
         Integer subScore = Integer.parseInt(subjectiveScore);
 
-        int result = papermanagementMapper.insertPaper(paperName, objScore, totScore, subScore, userID);
+        Papermanagement papermanagement = new Papermanagement(paperName,objScore,totScore,subScore,userId);
+        int result = papermanagementMapper.insertPaper(papermanagement);
 
         if (result > 0) {
-            return ResponseEntity.ok(response.success("添加试卷成功", true));
+            HashMap data = new HashMap();
+            data.put("paperId",papermanagement.getPaperId());
+            return ResponseEntity.ok(response.success("添加试卷成功",data));
         } else {
-            return ResponseEntity.ok(response.failure("添加试卷失败",false));
+            return ResponseEntity.ok(response.failure("添加试卷失败",null));
         }
     }
 
@@ -102,13 +115,48 @@ public class PaperController {
      * 向试卷添加题目
      */
     @PostMapping("/addQuesById")
-    @ApiOperation("根据试卷id查找试卷")
-    public ResponseEntity<ApiRest<?>> addQuesById(@RequestBody List<Paperquestion> paperquestions){
+    @ApiOperation("向试卷添加题目")
+    public ResponseEntity<ApiRest<?>> addQuesById(@RequestBody List<Paperquestion> paperquestions) {
         try {
-            return ResponseEntity.ok(response.success("Data inserted successfully",paperquestions));
+            for (Paperquestion question : paperquestions) {
+                System.out.println(question);
+                int result = paperquestionMapper.insertPaperQuestion(
+                        question.getPaperid(),
+                        question.getQuestionid(),
+                        question.getQuestiontype(),
+                        question.getScore()
+                );
+
+                if (result <= 0) {
+                    return ResponseEntity.ok(response.failure("该条数据插入失败！题号为: " + question.getQuestionid()));
+                }
+            }
+
+            return ResponseEntity.ok(response.success("所有题目插入成功", true));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.ok(response.success("Error inserting data: " + e.getMessage()));
+            return ResponseEntity.ok(response.failure("插入题目失败！" + e.getMessage()));
+        }
+    }
+
+    /**
+     * 根据试卷id获取所拥有的题目
+     */
+    @PostMapping("/findQuesByPaperId")
+    @ApiOperation("根据试卷id获取所拥有的题目")
+    public ResponseEntity<ApiRest<?>> findQuesByPaperId(@RequestParam("paperId") String paperId) {
+
+        try {
+            List<paperQuesItem> paperQuesList = paperquestionMapper.findQuesByPaperId(Integer.parseInt(paperId));
+
+            if (paperQuesList.size() <= 0) {
+                return ResponseEntity.ok(response.failure("出现错误，试卷题目查询失败",false));
+            }else{
+                return ResponseEntity.ok(response.success("该试卷题目查询成功", paperQuesList));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(response.failure("试卷题目查询失败！" + e.getMessage()));
         }
     }
 }
