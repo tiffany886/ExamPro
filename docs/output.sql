@@ -133,23 +133,42 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `examrecord`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
+# CREATE TABLE `examrecord` (
+#   `RecordID` int NOT NULL AUTO_INCREMENT COMMENT '记录ID',
+#   `ExamID` int NOT NULL COMMENT '考试ID',
+#   `UserID` int NOT NULL COMMENT '用户ID',
+#   `ExamDescription` varchar(255) NOT NULL COMMENT '考试描述',
+#   `StartTime` datetime NOT NULL COMMENT '开始时间',
+#   `EndTime` datetime NOT NULL COMMENT '结束时间',
+#   `ObjectiveScore` int NOT NULL COMMENT '客观分',
+#   `SubjectiveScore` int NOT NULL COMMENT '主观分',
+#   `TotalScore` int NOT NULL COMMENT '总分',
+#   `Status` int NOT NULL COMMENT '状态',
+#   PRIMARY KEY (`RecordID`),
+#   KEY `ExamID` (`ExamID`),
+#   KEY `UserID` (`UserID`),
+#   CONSTRAINT `examrecord_ibfk_1` FOREIGN KEY (`ExamID`) REFERENCES `exam` (`ExamID`),
+#   CONSTRAINT `examrecord_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`)
+# ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='在线考试记录表';
+
 CREATE TABLE `examrecord` (
-  `RecordID` int NOT NULL AUTO_INCREMENT COMMENT '记录ID',
-  `ExamID` int NOT NULL COMMENT '考试ID',
-  `UserID` int NOT NULL COMMENT '用户ID',
-  `ExamDescription` varchar(255) NOT NULL COMMENT '考试描述',
-  `StartTime` datetime NOT NULL COMMENT '开始时间',
-  `EndTime` datetime NOT NULL COMMENT '结束时间',
-  `ObjectiveScore` int NOT NULL COMMENT '客观分',
-  `SubjectiveScore` int NOT NULL COMMENT '主观分',
-  `TotalScore` int NOT NULL COMMENT '总分',
-  `Status` int NOT NULL COMMENT '状态',
-  PRIMARY KEY (`RecordID`),
-  KEY `ExamID` (`ExamID`),
-  KEY `UserID` (`UserID`),
-  CONSTRAINT `examrecord_ibfk_1` FOREIGN KEY (`ExamID`) REFERENCES `exam` (`ExamID`),
-  CONSTRAINT `examrecord_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='在线考试记录表';
+                              `RecordID` int NOT NULL AUTO_INCREMENT COMMENT '考试记录ID',
+                              `PaperID` int NOT NULL COMMENT '试卷ID',
+                              `QuestionID` int NOT NULL COMMENT '题目ID',
+                              `StudentAnswer` text COMMENT '学生答案',
+                              `Score` int COMMENT '所得分数',
+                              `TotalScore` int COMMENT '题目总分',
+                              PRIMARY KEY (`RecordID`),
+                              KEY `PaperID` (`PaperID`),
+                              KEY `QuestionID` (`QuestionID`),
+                              CONSTRAINT `examrecord_ibfk_1` FOREIGN KEY (`PaperID`) REFERENCES `papermanagement` (`PaperID`),
+                              CONSTRAINT `examrecord_ibfk_2` FOREIGN KEY (`QuestionID`) REFERENCES `questionpool` (`QuestionID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='考试记录表';
+
+ALTER TABLE `examrecord`
+    ADD `ExamID` int NOT NULL COMMENT '考试ID',
+    ADD CONSTRAINT `examrecord_ibfk_3` FOREIGN KEY (`ExamID`) REFERENCES `exam` (`ExamID`);
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
