@@ -120,5 +120,14 @@ public class ExamController {
             return ResponseEntity.ok(response.failure("创建考试失败！" + e.getMessage()));
         }
     }
-
+    /**
+     * 查询通过初审的考试
+     */
+    @GetMapping("/examsPassJunior")
+    @ApiOperation("查询通过初审的考试")
+    public ResponseEntity<?> examsPassJunior() {
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        List<ExamInfoDTO> data = examMapper.findExamsPassJunior();
+        return ResponseEntity.ok(response.success("查询成功！", data));
+    }
 }

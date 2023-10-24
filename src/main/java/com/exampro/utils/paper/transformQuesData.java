@@ -26,6 +26,7 @@ public class transformQuesData {
             data.put("questionId",item.getQuestionId());
             data.put("questionStore",item.getQuestionScore());
             data.put("juniorState",item.getJuniorState());
+            data.put("ultimateState",item.getUltimateState());
             transformedData.add(data);
         }
         return transformedData;

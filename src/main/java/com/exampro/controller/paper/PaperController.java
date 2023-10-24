@@ -112,6 +112,19 @@ public class PaperController {
     }
 
     /**
+     * 查询通过初审的卷子
+     */
+    @GetMapping("/searchPaperPassJunior")
+    @ApiOperation("查询通过初审的卷子")
+    public ResponseEntity<ApiRest<?>> searchPaperPassJunior(){
+        List<Papermanagement> rows = papermanagementMapper.selectPaperPassJunior();
+        if(rows.isEmpty()){
+            return ResponseEntity.ok(response.success("没有试卷",emptyList));
+        }else {
+            return ResponseEntity.ok(response.success("查询成功",rows));
+        }
+    }
+    /**
      * 向试卷添加题目
      */
     @PostMapping("/addQuesById")

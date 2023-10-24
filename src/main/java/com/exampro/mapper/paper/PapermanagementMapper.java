@@ -66,4 +66,10 @@ public interface PapermanagementMapper {
             "SET ultimateState = 2\n" +
             "WHERE paperId = #{paperId};\n")
     int changPaperRefuseLast(int paperId);
+
+    /**
+     * 查询通过初审的卷子
+     */
+    @Select("select * from papermanagement where juniorState = 1")
+    List<Papermanagement> selectPaperPassJunior();
 }
