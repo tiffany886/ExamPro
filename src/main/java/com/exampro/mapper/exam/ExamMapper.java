@@ -43,6 +43,31 @@ public interface ExamMapper {
     List<ExamInfoDTO> findAllExams();
 
     /**
+     * 查询通过初审的试卷
+     */
+    @Select("SELECT\n" +
+            "    e.ExamID AS ExamID,\n" +
+            "    e.ExamName,\n" +
+            "    e.StartTime,\n" +
+            "    e.NumberOfExaminees,\n" +
+            "    e.examDuration ,e.ultimateState , e.juniorState \n" +
+            "FROM\n" +
+            "    exam e\n" +
+            "        JOIN\n" +
+            "    papermanagement p ON e.PaperID = p.PaperID\n" +
+            "        JOIN\n" +
+            "    `user` u ON e.UserID = u.UserID where e.juniorState = 1 order by e.examID desc;")
+    @Results({
+            @Result(column = "ExamID", property = "ExamID"),
+            @Result(column = "ExamName", property = "ExamName"),
+            @Result(column = "StartTime", property = "StartTime"),
+            @Result(column = "NumberOfExaminees", property = "NumberOfExaminees"),
+            @Result(column = "examDuration", property = "examDuration"),
+            @Result(column = "ultimateState", property = "ultimateState"),
+            @Result(column = "juniorState", property = "juniorState")
+    })
+    List<ExamInfoDTO> findExamsPassJunior();
+    /**
      * 通过用户id查询所拥有的考试
      * @param userID
      * @return
