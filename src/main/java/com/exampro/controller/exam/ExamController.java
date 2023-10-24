@@ -2,9 +2,11 @@ package com.exampro.controller.exam;
 
 import com.exampro.constants.ApiResponse;
 import com.exampro.mapper.exam.ExamMapper;
+import com.exampro.mapper.exam.ExamrecordMapper;
 import com.exampro.mapper.exam.ExamregistrationMapper;
 import com.exampro.model.exam.Exam;
 import com.exampro.model.exam.ExamInfoDTO;
+import com.exampro.model.exam.Examrecord;
 import com.exampro.utils.jwt.JwtTokenUtil;
 import com.exampro.utils.paper.DateFormat;
 import io.jsonwebtoken.Claims;
@@ -35,6 +37,12 @@ public class ExamController {
      */
     @Autowired
     private ExamregistrationMapper examregistrationMapper;
+
+    /**
+     * 注入ExamrecordMapper
+     */
+    @Autowired
+    private ExamrecordMapper examrecordMapper;
 
     /**
      * 注入 JwtTokenUtil
@@ -130,4 +138,34 @@ public class ExamController {
         List<ExamInfoDTO> data = examMapper.findExamsPassJunior();
         return ResponseEntity.ok(response.success("查询成功！", data));
     }
+
+    @GetMapping("/addExamRecord")
+    @ApiOperation("新增考生的考试记录")
+    public ResponseEntity<?> addExamRecord(
+            @RequestParam("paperID") Integer paperID,
+            @RequestParam("questionID") Integer questionID,
+            @RequestParam("studentAnswer") String studentAnswer,
+            @RequestParam("score") Integer score,
+            @RequestParam("totalScore") Integer totalScore,
+            @RequestParam("examID") Integer examID
+    ) {
+        Examrecord examRecord = new Examrecord();
+        examRecord.setPaperid(paperID);
+        examRecord.setQuestionid(questionID);
+        examRecord.setStudentanswer(studentAnswer);
+        examRecord.setScore(score);
+        examRecord.setTotalscore(totalScore);
+        examRecord.setExamid(examID);
+
+        int result = examrecordMapper.insertExamRecord(examRecord);
+
+        if (result > 0) {
+            // 插入成功
+            return ResponseEntity.ok("考试记录插入成功！");
+        } else {
+            // 插入失败
+            return ResponseEntity.badRequest().body("考试记录插入失败");
+        }
+    }
+
 }
