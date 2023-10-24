@@ -1,5 +1,6 @@
 package com.exampro.mapper.exam;
 
+import com.exampro.model.User;
 import com.exampro.model.exam.Exam;
 import com.exampro.model.exam.ExamInfoDTO;
 import org.apache.ibatis.annotations.*;
@@ -49,7 +50,9 @@ public interface ExamMapper {
             "    e.ExamID AS ExamID,\n" +
             "    e.ExamName,\n" +
             "    e.StartTime,\n" +
+            "    e.EndTime,\n" +
             "    e.NumberOfExaminees,\n" +
+            "    u.Username AS CreatedBy,\n" +
             "    e.examDuration ,e.ultimateState , e.juniorState \n" +
             "FROM\n" +
             "    exam e\n" +
@@ -61,10 +64,12 @@ public interface ExamMapper {
             @Result(column = "ExamID", property = "ExamID"),
             @Result(column = "ExamName", property = "ExamName"),
             @Result(column = "StartTime", property = "StartTime"),
+            @Result(column = "EndTime", property = "EndTime"),
             @Result(column = "NumberOfExaminees", property = "NumberOfExaminees"),
             @Result(column = "examDuration", property = "examDuration"),
             @Result(column = "ultimateState", property = "ultimateState"),
-            @Result(column = "juniorState", property = "juniorState")
+            @Result(column = "juniorState", property = "juniorState"),
+            @Result(column = "CreatedBy", property = "CreatedBy")
     })
     List<ExamInfoDTO> findExamsPassJunior();
     /**
@@ -75,6 +80,14 @@ public interface ExamMapper {
     @Select("SELECT * FROM exam WHERE UserID = #{userID} order by examID desc")
     List<Exam> findUserExams(@Param("userID") Integer userID);
 
+    /**
+     * 查询参加考试的考生
+     */
+    @Select("SELECT u.UserID, u.Username\n" +
+            "FROM user u\n" +
+            "INNER JOIN examregistration er ON u.UserID = er.UserID\n" +
+            "WHERE er.ExamID = #{examId};\n")
+    List<User> findExamRegistUsers(@Param("examId") Integer examId);
     /**
      * 添加考试
      * @param examName

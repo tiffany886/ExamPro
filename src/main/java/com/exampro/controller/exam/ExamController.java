@@ -4,6 +4,7 @@ import com.exampro.constants.ApiResponse;
 import com.exampro.mapper.exam.ExamMapper;
 import com.exampro.mapper.exam.ExamrecordMapper;
 import com.exampro.mapper.exam.ExamregistrationMapper;
+import com.exampro.model.User;
 import com.exampro.model.exam.Exam;
 import com.exampro.model.exam.ExamInfoDTO;
 import com.exampro.model.exam.Examrecord;
@@ -75,6 +76,17 @@ public class ExamController {
         return ResponseEntity.ok(response.success("查询成功！",data));
     }
 
+    /**
+     * 查询试卷的全部学生
+     */
+    @GetMapping("/examRegistUsers")
+    @ApiOperation("查询报名考试的考生")
+    public ResponseEntity<?> examRegistUsers(Integer examId) {
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        // 解析token获取用户id
+        List<User> data = examMapper.findExamRegistUsers(examId);
+        return ResponseEntity.ok(response.success("查询成功！",data));
+    }
     /**
      * 立即报名
      */

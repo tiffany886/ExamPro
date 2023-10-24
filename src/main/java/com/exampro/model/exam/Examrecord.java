@@ -1,5 +1,7 @@
 package com.exampro.model.exam;
 
+import io.swagger.models.auth.In;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -32,12 +34,12 @@ public class Examrecord implements Serializable {
     /**
      * 获得分数
      */
-    private String score;
+    private Integer score;
 
     /**
      * 答案总分
      */
-    private String totalscore;
+    private Integer totalscore;
 
     public Integer getRecordid() {
         return recordid;
@@ -79,7 +81,7 @@ public class Examrecord implements Serializable {
         this.studentanswer = studentanswer;
     }
 
-    public String getScore() {
+    public Integer getScore() {
         return score;
     }
 
@@ -87,7 +89,7 @@ public class Examrecord implements Serializable {
         this.score = score;
     }
 
-    public String getTotalscore() {
+    public Integer getTotalscore() {
         return totalscore;
     }
 
