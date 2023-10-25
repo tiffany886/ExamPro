@@ -3,6 +3,7 @@ package com.exampro.mapper.exam;
 import com.exampro.model.User;
 import com.exampro.model.exam.Exam;
 import com.exampro.model.exam.ExamInfoDTO;
+import com.exampro.model.exam.Examrecord;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -134,4 +135,6 @@ public interface ExamMapper {
             "SET ultimateState = 2\n" +
             "WHERE examID = #{examID};\n")
     int changExamRefuseLast(int examId);
+
+
 }

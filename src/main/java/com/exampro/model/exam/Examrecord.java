@@ -9,27 +9,21 @@ public class Examrecord implements Serializable {
     /**
      * 记录ID
      */
-    private Integer recordid;
-
+    private Integer recordId;
     /**
-     * 考试ID
+     * 试卷id
      */
-    private Integer examid;
+    private Integer paperId;
 
     /**
      * 试卷id
      */
-    private Integer paperid;
-
-    /**
-     * 试卷id
-     */
-    private Integer questionid;
+    private Integer questionId;
 
     /**
      * 学生答案
      */
-    private String studentanswer;
+    private String studentAnswer;
 
     /**
      * 获得分数
@@ -39,46 +33,72 @@ public class Examrecord implements Serializable {
     /**
      * 答案总分
      */
-    private Integer totalscore;
+    private Integer totalScore;
 
-    public Integer getRecordid() {
-        return recordid;
+    /**
+     * 考试ID
+     */
+    private Integer examId;
+
+    private Integer userId;
+
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setRecordid(Integer recordid) {
-        this.recordid = recordid;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getExamid() {
-        return examid;
+    public Examrecord(Integer recordId, Integer paperId, Integer questionId, String studentAnswer, Integer score, Integer totalScore, Integer examId, Integer userId) {
+        this.recordId = recordId;
+        this.paperId = paperId;
+        this.questionId = questionId;
+        this.studentAnswer = studentAnswer;
+        this.score = score;
+        this.totalScore = totalScore;
+        this.examId = examId;
+        this.userId = userId;
     }
 
-    public void setExamid(Integer examid) {
-        this.examid = examid;
+    public Integer getRecordId() {
+        return recordId;
     }
 
-    public Integer getPaperid() {
-        return paperid;
+    public void setRecordId(Integer recordId) {
+        this.recordId = recordId;
     }
 
-    public void setPaperid(Integer paperid) {
-        this.paperid = paperid;
+    public Integer getPaperId() {
+        return paperId;
     }
 
-    public Integer getQuestionid() {
-        return questionid;
+    public void setPaperId(Integer paperId) {
+        this.paperId = paperId;
     }
 
-    public void setQuestionid(Integer questionid) {
-        this.questionid = questionid;
+    public Integer getExamId() {
+        return examId;
     }
 
-    public String getStudentanswer() {
-        return studentanswer;
+    public void setExamId(Integer examId) {
+        this.examId = examId;
     }
 
-    public void setStudentanswer(String studentanswer) {
-        this.studentanswer = studentanswer;
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
+    public String getStudentAnswer() {
+        return studentAnswer;
+    }
+
+    public void setStudentAnswer(String studentAnswer) {
+        this.studentAnswer = studentAnswer;
     }
 
     public Integer getScore() {
@@ -89,24 +109,21 @@ public class Examrecord implements Serializable {
         this.score = score;
     }
 
-    public Integer getTotalscore() {
-        return totalscore;
+    public Integer getTotalScore() {
+        return totalScore;
     }
 
-    public void setTotalscore(Integer totalscore) {
-        this.totalscore = totalscore;
+    public void setTotalScore(Integer totalScore) {
+        this.totalScore = totalScore;
     }
-
-    @Override
-    public String toString() {
-        return "Examrecord{" +
-                "recordid=" + recordid +
-                ", examid=" + examid +
-                ", paperid=" + paperid +
-                ", questionid=" + questionid +
-                ", studentanswer='" + studentanswer + '\'' +
-                ", score='" + score + '\'' +
-                ", totalscore='" + totalscore + '\'' +
-                '}';
+    public Examrecord(){}
+    public Examrecord(Integer recordId, Integer paperId, Integer questionId, String studentAnswer, Integer score, Integer totalScore, Integer examId) {
+        this.recordId = recordId;
+        this.paperId = paperId;
+        this.questionId = questionId;
+        this.studentAnswer = studentAnswer;
+        this.score = score;
+        this.totalScore = totalScore;
+        this.examId = examId;
     }
 }

@@ -154,30 +154,87 @@ public class ExamController {
     @GetMapping("/addExamRecord")
     @ApiOperation("新增考生的考试记录")
     public ResponseEntity<?> addExamRecord(
-            @RequestParam("paperID") Integer paperID,
-            @RequestParam("questionID") Integer questionID,
+            @RequestParam("paperId") Integer paperId,
+            @RequestParam("questionId") Integer questionId,
             @RequestParam("studentAnswer") String studentAnswer,
             @RequestParam("score") Integer score,
             @RequestParam("totalScore") Integer totalScore,
-            @RequestParam("examID") Integer examID
+            @RequestParam("examId") Integer examId,
+            @RequestHeader("Authorization") String token
     ) {
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        Claims claims = jwtTokenUtil.parseToken(token);
+        Integer userID = Integer.parseInt(claims.getId());
         Examrecord examRecord = new Examrecord();
-        examRecord.setPaperid(paperID);
-        examRecord.setQuestionid(questionID);
-        examRecord.setStudentanswer(studentAnswer);
+        examRecord.setPaperId(paperId);
+        examRecord.setQuestionId(questionId);
+        examRecord.setStudentAnswer(studentAnswer);
         examRecord.setScore(score);
-        examRecord.setTotalscore(totalScore);
-        examRecord.setExamid(examID);
+        examRecord.setTotalScore(totalScore);
+        examRecord.setExamId(examId);
+        examRecord.setUserId(userID);
 
         int result = examrecordMapper.insertExamRecord(examRecord);
 
         if (result > 0) {
             // 插入成功
-            return ResponseEntity.ok("考试记录插入成功！");
+            return ResponseEntity.ok(response.success("考试记录插入成功！"));
         } else {
             // 插入失败
             return ResponseEntity.badRequest().body("考试记录插入失败");
         }
     }
 
+    /**
+     * 判断是否有考试记录，则不可做题 isUserDoneExam
+     */
+    @GetMapping("/isUserDoneExam")
+    @ApiOperation("判断是否有考试记录")
+    public ResponseEntity<?> isUserDoneExam(@RequestHeader("Authorization") String token,@RequestParam("examId") Integer examId) {
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        Claims claims = jwtTokenUtil.parseToken(token);
+        Integer userID = Integer.parseInt(claims.getId());
+        List<Examrecord> data = examrecordMapper.findUserDoneExam(userID,examId);
+        if(!data.isEmpty()){
+            return ResponseEntity.ok(response.success("已交卷", true));
+        }else {
+            return ResponseEntity.ok(response.success("未交卷", false));
+        }
+    }
+
+    /**
+     * 根据用户id获取考试记录 selectAllExamRecord
+     */
+    @PostMapping("/getAllExamRecord")
+    @ApiOperation("根据用户id获取考试记录")
+    public ResponseEntity<?> getAllExamRecord(@RequestHeader("Authorization") String token,@RequestParam("examId") Integer examId) {
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        Claims claims = jwtTokenUtil.parseToken(token);
+        Integer userID = Integer.parseInt(claims.getId());
+        List<Examrecord> data = examrecordMapper.selectAllExamRecord(examId,userID);
+        if(!data.isEmpty()){
+            return ResponseEntity.ok(response.success("查询成功", data));
+        }else {
+            return ResponseEntity.ok(response.success("查询失败", false));
+        }
+    }
+
+    /**
+     * 更新学生成绩 updateUserExamScore
+     */
+    @GetMapping("/updateUserExamScore")
+    @ApiOperation("更新学生成绩")
+    public ResponseEntity<?> updateUserExamScore(@RequestHeader("Authorization") String token,@RequestParam("examId") Integer examId,@RequestParam("questionId") Integer questionId,@RequestParam("score") Integer score){
+        Claims claims = jwtTokenUtil.parseToken(token);
+        Integer userID = Integer.parseInt(claims.getId());
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        int data = examrecordMapper.updateUserExamScore(userID,examId,questionId,score);
+        if(data == 1){
+            return ResponseEntity.ok(response.success("插入成功！", true));
+        }else {
+            return ResponseEntity.ok(response.failure("插入失败！", false));
+
+        }
+
+    }
 }

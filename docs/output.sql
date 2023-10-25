@@ -169,6 +169,12 @@ ALTER TABLE `examrecord`
     ADD `ExamID` int NOT NULL COMMENT '考试ID',
     ADD CONSTRAINT `examrecord_ibfk_3` FOREIGN KEY (`ExamID`) REFERENCES `exam` (`ExamID`);
 
+-- 在examrecord表中添加UserID列作为外键
+ALTER TABLE `examrecord`
+    ADD `UserID` int NOT NULL COMMENT '用户ID',
+    ADD CONSTRAINT `examrecord_ibfk_4` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
+
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -593,4 +599,12 @@ INSERT INTO `role` (`RoleName`) VALUES
 ('监考人'),
 ('评卷人');
 
-
+DROP TABLE IF EXISTS userExamScore;
+CREATE TABLE userExamScore (
+                               id INT AUTO_INCREMENT PRIMARY KEY,
+                               userId INT NOT NULL,
+                               examId INT NOT NULL,
+                               totalScore INT NOT NULL,
+                               FOREIGN KEY (userId) REFERENCES user (UserID), -- 关联学生表
+                               FOREIGN KEY (examId) REFERENCES exam (ExamID)     -- 关联考试表
+);
