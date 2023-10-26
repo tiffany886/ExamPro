@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -131,13 +132,18 @@ public class ExamController {
         try{
             // 转换成时间格式
             Date beginTime = DateFormat.stringToDate(startTime);
-            Integer affectedRows = examMapper.addExam(examName,examDescription,paperID,beginTime,examDuration,userID);
-            if(affectedRows != 1){
-                return ResponseEntity.ok(response.failure("创建考试失败！请重新尝试！"));
+            Exam exam = new Exam(examName,examDescription,paperID,beginTime,examDuration,userID);
+            int result  = examMapper.addExam(exam);
+            if (result > 0) {
+                HashMap data = new HashMap();
+                data.put("examID",exam.getExamID());
+                return ResponseEntity.ok(response.success("创建考试成功！",data));
+            }else{
+                return ResponseEntity.ok(response.success("创建考试失败！请重新尝试！",false));
             }
-            return ResponseEntity.ok(response.success("创建考试成功！"));
+
         }catch (Exception e){
-            return ResponseEntity.ok(response.failure("创建考试失败！" + e.getMessage()));
+            return ResponseEntity.ok(response.failure("创建考试失败！" + e.getMessage(),false));
         }
     }
     /**

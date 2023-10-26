@@ -19,27 +19,23 @@ public class User{
     /**
      * 身份
      */
-    private Integer role;
+    private Integer roleid;
 
-    public User(Integer userid, String username) {
-        this.userid = userid;
+    public User(String username, String password, Integer roleid) {
         this.username = username;
+        this.password = password;
+        this.roleid = roleid;
     }
 
-    public User(Integer userid, String username, String password, Integer role) {
+    public User(Integer userid, String username, String password, Integer roleid) {
         this.userid = userid;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.roleid = roleid;
     }
 
-    public User(String username, String password, Integer role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
+    public User(int parseInt, String subject) {
     }
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getUserid() {
         return userid;
@@ -65,24 +61,21 @@ public class User{
         this.password = password;
     }
 
-    public Integer getRole() {
-        return role;
+    public Integer getRoleid() {
+        return roleid;
     }
 
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() +
-                " [" +
-                "Hash = " + hashCode() +
-                ", userid=" + userid +
-                ", username=" + username +
-                ", password=" + password +
-                ", role=" + role +
-                ", serialVersionUID=" + serialVersionUID +
-                "]";
+        return "User{" +
+                "userid=" + userid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roleid=" + roleid +
+                '}';
     }
 }

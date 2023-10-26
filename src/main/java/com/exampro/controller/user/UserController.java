@@ -91,7 +91,7 @@ public class UserController {
             return ResponseEntity.ok(response.failure("密码不正确！登陆失败！", false));
         }
         // 生成Token并返回给客户端
-        String token = jwtTokenUtil.buildToken(user.getUserid(),username,user.getRole());
+        String token = jwtTokenUtil.buildToken(user.getUserid(),username,user.getRoleid());
         HashMap data = new HashMap();
         data.put("token",token);
         data.put("username",username);
@@ -102,7 +102,7 @@ public class UserController {
     @PostMapping(value = "/reguser",produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("注册用户")
     public ResponseEntity<?> regUser(@RequestParam("username") String username,
-                                     @RequestParam("password") String password,@RequestParam("role") String role) {
+                                     @RequestParam("password") String password,@RequestParam("roleid") String roleid) {
         ApiResponse<Boolean> response = new ApiResponse<>();
         // 判断用户是否存在
         User user = userMapper.findByUsername(username);
@@ -115,12 +115,12 @@ public class UserController {
             // 加密密码
             PassInfo info = passHandler.buildPassword(password);
             // 创建一个新的User对象，使用提供的用户名、密码和角色
-            User newUser = new User(username, info.getPassword(), Integer.parseInt(role));
+            User newUser = new User(username, info.getPassword(), Integer.parseInt(roleid));
             // 将新用户插入数据库
             userMapper.insertNewUser(newUser);
             newUser = userMapper.findByUsername(username);
             // 生成Token并返回给客户端
-            String token = jwtTokenUtil.buildToken(newUser.getUserid(),username,newUser.getRole());
+            String token = jwtTokenUtil.buildToken(newUser.getUserid(),username,newUser.getRoleid());
             HashMap data = new HashMap();
             data.put("token",token);
             data.put("username",username);

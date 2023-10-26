@@ -577,7 +577,19 @@ CREATE TABLE `role` (
                         PRIMARY KEY (`RoleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色表';
 
+
+DROP TABLE IF EXISTS `exam_proctor`;
+CREATE TABLE `exam_proctor` (
+                                `RecordID` INT NOT NULL AUTO_INCREMENT COMMENT '记录ID',
+                                `ProctorID` INT NOT NULL COMMENT '监考人ID',
+                                `examID` INT NOT NULL COMMENT '考试ID',
+                                PRIMARY KEY (`RecordID`),
+                                FOREIGN KEY (`ProctorID`) REFERENCES `user`(`UserID`),
+                                FOREIGN KEY (`examID`) REFERENCES `exam`(`examID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='考试监考人表';
+
 -- 监考记录表
+DROP TABLE IF EXISTS `proctoring_record`;
 CREATE TABLE `proctoring_record` (
                                      `RecordID` INT NOT NULL AUTO_INCREMENT COMMENT '记录ID',
                                      `ExamineeID` INT NOT NULL COMMENT '考生ID',
@@ -586,9 +598,13 @@ CREATE TABLE `proctoring_record` (
                                      `IssueContent` VARCHAR(255) NOT NULL COMMENT '问题内容',
                                      `Time` DATETIME NOT NULL COMMENT '时间',
                                      `SenderID` INT NOT NULL COMMENT '发送人ID',
-                                     PRIMARY KEY (`RecordID`)
+                                     PRIMARY KEY (`RecordID`),
+                                     FOREIGN KEY (`ProctorID`) REFERENCES `exam_proctor`(`ProctorID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='监考记录表';
 
+# 时间当插入时就记录
+ALTER TABLE proctoring_record
+    MODIFY COLUMN Time TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 -- 向角色表插入默认数据
 INSERT INTO `role` (`RoleName`) VALUES
 ('初级审核员'),

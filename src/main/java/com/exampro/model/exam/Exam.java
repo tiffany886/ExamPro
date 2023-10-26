@@ -18,6 +18,20 @@ public class Exam implements Serializable {
         // 在这里添加构造函数、Getter和Setter方法
 
 
+
+    public Exam(String examName, String examDescription, int paperID, Date startTime, int examDuration, int userID) {
+        this.examName = examName;
+        this.examDescription = examDescription;
+        this.paperID = paperID;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.examDuration = examDuration;
+        this.numberOfExaminees = numberOfExaminees;
+        this.userID = userID;
+        this.ultimateState = ultimateState;
+        this.juniorState = juniorState;
+    }
+
     public Exam(int examID, String examName, String examDescription, int paperID, Date startTime, Date endTime, int examDuration, int numberOfExaminees, int userID, int ultimateState, int juniorState) {
         this.examID = examID;
         this.examName = examName;

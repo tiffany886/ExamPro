@@ -1,4 +1,4 @@
-package com.exampro.model;
+package com.exampro.model.exam;
 
 import java.io.Serializable;
 
@@ -6,21 +6,16 @@ public class Examregistration implements Serializable {
     /**
      * 报名ID
      *
-     * @mbg.generated
      */
     private Integer registrationid;
 
     /**
      * 考试ID
-     *
-     * @mbg.generated
      */
     private Integer examid;
 
     /**
      * 用户ID
-     *
-     * @mbg.generated
      */
     private Integer userid;
 

@@ -27,7 +27,7 @@ public interface UserMapper {
      * @param newUser
      * @return
      */
-    @Insert("INSERT INTO user (username, password, role) VALUES (#{username}, #{password}, #{role})")
+    @Insert("INSERT INTO user (username, password, roleid) VALUES (#{username}, #{password}, #{roleid})")
     int insertNewUser(User newUser);
 
     /**

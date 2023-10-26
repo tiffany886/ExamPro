@@ -98,11 +98,10 @@ public interface ExamMapper {
      * @param examDuration
      * @return
      */
+    @Options(useGeneratedKeys = true,keyProperty = "examID",keyColumn = "examID")
     @Insert(" INSERT INTO exam (ExamName, ExamDescription, PaperID, StartTime, ExamDuration,UserID )\n" +
             "VALUES (#{examName}, #{examDescription}, #{paperID}, #{startTime}, #{examDuration}, #{userID});")
-    Integer addExam(@Param("examName") String examName, @Param("examDescription") String examDescription,
-                    @Param("paperID") Integer paperID, @Param("startTime") Date startTime,
-                    @Param("examDuration") Integer examDuration,@Param("userID") Integer userID);
+    Integer addExam(Exam exam);
 
     /**
      * 修改状态为通过
