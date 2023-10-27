@@ -41,6 +41,7 @@ public class QuestionController {
             return ResponseEntity.ok(response.success("查询成功",rows));
         }
     }
+
     /**
      * 根据id获取对应的题目池
      */
@@ -88,19 +89,56 @@ public class QuestionController {
         }
     }
 
-    /**
-     * 查询通过审核的题目 selectQuesPass
-     */
+//    /**
+//     * 查询通过审核的题目 selectQuesPass
+//     */
+//    @ApiOperation("查询通过审核的题目")
+//    @GetMapping(value="/selectQuesPass",produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<ApiRest<?>> selectQuesPass(){
+//        ApiResponse<Boolean> response = new ApiResponse<>();
+//        List<Questionpool> rows=questionpoolMapper.selectQuesPass();
+//        if(rows.isEmpty()){
+//            return ResponseEntity.ok(response.success("没有题目",emptyList));
+//        }else {
+//            return ResponseEntity.ok(response.success("查询成功",rows));
+//        }
+//    }
 
-    @ApiOperation("查询通过审核的题目")
-    @GetMapping(value="/selectQuesPass",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiRest<?>> selectQuesPass(){
+    /**
+     * 获取题目池的页数
+     */
+    @PostMapping("/getQuestionPoolPageCount")
+    @ApiOperation("获取题目池的页数")
+    public ResponseEntity<ApiRest<?>> getQuestionPoolPageCount(@RequestParam("pageSize") int pageSize) {
+        ApiResponse<Integer> response = new ApiResponse<>();
+        int totalRecords = questionpoolMapper.getTotalQuestionPoolRecords(); // 你需要实现这个方法
+        int pageCount = (int) Math.ceil((double) totalRecords / pageSize);
+        HashMap data = new HashMap();
+        data.put("pageCount",pageCount);
+        return ResponseEntity.ok(response.success("获取题目池页数成功", data));
+    }
+
+    /**
+     * 分页获取通过的题目
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation("分页获取通过的题目")
+    @PostMapping(value = "/selectQuesPass", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiRest<?>> searchAllQues(
+            @RequestParam("page") int page, // 页码
+            @RequestParam("pageSize") int pageSize // 每页记录数
+    ) {
         ApiResponse<Boolean> response = new ApiResponse<>();
-        List<Questionpool> rows=questionpoolMapper.selectQuesPass();
-        if(rows.isEmpty()){
-            return ResponseEntity.ok(response.success("没有题目",emptyList));
-        }else {
-            return ResponseEntity.ok(response.success("查询成功",rows));
+        // 计算分页查询的起始索引
+        int startIndex = (page - 1) * pageSize;
+        List<Questionpool> rows = questionpoolMapper.selectQuestionWithPage(startIndex, pageSize);
+
+        if (rows.isEmpty()) {
+            return ResponseEntity.ok(response.success("没有题目", emptyList));
+        } else {
+            return ResponseEntity.ok(response.success("查询成功", rows));
         }
     }
 }
