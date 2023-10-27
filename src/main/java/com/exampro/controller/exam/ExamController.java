@@ -8,6 +8,7 @@ import com.exampro.model.User;
 import com.exampro.model.exam.Exam;
 import com.exampro.model.exam.ExamInfoDTO;
 import com.exampro.model.exam.Examrecord;
+import com.exampro.model.exam.UserExam;
 import com.exampro.utils.jwt.JwtTokenUtil;
 import com.exampro.utils.paper.DateFormat;
 import io.jsonwebtoken.Claims;
@@ -78,6 +79,31 @@ public class ExamController {
     }
 
     /**
+     * 查询通过终审的全部考试
+     */
+    @GetMapping("/userExamsPassAll")
+    @ApiOperation("查询所有通过终审的考试")
+    public ResponseEntity<?> userExamsPassAll() {
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        // 解析token获取用户id
+        List<ExamInfoDTO> data = examMapper.findExamsPassAll();
+        return ResponseEntity.ok(response.success("查询成功！",data));
+    }
+    /**
+     * 查询用户报名的考试
+     */
+    @GetMapping("/findExamineeExams")
+    @ApiOperation("查询考生报名的考试")
+    public ResponseEntity<?> findExamineeExams(@RequestHeader("Authorization") String token) {
+        ApiResponse<List<UserExam>> response = new ApiResponse<>();
+        // 解析token获取用户id
+        Claims claims = jwtTokenUtil.parseToken(token);
+        Integer userID = Integer.parseInt(claims.getId());
+        List<UserExam> data = examMapper.findExamineeExams(userID);
+        return ResponseEntity.ok(response.success("查询成功！",data));
+    }
+
+    /**
      * 查询试卷的全部学生
      */
     @GetMapping("/examRegistUsers")
@@ -132,6 +158,8 @@ public class ExamController {
         try{
             // 转换成时间格式
             Date beginTime = DateFormat.stringToDate(startTime);
+            System.out.println(startTime);
+            System.out.println(beginTime);
             Exam exam = new Exam(examName,examDescription,paperID,beginTime,examDuration,userID);
             int result  = examMapper.addExam(exam);
             if (result > 0) {
@@ -243,4 +271,8 @@ public class ExamController {
         }
 
     }
+
+    /**
+     * 获取学生考试记录 getUserExamRecord
+     */
 }

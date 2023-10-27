@@ -43,4 +43,8 @@ public interface ExamrecordMapper {
             "SET Score = #{score}\n" +
             "WHERE UserID = #{userId} AND ExamID = #{examId} AND QuestionID = #{questionId};\n")
     int updateUserExamScore(int userId,int examId,int questionId,int score);
+    /**
+     * 是否评卷完毕
+     */
+    // @Select("select * from examrecord where userId = #{userId} and examId = #{examId}")
 }

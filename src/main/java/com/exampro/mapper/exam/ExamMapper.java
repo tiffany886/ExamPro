@@ -4,6 +4,7 @@ import com.exampro.model.User;
 import com.exampro.model.exam.Exam;
 import com.exampro.model.exam.ExamInfoDTO;
 import com.exampro.model.exam.Examrecord;
+import com.exampro.model.exam.UserExam;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -81,6 +82,39 @@ public interface ExamMapper {
     @Select("SELECT * FROM exam WHERE UserID = #{userID} order by examID desc")
     List<Exam> findUserExams(@Param("userID") Integer userID);
 
+    // @Select("SELECT * FROM exam WHERE juniorState = 1 and ultimateState = 1 order by examID desc")
+    @Select("SELECT\n" +
+            "    e.ExamID AS ExamID,\n" +
+            "    e.ExamName,\n" +
+            "    e.StartTime,\n" +
+            "    e.EndTime,\n" +
+            "    e.NumberOfExaminees,\n" +
+            "    u.Username AS CreatedBy,\n" +
+            "    e.examDuration ,e.ultimateState , e.juniorState \n" +
+            "FROM\n" +
+            "    exam e\n" +
+            "        JOIN\n" +
+            "    papermanagement p ON e.PaperID = p.PaperID\n" +
+            "        JOIN\n" +
+            "    `user` u ON e.UserID = u.UserID where e.juniorState = 1 and e.ultimateState = 1 order by e.examID desc;")
+    @Results({
+            @Result(column = "ExamID", property = "ExamID"),
+            @Result(column = "ExamName", property = "ExamName"),
+            @Result(column = "StartTime", property = "StartTime"),
+            @Result(column = "EndTime", property = "EndTime"),
+            @Result(column = "NumberOfExaminees", property = "NumberOfExaminees"),
+            @Result(column = "examDuration", property = "examDuration"),
+            @Result(column = "ultimateState", property = "ultimateState"),
+            @Result(column = "juniorState", property = "juniorState"),
+            @Result(column = "CreatedBy", property = "CreatedBy")
+    })
+    List<ExamInfoDTO> findExamsPassAll();
+
+    @Select("SELECT e.ExamID, e.ExamName, e.ExamDescription, e.StartTime, e.EndTime, e.ExamDuration,e.PaperID,e.NumberOfExaminees\n" +
+            "FROM examregistration er\n" +
+            "JOIN exam e ON er.ExamID = e.ExamID\n" +
+            "WHERE er.UserID = #{userID};\n")
+    List<UserExam> findExamineeExams(@Param("userID") Integer userID);
     /**
      * 查询参加考试的考生
      */
@@ -91,11 +125,6 @@ public interface ExamMapper {
     List<User> findExamRegistUsers(@Param("examId") Integer examId);
     /**
      * 添加考试
-     * @param examName
-     * @param examDescription
-     * @param paperID
-     * @param startTime
-     * @param examDuration
      * @return
      */
     @Options(useGeneratedKeys = true,keyProperty = "examID",keyColumn = "examID")

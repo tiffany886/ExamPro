@@ -15,6 +15,8 @@ public interface PapermanagementMapper {
     @Select("select * from papermanagement order by PaperID desc")
     List<Papermanagement> selectAllPaper();
 
+    @Select("select * from papermanagement where juniorState = 1 and ultimateState = 1 order by PaperID desc")
+    List<Papermanagement> searchPaperPassAll();
     /**
      * 添加试卷
      * @param

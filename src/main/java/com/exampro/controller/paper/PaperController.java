@@ -62,6 +62,17 @@ public class PaperController {
         }
     }
 
+    @GetMapping("/searchPaperPassAll")
+    @ApiOperation("查询通过初审和终审的卷子")
+    public ResponseEntity<ApiRest<?>> searchPaperPassAll(){
+        List<Papermanagement> rows = papermanagementMapper.searchPaperPassAll();
+        if(rows.isEmpty()){
+            return ResponseEntity.ok(response.success("没有试卷",emptyList));
+        }else {
+            return ResponseEntity.ok(response.success("查询成功",rows));
+        }
+    }
+
     /**
      * 添加试卷
      * (#{PaperName}, #{ObjectiveScore}, #{TotalScore}, #{SubjectiveScore}, #{StartTime}, #{EndTime},#{NumberOfExaminees}, #{UserID}
