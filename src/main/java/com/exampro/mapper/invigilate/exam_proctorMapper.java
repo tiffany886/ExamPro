@@ -1,6 +1,7 @@
 package com.exampro.mapper.invigilate;
 
 import com.exampro.model.User;
+import com.exampro.model.exam.Exam;
 import com.exampro.model.invigilate.proctoring_record;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
@@ -49,8 +50,17 @@ public interface exam_proctorMapper {
     /**
      * 根据考试id查找监考记录
      */
-    @Select("SELECT * FROM proctoring_record WHERE ExamID = #{examID}")
+    @Select("SELECT * FROM proctoring_record WHERE ExamID = #{examID} ORDER BY Time ASC")
     List<proctoring_record> findProctoringRecordsByExamID(@Param("examID") int examID);
+
+    /**
+     * 根据监考人ID查找要监考的考试信息
+     */
+    @Select("SELECT e.* " +
+            "FROM exam e " +
+            "INNER JOIN exam_proctor ep ON e.ExamID = ep.examID " +
+            "WHERE ep.ProctorID = #{proctorID}")
+    List<Exam> findExamsByProctorID(@Param("proctorID") int proctorID);
 
 
 
