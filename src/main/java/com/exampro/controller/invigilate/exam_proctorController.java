@@ -3,12 +3,14 @@ package com.exampro.controller.invigilate;
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
 import com.exampro.mapper.invigilate.exam_proctorMapper;
+import com.exampro.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,7 +38,7 @@ public class exam_proctorController {
         try{
             return ResponseEntity.ok(response.success("查询成功！", exam_proctorMapper.findAllProctors()));
         }catch (Exception e){
-            return ResponseEntity.ok(response.success("查询失败！"+ e.getMessage(), false));
+            return ResponseEntity.ok(response.failure("查询失败！"+ e.getMessage(), false));
         }
     }
 
@@ -56,8 +58,59 @@ public class exam_proctorController {
         if (rowsInserted > 0) {
             return ResponseEntity.ok(response.success("监考人插入成功！", true));
         } else {
-            return ResponseEntity.ok(response.success("监考人失败！", false));
+            return ResponseEntity.ok(response.failure("监考人失败！", false));
         }
     }
 
+    /**
+     * 插入监考记录
+     * @param examineeID
+     * @param examID
+     * @param proctorID
+     * @param issueContent
+     * @param senderID
+     * @return
+     */
+    @PostMapping("/addProctoringRecord")
+    @ApiOperation("插入监考记录")
+    public ResponseEntity<ApiRest<?>> addProctoringRecord(
+            @RequestParam("examineeID") Integer examineeID,
+            @RequestParam("examID") Integer examID,
+            @RequestParam("proctorID") Integer proctorID,
+            @RequestParam("issueContent") String issueContent,
+            @RequestParam("senderID") Integer senderID) {
+
+        ApiResponse<?> response = new ApiResponse<>();
+
+        int rowsInserted = exam_proctorMapper.addProctoringRecord(examineeID, examID, proctorID, issueContent, senderID);
+
+        if (rowsInserted > 0) {
+            return ResponseEntity.ok(response.success("监考记录插入成功！", true));
+        } else {
+            return ResponseEntity.ok(response.failure("监考记录插入失败！", false));
+        }
+    }
+
+    /**
+     * 根据考试ID查找监考人
+     * @param examID 考试ID
+     * @return ResponseEntity 包含查询结果的响应
+     */
+    @PostMapping("/findProctorsByExamID")
+    @ApiOperation("根据考试ID查找监考人")
+    public ResponseEntity<ApiRest<?>> findProctorsByExamID(@RequestParam("examID") Integer examID) {
+        ApiResponse<?> response = new ApiResponse<>();
+        try {
+            Integer proctorId = exam_proctorMapper.findProctorsByExamID(examID);
+            HashMap data = new HashMap();
+            data.put("proctorId",proctorId);
+            if (proctorId != -1) {
+                return ResponseEntity.ok(response.success("查询监考人id成功！", data));
+            } else {
+                return ResponseEntity.ok(response.failure("未找到相关监考人信息！", null));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.ok(response.failure("查询监考人id失败！" + e.getMessage(), false));
+        }
+    }
 }
