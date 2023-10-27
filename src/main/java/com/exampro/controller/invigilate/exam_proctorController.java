@@ -3,7 +3,10 @@ package com.exampro.controller.invigilate;
 import com.exampro.constants.ApiResponse;
 import com.exampro.constants.ApiRest;
 import com.exampro.mapper.invigilate.exam_proctorMapper;
-import com.exampro.model.User;
+import com.exampro.model.exam.Exam;
+import com.exampro.model.invigilate.proctoring_record;
+import com.exampro.utils.jwt.JwtTokenUtil;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,12 @@ public class exam_proctorController {
      */
     @Autowired
     private exam_proctorMapper exam_proctorMapper;
+
+    /**
+     * 注入 JwtTokenUtil
+     */
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     /**
      * 查询所有监考人
@@ -113,4 +122,44 @@ public class exam_proctorController {
             return ResponseEntity.ok(response.failure("查询监考人id失败！" + e.getMessage(), false));
         }
     }
+
+    @PostMapping("/proctoringRecordsByExamID")
+    @ApiOperation("根据考试ID查找监考记录")
+    public ResponseEntity<ApiRest<?>> findProctoringRecordsByExamID(@RequestParam("examID") int examID) {
+        ApiResponse<?> response = new ApiResponse<>();
+        try {
+            List<proctoring_record> records = exam_proctorMapper.findProctoringRecordsByExamID(examID);
+            if (!records.isEmpty()) {
+                return ResponseEntity.ok(response.success("查询监考记录成功！", records));
+            } else {
+                return ResponseEntity.ok(response.failure("未找到相关监考记录！", null));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.ok(response.failure("查询监考记录失败！" + e.getMessage(), false));
+        }
+    }
+
+    /**
+     * 根据监考人ID查找要监考的考试信息
+     * @return
+     */
+    @PostMapping("/examsByProctorID")
+    @ApiOperation("根据监考人ID查找要监考的考试信息")
+    public ResponseEntity<ApiRest<List<Exam>>> findExamsByProctorID(@RequestHeader("Authorization") String token) {
+        ApiResponse<List<Exam>> response = new ApiResponse<>();
+        // 解析token获取用户id
+        Claims claims = jwtTokenUtil.parseToken(token);
+        Integer userID = Integer.parseInt(claims.getId());
+        try {
+            List<Exam> exams = exam_proctorMapper.findExamsByProctorID(userID);
+            if (!exams.isEmpty()) {
+                return ResponseEntity.ok(response.success("查询要监考的考试信息成功！", exams));
+            } else {
+                return ResponseEntity.ok(response.failure("未找到相关的考试信息！", null));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.ok(response.failure("查询要监考的考试信息失败！" + e.getMessage(), null));
+        }
+    }
+
 }
