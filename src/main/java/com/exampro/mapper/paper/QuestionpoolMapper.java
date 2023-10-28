@@ -43,13 +43,13 @@ public interface QuestionpoolMapper {
             "WHERE QuestionID = #{questionId};\n")
     int changQuesRefuseById(int questionId);
 
-//    /**
-//     * 获得初级审批通过的试题
-//     */
-//    @Select("SELECT * \n" +
-//            "FROM questionpool \n" +
-//            "WHERE juniorState = 1 order by createTime desc;\n")
-//    List<Questionpool> selectQuesPass();
+   /**
+    * 获得初级审批通过的试题
+    */
+   @Select("SELECT * \n" +
+           "FROM questionpool \n" +
+           "WHERE juniorState = 1 order by createTime desc;\n")
+   List<Questionpool> selectQuesPassAll();
 
     // 查询题目池的总记录数
     @Select("SELECT COUNT(*) FROM questionpool WHERE juniorState = 1")

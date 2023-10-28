@@ -96,6 +96,7 @@ public class UserController {
         data.put("token",token);
         data.put("username",username);
         data.put("userid",user.getUserid());
+        data.put("role",user.getRoleid());
         return ResponseEntity.ok(response.success("登录成功！", data));
     }
 

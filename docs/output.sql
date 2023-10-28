@@ -47,7 +47,7 @@ CREATE TABLE `bankquestion` (
 
 LOCK TABLES `bankquestion` WRITE;
 /*!40000 ALTER TABLE `bankquestion` DISABLE KEYS */;
-INSERT INTO `bankquestion` VALUES (1,1,1),(3,1,31),(4,1,32),(5,1,33),(6,1,34),(7,1,35);
+# INSERT INTO `bankquestion` VALUES (1,1,1),(3,1,31),(4,1,32),(5,1,33),(6,1,34),(7,1,35);
 /*!40000 ALTER TABLE `bankquestion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,7 +276,7 @@ CREATE TABLE `papermanagement` (
 
 LOCK TABLES `papermanagement` WRITE;
 /*!40000 ALTER TABLE `papermanagement` DISABLE KEYS */;
-INSERT INTO `papermanagement` VALUES (1,'小升初卷子',0,0,0,1),(2,'英语四六级试卷',0,0,0,1),(3,'教资科一考试试卷',0,0,0,1),(4,'蓝桥杯考试',0,0,0,1),(5,'佛系考试',0,0,0,2);
+# INSERT INTO `papermanagement` VALUES (1,'小升初卷子',0,0,0,1),(2,'英语四六级试卷',0,0,0,1),(3,'教资科一考试试卷',0,0,0,1),(4,'蓝桥杯考试',0,0,0,1),(5,'佛系考试',0,0,0,2);
 /*!40000 ALTER TABLE `papermanagement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,7 +371,7 @@ CREATE TABLE `questionbank` (
 
 LOCK TABLES `questionbank` WRITE;
 /*!40000 ALTER TABLE `questionbank` DISABLE KEYS */;
-INSERT INTO `questionbank` VALUES (1,'英语题库','2023-09-25 01:23:21',1),(2,'数学题库','2023-09-25 01:23:21',1),(3,'我的题库','2023-09-25 02:56:33',1),(4,'12','2023-10-03 09:16:06',1),(5,'我的题库','2023-10-03 09:16:38',1),(6,'英语题库2','2023-10-04 05:16:29',1),(7,'wo','2023-10-07 09:01:17',1);
+# INSERT INTO `questionbank` VALUES (1,'英语题库','2023-09-25 01:23:21',1),(2,'数学题库','2023-09-25 01:23:21',1),(3,'我的题库','2023-09-25 02:56:33',1),(4,'12','2023-10-03 09:16:06',1),(5,'我的题库','2023-10-03 09:16:38',1),(6,'英语题库2','2023-10-04 05:16:29',1),(7,'wo','2023-10-07 09:01:17',1);
 /*!40000 ALTER TABLE `questionbank` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -401,32 +401,32 @@ CREATE TABLE `questionpool` (
 ALTER TABLE `questionpool` ADD COLUMN `questionScore` int NOT NULL COMMENT '题目分数';
 LOCK TABLES `questionpool` WRITE;
 /*!40000 ALTER TABLE `questionpool` DISABLE KEYS */;
-INSERT INTO `questionpool` VALUES
-(1, '0', 'What is 2 + 2?', 1, '4', '2023-09-25 01:23:21', 10),
-(2, '0', 'What is the capital of France?', 1, 'Paris', '2023-09-25 01:23:21', 10),
-(3, '0', 'What is 3 x 3?', 1, '9', '2023-09-25 01:23:21', 10),
-(16, '0', '主观题', 1, '答案', '2023-10-01 05:15:37', 10),
-(17, '1', '我是单钻(exampro)A=下拉&B=将大量时间&C=大数据&D=爱上了的话', 1, 'B', '2023-10-01 05:17:13', 3),
-(18, '2', 'ashldk(exampro)A=爱死了&B=阿达，&C=dasjl&D=打死了很久', 1, 'B,C', '2023-10-01 05:22:09', 5),
-(19, '0', 'asdas', 1, 'sdad', '2023-10-01 05:29:36', 10),
-(20, '0', 'weqewe', 1, 'qeweqw', '2023-10-01 05:32:00', 10),
-(21, '0', 'psmtimuzhi今天吃什么吗', 3, '吃玉米吃烧烤', '2023-10-03 03:38:42', 10),
-(22, '1', '1+1?(exampro)A=3&B=2&C=4&D=5', 3, 'B', '2023-10-03 03:38:58', 3),
-(23, '2', '4+4=? 7-2=?(exampro)A=1&B=2&C=5&D=8', 3, 'C,D', '2023-10-03 03:39:37', 5),
-(24, '1', '“神舟十号”飞船的速度约是每秒7.8km，而人步行的速度是每秒0.0012km。“神舟十号”飞船的速度是人步行速度的( 　)倍。(exampro)A=65&B=650&C=6500&D=65000', 3, 'C', '2023-10-03 03:45:14', 3),
-(25, '1', '12(exampro)A=12&B=2&C=21&D=21', 3, 'A', '2023-10-03 03:45:50', 3),
-(26, '1', '大苏打撒(exampro)A=阿斯顿&B=打算&C=打算&D=vdf', 1, 'D', '2023-10-03 05:40:57', 3),
-(27, '0', '111', 1, '1111', '2023-10-08 00:57:32', 10),
-(28, '0', '3333', 1, '333', '2023-10-08 00:58:30', 10),
-(29, '0', '55', 1, '55', '2023-10-08 01:00:22', 10),
-(30, '0', '99', 1, '99', '2023-10-08 01:42:00', 10),
-(31, '0', '44', 1, '44', '2023-10-08 01:43:03', 10),
-(32, '0', '88', 1, '88', '2023-10-08 01:45:02', 10),
-(33, '0', '77', 1, '77', '2023-10-08 01:47:27', 10),
-(34, '0', '11', 1, '11', '2023-10-08 01:48:09', 10),
-(35, '0', '33', 1, '33', '2023-10-08 01:48:27', 10),
-(36, '2', '我是多选题(exampro)A=534&B=534&C=534&D=534', 1, 'C', '2023-10-08 02:46:51', 5),
-(37, '0', '3242', 1, '32434', '2023-10-08 02:55:00', 10);
+# INSERT INTO `questionpool` VALUES
+# (1, '0', 'What is 2 + 2?', 1, '4', '2023-09-25 01:23:21', 10),
+# (2, '0', 'What is the capital of France?', 1, 'Paris', '2023-09-25 01:23:21', 10),
+# (3, '0', 'What is 3 x 3?', 1, '9', '2023-09-25 01:23:21', 10),
+# (16, '0', '主观题', 1, '答案', '2023-10-01 05:15:37', 10),
+# (17, '1', '我是单钻(exampro)A=下拉&B=将大量时间&C=大数据&D=爱上了的话', 1, 'B', '2023-10-01 05:17:13', 3),
+# (18, '2', 'ashldk(exampro)A=爱死了&B=阿达，&C=dasjl&D=打死了很久', 1, 'B,C', '2023-10-01 05:22:09', 5),
+# (19, '0', 'asdas', 1, 'sdad', '2023-10-01 05:29:36', 10),
+# (20, '0', 'weqewe', 1, 'qeweqw', '2023-10-01 05:32:00', 10),
+# (21, '0', 'psmtimuzhi今天吃什么吗', 3, '吃玉米吃烧烤', '2023-10-03 03:38:42', 10),
+# (22, '1', '1+1?(exampro)A=3&B=2&C=4&D=5', 3, 'B', '2023-10-03 03:38:58', 3),
+# (23, '2', '4+4=? 7-2=?(exampro)A=1&B=2&C=5&D=8', 3, 'C,D', '2023-10-03 03:39:37', 5),
+# (24, '1', '“神舟十号”飞船的速度约是每秒7.8km，而人步行的速度是每秒0.0012km。“神舟十号”飞船的速度是人步行速度的( 　)倍。(exampro)A=65&B=650&C=6500&D=65000', 3, 'C', '2023-10-03 03:45:14', 3),
+# (25, '1', '12(exampro)A=12&B=2&C=21&D=21', 3, 'A', '2023-10-03 03:45:50', 3),
+# (26, '1', '大苏打撒(exampro)A=阿斯顿&B=打算&C=打算&D=vdf', 1, 'D', '2023-10-03 05:40:57', 3),
+# (27, '0', '111', 1, '1111', '2023-10-08 00:57:32', 10),
+# (28, '0', '3333', 1, '333', '2023-10-08 00:58:30', 10),
+# (29, '0', '55', 1, '55', '2023-10-08 01:00:22', 10),
+# (30, '0', '99', 1, '99', '2023-10-08 01:42:00', 10),
+# (31, '0', '44', 1, '44', '2023-10-08 01:43:03', 10),
+# (32, '0', '88', 1, '88', '2023-10-08 01:45:02', 10),
+# (33, '0', '77', 1, '77', '2023-10-08 01:47:27', 10),
+# (34, '0', '11', 1, '11', '2023-10-08 01:48:09', 10),
+# (35, '0', '33', 1, '33', '2023-10-08 01:48:27', 10),
+# (36, '2', '我是多选题(exampro)A=534&B=534&C=534&D=534', 1, 'C', '2023-10-08 02:46:51', 5),
+# (37, '0', '3242', 1, '32434', '2023-10-08 02:55:00', 10);
 
 /*!40000 ALTER TABLE `questionpool` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -462,7 +462,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'zhhh','e1ee0203ab28bb206f7b557722882de1',1),(2,'psn','e1ee0203ab28bb206f7b557722882de1',1),(3,'psm','e1ee0203ab28bb206f7b557722882de1',1);
+# INSERT INTO `user` VALUES (1,'zhhh','e1ee0203ab28bb206f7b557722882de1',1),(2,'psn','e1ee0203ab28bb206f7b557722882de1',1),(3,'psm','e1ee0203ab28bb206f7b557722882de1',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -476,11 +476,11 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- 插入考试数据
-INSERT INTO exam (ExamName, ExamDescription, StartTime,PaperID, ExamDuration,UserID)
-VALUES
-('考试1', '第一个考试描述','2023-06-05 07:12:00', 1, 90,1),
-('考试2', '第二个考试描述','2023-06-05 07:12:00', 2, 90,1),
-('考试3', '第三个考试描述','2023-06-05 07:12:00', 3, 90,1);
+# INSERT INTO exam (ExamName, ExamDescription, StartTime,PaperID, ExamDuration,UserID)
+# VALUES
+# ('考试1', '第一个考试描述','2023-06-05 07:12:00', 1, 90,1),
+# ('考试2', '第二个考试描述','2023-06-05 07:12:00', 2, 90,1),
+# ('考试3', '第三个考试描述','2023-06-05 07:12:00', 3, 90,1);
 -- Dump completed on 2023-10-08 12:31:44
 
 DELIMITER //
@@ -521,16 +521,16 @@ END;
 //
 
 DELIMITER ;
-
-INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, Score)
-VALUES
-(1, 1, 0, 10);
-INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, Score)
-VALUES
-(1, 2, 0, 20);
-INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, Score)
-VALUES
-(1, 3, 0, 30);
+#
+# INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, Score)
+# VALUES
+# (1, 1, 0, 10);
+# INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, Score)
+# VALUES
+# (1, 2, 0, 20);
+# INSERT INTO paperquestion (PaperID, QuestionID, QuestionType, Score)
+# VALUES
+# (1, 3, 0, 30);
 
 -- 创建一个在插入 examregistration 表时更新 NumberOfExaminees 的触发器
 DELIMITER //
@@ -546,11 +546,11 @@ END;
 //
 DELIMITER ;
 
-insert into examregistration (ExamID,UserID)
-values (1,1);
-
-insert into examregistration (ExamID,UserID)
-values (1,2);
+# insert into examregistration (ExamID,UserID)
+# values (1,1);
+#
+# insert into examregistration (ExamID,UserID)
+# values (1,2);
 
 
 -- 题目审核表
@@ -612,8 +612,7 @@ INSERT INTO `role` (`RoleName`) VALUES
 ('考试管理员'),
 ('考生'),
 ('出卷人'),
-('监考人'),
-('评卷人');
+('监考人');
 
 DROP TABLE IF EXISTS userExamScore;
 CREATE TABLE userExamScore (

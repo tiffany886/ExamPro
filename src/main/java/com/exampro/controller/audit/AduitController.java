@@ -77,6 +77,7 @@ public class AduitController {
     @ApiOperation("通过考试初级审核")
     @GetMapping(value="/examJuniorPass",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiRest<?>> examJuniorPass(@RequestParam("examId") Integer examId){
+        System.out.println(123);
         ApiResponse<Boolean> response = new ApiResponse<>();
         int row = examMapper.changExamPassById(examId);
         try {

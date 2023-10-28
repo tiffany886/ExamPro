@@ -26,7 +26,8 @@ public interface ExamMapper {
             "    e.NumberOfExaminees,\n" +
             "    p.ObjectiveScore,\n" +
             "    p.SubjectiveScore,\n" +
-            "    u.Username AS CreatedBy\n" +
+            "    u.Username AS CreatedBy,\n" +
+            "    e.examDuration ,e.ultimateState , e.juniorState \n" +
             "FROM\n" +
             "    exam e\n" +
             "        JOIN\n" +
@@ -39,6 +40,9 @@ public interface ExamMapper {
             @Result(column = "StartTime", property = "StartTime"),
             @Result(column = "EndTime", property = "EndTime"),
             @Result(column = "NumberOfExaminees", property = "NumberOfExaminees"),
+            @Result(column = "examDuration", property = "examDuration"),
+            @Result(column = "ultimateState", property = "ultimateState"),
+            @Result(column = "juniorState", property = "juniorState"),
             @Result(column = "ObjectiveScore", property = "ObjectiveScore"),
             @Result(column = "SubjectiveScore", property = "SubjectiveScore"),
             @Result(column = "CreatedBy", property = "CreatedBy")

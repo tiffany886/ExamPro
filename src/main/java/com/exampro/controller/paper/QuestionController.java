@@ -89,20 +89,20 @@ public class QuestionController {
         }
     }
 
-//    /**
-//     * 查询通过审核的题目 selectQuesPass
-//     */
-//    @ApiOperation("查询通过审核的题目")
-//    @GetMapping(value="/selectQuesPass",produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ApiRest<?>> selectQuesPass(){
-//        ApiResponse<Boolean> response = new ApiResponse<>();
-//        List<Questionpool> rows=questionpoolMapper.selectQuesPass();
-//        if(rows.isEmpty()){
-//            return ResponseEntity.ok(response.success("没有题目",emptyList));
-//        }else {
-//            return ResponseEntity.ok(response.success("查询成功",rows));
-//        }
-//    }
+   /**
+    * 查询通过审核的题目 selectQuesPassAll
+    */
+   @ApiOperation("查询通过审核的题目")
+   @GetMapping(value="/selectQuesPassAll",produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<ApiRest<?>> selectQuesPass(){
+       ApiResponse<Boolean> response = new ApiResponse<>();
+       List<Questionpool> rows=questionpoolMapper.selectQuesPassAll();
+       if(rows.isEmpty()){
+           return ResponseEntity.ok(response.success("没有题目",emptyList));
+       }else {
+           return ResponseEntity.ok(response.success("查询成功",rows));
+       }
+   }
 
     /**
      * 获取题目池的页数
