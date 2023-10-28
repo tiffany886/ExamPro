@@ -252,17 +252,30 @@ public class ExamController {
             return ResponseEntity.ok(response.success("查询失败", false));
         }
     }
+    /**
+     * 根据用户id获取考试记录 selectAllExamRecord
+     */
+    @PostMapping("/getAllExamRecordMana")
+    @ApiOperation("根据用户id获取考试记录")
+    public ResponseEntity<?> getAllExamRecordMana(@RequestParam("userId") Integer userId,@RequestParam("examId") Integer examId) {
+        ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
+        List<Examrecord> data = examrecordMapper.selectAllExamRecord(examId,userId);
+        if(!data.isEmpty()){
+            return ResponseEntity.ok(response.success("查询成功", data));
+        }else {
+            return ResponseEntity.ok(response.success("查询失败", false));
+        }
+    }
+
 
     /**
      * 更新学生成绩 updateUserExamScore
      */
     @GetMapping("/updateUserExamScore")
     @ApiOperation("更新学生成绩")
-    public ResponseEntity<?> updateUserExamScore(@RequestHeader("Authorization") String token,@RequestParam("examId") Integer examId,@RequestParam("questionId") Integer questionId,@RequestParam("score") Integer score){
-        Claims claims = jwtTokenUtil.parseToken(token);
-        Integer userID = Integer.parseInt(claims.getId());
+    public ResponseEntity<?> updateUserExamScore(@RequestParam("userId") Integer userId,@RequestParam("examId") Integer examId,@RequestParam("questionId") Integer questionId,@RequestParam("score") Integer score){
         ApiResponse<List<ExamInfoDTO>> response = new ApiResponse<>();
-        int data = examrecordMapper.updateUserExamScore(userID,examId,questionId,score);
+        int data = examrecordMapper.updateUserExamScore(userId,examId,questionId,score);
         if(data == 1){
             return ResponseEntity.ok(response.success("插入成功！", true));
         }else {
